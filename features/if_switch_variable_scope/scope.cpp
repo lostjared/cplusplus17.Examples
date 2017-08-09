@@ -1,5 +1,16 @@
 #include<iostream>
 #include<vector>
+#include<algorithm>
+
+// function using new syntatic sugar
+template<typename T>
+bool VecRemove(std::vector<T> &vec, std::string search) {
+    if(auto pos(std::find(vec.begin(), vec.end(), search)); pos != vec.end()) {
+        vec.erase(pos);
+        return true;
+    }
+    return false;
+}
 
 int main(int argc, char **argv) {
     std::vector<std::string> v {"Jared", "Monkey", "Cow", "Turkey", "Pumpkin" };
@@ -7,7 +18,11 @@ int main(int argc, char **argv) {
     if(int sz(v.size()); sz > 3) {
         std::cout << "Yeah it works value is: " << sz << "\n";
     }
-    
+    // remove string Monkey from Vector
+    if(VecRemove(v, "Monkey")) {
+        std::cout << "Removed string\n";
+    }
+    std::cout << "Enter character: \n";
     // cool initalization statement for swtich
     switch(auto c(getchar()); c) {
         case 'q':
@@ -19,5 +34,6 @@ int main(int argc, char **argv) {
         default:
             std::cout << "You did not press b.\n";
     }
+    
     return 0;
 }
