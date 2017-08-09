@@ -1,8 +1,13 @@
+/*
+ C++17 Example
+ tested with Clang-3.9
+*/
+
 #include<iostream>
 #include<vector>
 #include<algorithm>
 
-// function using new syntatic sugar
+// function using if statement with new syntatic sugar
 template<typename T>
 bool VecRemove(std::vector<T> &vec, const T &search) {
     if(auto pos(std::find(vec.begin(), vec.end(), search)); pos != vec.end()) {
