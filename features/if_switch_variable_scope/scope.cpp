@@ -4,7 +4,7 @@
 
 // function using new syntatic sugar
 template<typename T>
-bool VecRemove(std::vector<T> &vec, std::string search) {
+bool VecRemove(std::vector<T> &vec, const T &search) {
     if(auto pos(std::find(vec.begin(), vec.end(), search)); pos != vec.end()) {
         vec.erase(pos);
         return true;
@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
         std::cout << "Yeah it works value is: " << sz << "\n";
     }
     // remove string Monkey from Vector
-    if(VecRemove(v, "Monkey")) {
+    if(VecRemove<std::string>(v, "Monkey")) {
         std::cout << "Removed string\n";
     }
     std::cout << "Enter character: \n";
