@@ -1,6 +1,6 @@
-CXX_FLAGS=-std=c++1z
+CXX_FLAGS=-std=c++17
 # change CXX to your compiler below
-CXX=clang++-3.9
+CXX=clang++-5.0
 
 all: scope
 
