@@ -1,0 +1,9 @@
+CXX=clang++-5.0
+CXX_FLAGS= -std=c++17
+
+argstest: args.cpp
+	$(CXX) $(CXX_FLAGS) args.cpp -o argstest
+all: argstest
+
+clean:
+	rm -f argstest
