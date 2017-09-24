@@ -1,4 +1,5 @@
-CXX_FLAGS=-std=c++1z
+CXX_FLAGS=-std=c++17
+CXX=clang++-5.0
 
 nested_namespace: nested_namespace.cpp
 	$(CXX) $(CXX_FLAGS)  nested_namespace.cpp -o nested_namespace
