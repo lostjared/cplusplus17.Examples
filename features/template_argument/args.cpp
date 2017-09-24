@@ -38,8 +38,8 @@ private:
 
 int main() {
     try {
-    	Stack value{100.5};
-    	Stack test_value = 500;
+    	Stack value{100.5}; // deduce argument
+    	Stack test_value = 500; // deduce argument
         value.print();
         
         for(int i = 0; i < 10; ++i)
