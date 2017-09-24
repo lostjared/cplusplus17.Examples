@@ -1,7 +1,5 @@
-// change CXX to your compiler
-
-
-CXXFLAGS=-std=c++1z
+CXXFLAGS=-std=c++17
+CXX=clang++-5.0
 
 all: sb
 
