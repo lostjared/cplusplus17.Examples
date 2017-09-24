@@ -1,5 +1,5 @@
-CXX_FLAGS=-std=c++1z
-
+CXX_FLAGS=-std=c++17
+CXX=clang++-5.0
 
 hex_float: hex_float.cpp
 	$(CXX) $(CXX_FLAGS) hex_float.cpp -o hex_float
