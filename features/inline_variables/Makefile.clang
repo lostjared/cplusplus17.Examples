@@ -1,10 +1,12 @@
-CXX_FLAGS=-std=c++1z
+CXX_FLAGS=-std=c++17
 
-CXX=clang++-3.9
+CXX=clang++-5.0
 
 inline-test: point.cpp main.cpp point.hpp header_only.hpp
 	$(CXX) $(CXX_FLAGS) point.cpp main.cpp -o inline-test
 
+clean:
+	rm -f inline-test
 
 all: inline-test
 
