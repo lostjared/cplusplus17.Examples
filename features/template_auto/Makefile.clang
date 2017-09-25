@@ -1,0 +1,11 @@
+CXX=clang++-5.0
+CXX_FLAGS= -std=c++17
+TEMPLATEA=template_auto
+
+all: $(TEMPLATEA)
+
+$(TEMPLATEA): $(TEMPLATEA).cpp
+	$(CXX) $(CXX_FLAGS) $(TEMPLATEA).cpp -o $(TEMPLATEA)
+clean:
+	rm -f $(TEMPLATEA)
+ 
