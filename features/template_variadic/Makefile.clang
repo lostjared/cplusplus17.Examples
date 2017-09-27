@@ -5,8 +5,9 @@ TEMP_FUNC=variadic_func
 TEMP_BASE=variadic_base
 TEMP_FOLD=variadic_fold
 TEMP_INDI=variadic_indices
+TEMP_SIZE=variadic_sizeof
 
-all: $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI)
+all: $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI) $(TEMP_SIZE)
 
 $(TEMP_FUNC): $(TEMP_FUNC).cpp
 	$(CXX) $(CXX_FLAGS) $(TEMP_FUNC).cpp -o $(TEMP_FUNC)
@@ -16,5 +17,8 @@ $(TEMP_FOLD): $(TEMP_FOLD).cpp
 	$(CXX) $(CXX_FLAGS) $(TEMP_FOLD).cpp -o $(TEMP_FOLD)
 $(TEMP_INDI): $(TEMP_INDI).cpp
 	$(CXX) $(CXX_FLAGS) $(TEMP_INDI).cpp -o $(TEMP_INDI)
+$(TEMP_SIZE): $(TEMP_SIZE).cpp
+	$(CXX) $(CXX_FLAGS) $(TEMP_SIZE).cpp -o $(TEMP_SIZE)
 clean:
-	rm -f $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI)
+	rm -f $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI) $(TEMP_SIZE)
+
