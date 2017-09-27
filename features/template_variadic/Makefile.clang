@@ -1,0 +1,20 @@
+CXX=clang++-5.0
+CXX_FLAGS=-std=c++17
+
+TEMP_FUNC=variadic_func
+TEMP_BASE=variadic_base
+TEMP_FOLD=variadic_fold
+TEMP_INDI=variadic_indices
+
+all: $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI)
+
+$(TEMP_FUNC): $(TEMP_FUNC).cpp
+	$(CXX) $(CXX_FLAGS) $(TEMP_FUNC).cpp -o $(TEMP_FUNC)
+$(TEMP_BASE): $(TEMP_BASE).cpp
+	$(CXX) $(CXX_FLAGS) $(TEMP_BASE).cpp -o $(TEMP_BASE)
+$(TEMP_FOLD): $(TEMP_FOLD).cpp
+	$(CXX) $(CXX_FLAGS) $(TEMP_FOLD).cpp -o $(TEMP_FOLD)
+$(TEMP_INDI): $(TEMP_INDI).cpp
+	$(CXX) $(CXX_FLAGS) $(TEMP_INDI).cpp -o $(TEMP_INDI)
+clean:
+	rm -f $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI)
