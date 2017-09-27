@@ -1,6 +1,6 @@
 /*
  C++17 Example
- tested with Clang-3.9
+ tested with Clang-5.0
 */
 
 #include<iostream>
