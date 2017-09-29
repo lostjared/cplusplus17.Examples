@@ -25,6 +25,10 @@ public:
     Stack() = default;
     Stack(std::initializer_list<T> items);
     void push(const T &type);
+    
+    template<typename T2, template<typename E2, typename = std::allocator<E2>> typename C2>
+    void push(const Stack<T2, C2> &c);
+    
     void push_list(std::initializer_list<T> items);
     void pop();
     T &top();
@@ -78,6 +82,12 @@ bool Stack<T,C>::empty() const {
 
 template<typename T, template<typename E, typename = std::allocator<E>> typename C>
 template<typename T2, template<typename E2, typename = std::allocator<E2>> typename C2>
+void Stack<T,C>::push(const Stack<T2,C2> &c) {
+    container.insert(container.begin(), c.container.begin(), c.container.end());
+}
+
+template<typename T, template<typename E, typename = std::allocator<E>> typename C>
+template<typename T2, template<typename E2, typename = std::allocator<E2>> typename C2>
 Stack<T, C> &Stack<T,C>::operator=(const Stack<T2,C2> &c) {
     if(!container.empty())
         container.erase(container.begin(), container.end());
@@ -86,9 +96,8 @@ Stack<T, C> &Stack<T,C>::operator=(const Stack<T2,C2> &c) {
     return *this;
 }
 
-
-
 int main() {
+    // tests using Stack template
     try {
         Stack<int, std::deque> stack1 ({0, 1, 0, 24, 150, 255});
         Stack<float, std::vector> stack2;
@@ -102,6 +111,10 @@ int main() {
             std::cout << "stack1 top: " << stack1.top() << "\n";
             stack1.pop();
         }
+        std::cout << "Added to stack1\n";
+        Stack<int, std::vector> stack3({520, 240, 190, 640, 480, 1280, 720, 1920, 1080});
+        stack1.push(stack3);
+        stack1.print();
     } catch(Exception &e) {
         std::cerr << "Exception: " << e.getError() << "\n";
     }
