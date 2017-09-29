@@ -28,6 +28,7 @@ public:
     void pop();
     T &top();
     void print();
+    bool empty() const;
     
     template<typename T2, template<typename E2, typename = std::allocator<E2>> typename C2>
     Stack<T, C> &operator=(const Stack<T2,C2> &c);
@@ -50,13 +51,16 @@ void Stack<T,C>::push_list(std::initializer_list<T> items) {
 
 template<typename T, template<typename E, typename = std::allocator<E>> typename C>
 void Stack<T,C>::pop() {
-    if(container.size()==0)
+    if(container.empty())
         throw Exception("Error: Stack Underflow");
     container.pop_back();
 }
 
 template<typename T, template<typename E, typename = std::allocator<E>> typename C>
 T &Stack<T,C>::top() {
+    if(container.empty())
+        throw Exception("Error: Stack empty");
+    
     return container.back();
 }
 
@@ -64,6 +68,11 @@ template<typename T, template<typename E, typename = std::allocator<E>> typename
 void Stack<T,C>::print() {
     for(auto &i : container)
         std::cout << i << "\n";
+}
+
+template<typename T, template<typename E, typename = std::allocator<E>> typename C>
+bool Stack<T,C>::empty() const {
+    return container.empty();
 }
 
 template<typename T, template<typename E, typename = std::allocator<E>> typename C>
@@ -83,9 +92,15 @@ int main() {
         Stack<int, std::deque> stack1 ({0, 1, 0, 24, 150, 255});
         Stack<float, std::vector> stack2;
         stack2 = stack1;
+        std::cout << "stack 2: \n";
         stack2.print();
         stack1.push_list({1, 0, 410, 64, 124});
+        std::cout << "stack 1: \n";
         stack1.print();
+        while(!stack1.empty()) {
+            std::cout << "stack1 top: " << stack1.top() << "\n";
+            stack1.pop();
+        }
     } catch(Exception &e) {
         std::cerr << "Exception: " << e.getError() << "\n";
     }
