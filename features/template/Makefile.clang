@@ -1,0 +1,14 @@
+CXX=clang++-5.0
+CXX_FLAGS=-std=c++17
+
+TEMP_STACK=template_stack
+
+all: $(TEMP_STACK)
+
+
+$(TEMP_STACK): $(TEMP_STACK).cpp
+	$(CXX) $(CXX_FLAGS) $(TEMP_STACK).cpp -o $(TEMP_STACK)
+
+clean:
+	rm -f $(TEMP_STACK)
+
