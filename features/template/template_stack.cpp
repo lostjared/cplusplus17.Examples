@@ -1,7 +1,7 @@
-/* 
+/*
  Custom Stack Class based from Chapter 5 of "C++ Templates: The Complete Guide Second Edition"
  man I had to type template a ton.
-*/
+ */
 
 #include<iostream>
 #include<vector>
@@ -20,7 +20,7 @@ template<typename T, template<typename E, typename = std::allocator<E>> typename
 class Stack {
 public:
     C<T> container;
-
+    
     Stack() = default;
     Stack(std::initializer_list<T> items);
     void push(const T &type);
@@ -79,10 +79,14 @@ Stack<T, C> &Stack<T,C>::operator=(const Stack<T2,C2> &c) {
 
 
 int main() {
-    Stack<int, std::deque> stack1 ({0, 1, 0, 24, 150, 255});
-    Stack<float, std::vector> stack2;
-    stack2 = stack1;
-    stack2.print();
-    stack1.push_list({1, 0, 410, 64, 124});
-    stack1.print();
+    try {
+        Stack<int, std::deque> stack1 ({0, 1, 0, 24, 150, 255});
+        Stack<float, std::vector> stack2;
+        stack2 = stack1;
+        stack2.print();
+        stack1.push_list({1, 0, 410, 64, 124});
+        stack1.print();
+    } catch(Exception &e) {
+        std::cerr << "Exception: " << e.getError() << "\n";
+    }
 }
