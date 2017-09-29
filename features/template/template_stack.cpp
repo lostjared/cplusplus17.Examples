@@ -1,11 +1,12 @@
 /*
- Custom Stack Class based from Chapter 5 of "C++ Templates: The Complete Guide Second Edition"
- man I had to type template a ton.
- */
+	Custom Stack Class based from Chapter 5 of "C++ Templates: The Complete Guide Second Edition"
+*/
 
 #include<iostream>
 #include<vector>
 #include<deque>
+#include<string>
+#include<initializer_list>
 
 class Exception {
 public:
