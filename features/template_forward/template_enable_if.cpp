@@ -10,7 +10,7 @@
 #include<algorithm>
 
 template<typename T>
-using enable_string = typename std::enable_if_t<std::is_convertible<T,std::string>::value>;
+using enable_string = std::enable_if_t<std::is_convertible<T,std::string>::value>;
 
 class User {
 public:
