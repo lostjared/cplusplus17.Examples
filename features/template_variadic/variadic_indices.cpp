@@ -7,7 +7,7 @@ void print(const T &type) {
 }
 
 template<typename T, typename... Args>
-void print(T type, Args... args) {
+void print(const T &type, Args... args) {
     print(type);
     print(args...);
 }

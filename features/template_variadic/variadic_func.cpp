@@ -6,7 +6,7 @@ void echo(const T &value) {
 }
 
 template<typename T, typename... Types>
-void echo(T first, Types... args) {
+void echo(const T &first, Types... args) {
     echo(first);
     echo(args...);
 }
