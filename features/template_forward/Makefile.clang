@@ -1,0 +1,12 @@
+CXX=clang++-5.0
+CXXFLAGS=-std=c++17
+
+TEMPLATE_FORWARD=template_forward
+
+all: $(TEMPLATE_FORWARD)
+
+$(TEMPLATE_FORWARD): $(TEMPLATE_FORWARD).cpp
+	$(CXX) $(CXXFLAGS) $(TEMPLATE_FORWARD).cpp -o $(TEMPLATE_FORWARD)
+clean:
+	rm -f $(TEMPLATE_FORWARD)
+
