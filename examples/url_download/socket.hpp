@@ -45,7 +45,9 @@ namespace net {
         int acceptSocket(Socket &s);
         int acceptSocket(Socket &s, sockaddr *addr, socklen_t *addrlen);
         ssize_t readLine(std::string &buf);
+        ssize_t readHeader(std::string &buf);
         std::string readLine(ssize_t &bytesRead);
+        
         ssize_t receive(void *buf, size_t len);
         ssize_t sendData(const void *buf, size_t len);
         ssize_t sendString(const std::string &text);

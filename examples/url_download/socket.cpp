@@ -170,6 +170,22 @@ namespace net {
         return bytesRead;
     }
     
+    ssize_t Socket::readHeader(std::string &buf) {
+        if(!valid()) return -1;
+        ssize_t bytesRead = 0;
+        ssize_t readVal = 0;
+        char c = 0;
+        int count = 0;
+        while(1) {
+            readVal = read(sockfd, &c, 1);
+            if(readVal == 0 || readVal == -1) break;
+            buf += c;
+            bytesRead++;
+            if(buf.rfind("\r\n\r\n") != std::string::npos) break;
+        }
+        return bytesRead;
+    }
+    
     std::string Socket::readLine(ssize_t &bytesRead) {
         bytesRead = 0;
         std::ostringstream stream;

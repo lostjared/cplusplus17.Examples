@@ -42,9 +42,9 @@ int main(int argc, char **argv) {
     }
     std::cout << "IP Resolved to: " << host_ip << "\n";
     if(sock.connectToHost(host_ip,"80", net::SocketType::STREAM) != -1) {
-        std::string send_str = "GET /";
-        send_str += path + " HTTP/1.0\n\n";
-        sock.sendString(send_str);
+        std::ostringstream stream;
+        stream << "GET /" << path << " HTTP/1.0\r\n\r\n";
+        sock.sendString(stream.str());
         std::fstream file;
         auto t = path.rfind("/");
         std::string filename;
@@ -57,6 +57,10 @@ int main(int argc, char **argv) {
         if(!file.is_open()) {
             std::cerr << "Couldn't open: " << filename << " for writing!\n";
             exit(EXIT_FAILURE);
+        }
+        std::string text;
+        if(sock.readHeader(text) > 0) {
+            std::cout << text << "\n";
         }
         std::cout << "Saving file: " << filename << "\n";
         while(1) {
