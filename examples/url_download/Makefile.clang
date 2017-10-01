@@ -1,0 +1,14 @@
+CXX=clang++-5.0
+CXXFLAGS=-std=c++17
+LDFLAGS=
+CPP_FILES := $(wildcard *.cpp)
+OBJ_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.o)))
+
+%.o: %.cpp socket.hpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+  
+all: $(OBJ_FILES) 
+	$(CXX) $(OBJ_FILES)  -o url_download  $(LDFLAGS)
+
+clean:
+	rm -f url_download *.o
