@@ -43,9 +43,9 @@ int main(int argc, char **argv) {
     std::cout << "IP Resolved to: " << host_ip << "\n";
     if(sock.connectToHost(host_ip,"80", net::SocketType::STREAM) != -1) {
         std::ostringstream stream;
-        stream << "GET /" << path << " HTTP/1.0\r\n\r\n";
+        stream << "GET /" << path << " HTTP/1.1\r\nHost: "<<site_url<<"\r\n\r\n";
         sock.sendString(stream.str());
-        std::cout << "GET /" << path << " HTTP/1.0\n";
+        std::cout << "GET /" << path << " HTTP/1.1\r\nHost: " << site_url << "\n";
         std::fstream file;
         auto t = path.rfind("/");
         std::string filename;
