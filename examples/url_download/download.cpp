@@ -45,6 +45,7 @@ int main(int argc, char **argv) {
         std::ostringstream stream;
         stream << "GET /" << path << " HTTP/1.0\r\n\r\n";
         sock.sendString(stream.str());
+        std::cout << "GET /" << path << " HTTP/1.0\n";
         std::fstream file;
         auto t = path.rfind("/");
         std::string filename;
@@ -59,8 +60,9 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
         }
         std::string text;
-        if(sock.readHeader(text) > 0) {
-            std::cout << text << "\n";
+        if(sock.readHeader(text) == -1) {
+            herror("read");
+            exit(EXIT_FAILURE);
         }
         std::cout << "Saving file: " << filename << "\n";
         while(1) {
