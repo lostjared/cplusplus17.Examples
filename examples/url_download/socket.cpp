@@ -241,5 +241,22 @@ namespace net {
         }
     }
     
-    
+    bool convertHostToIp(const std::string &hostname , std::string &ip)
+    {
+        struct hostent *he;
+        struct in_addr **addr_list;
+        int i;
+        if ((he = gethostbyname( hostname.c_str())) == NULL)
+        {
+            herror("gethostbyname");
+            return false;
+        }
+        addr_list = (struct in_addr **) he->h_addr_list;
+        for(i = 0; addr_list[i] != NULL; i++)
+        {
+            ip = inet_ntoa(*addr_list[i]);
+            return true;
+        }
+        return false;
+    }
 }

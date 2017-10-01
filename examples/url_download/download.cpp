@@ -18,24 +18,7 @@ void extract_url(const std::string &url, std::string &site_url, std::string &pat
     }
 }
 
-int convertHostToIp(const std::string &hostname , std::string &ip)
-{
-    struct hostent *he;
-    struct in_addr **addr_list;
-    int i;
-    if ((he = gethostbyname( hostname.c_str())) == NULL)
-    {
-        herror("gethostbyname");
-        return 1;
-    }
-    addr_list = (struct in_addr **) he->h_addr_list;
-    for(i = 0; addr_list[i] != NULL; i++)
-    {
-        ip = inet_ntoa(*addr_list[i]);
-        return 0;
-    }
-    return 1;
-}
+
 
 int main(int argc, char **argv) {
     if(argc != 2) {
@@ -53,7 +36,10 @@ int main(int argc, char **argv) {
     net::Socket sock;
     std::cout << "Connecting to: " << site_url << " port 80\n";
     std::string host_ip;
-    convertHostToIp(site_url, host_ip);
+    if(net::convertHostToIp(site_url, host_ip) == false) {
+        std::cerr << "Could not convert to IP address.\n";
+        exit(EXIT_FAILURE);
+    }
     std::cout << "IP Resolved to: " << host_ip << "\n";
     if(sock.connectToHost(host_ip,"80", net::SocketType::STREAM) != -1) {
         std::string send_str = "GET /";

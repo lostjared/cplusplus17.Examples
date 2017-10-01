@@ -58,6 +58,8 @@ namespace net {
     };
     
     void ignorePipeSignal();
+    bool convertHostToIp(const std::string &hostname , std::string &ip);
+
 }
 
 
