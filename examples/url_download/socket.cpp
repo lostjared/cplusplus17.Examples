@@ -102,6 +102,19 @@ namespace net {
         return -1;
     }
     
+    int Socket::connectToHostName(const std::string &hostname, const std::string &port, SocketType type) {
+        std::string name;
+        if(convertHostToIp(hostname, name))
+            return connectToIp(name, port, type);
+        return -1;
+    }
+    int Socket::connectToHostName(const std::string &hostname, int port) {
+        std::string name;
+        if(convertHostToIp(hostname, name))
+            return connectToIp(name, port);
+        return -1;
+    }
+    
     int Socket::listenAt(const std::string &port, SocketType type, int backlog) {
         addrinfo hints;
         addrinfo *rt, *rp;
