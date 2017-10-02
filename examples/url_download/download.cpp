@@ -59,9 +59,8 @@ int main(int argc, char **argv) {
         std::string filename;
         if(t == std::string::npos)
             filename = path;
-		else
-			filename = path.substr(t+1, path.length()-t);
-        
+        else
+            filename = path.substr(t+1, path.length()-t);
         file.open(filename, std::ios::out | std::ios::binary);
         if(!file.is_open()) {
             std::cerr << "Couldn't open: " << filename << " for writing!\n";
@@ -87,5 +86,5 @@ int main(int argc, char **argv) {
         herror("connect");
         std::cerr << "Error could not connect to host: " << site_url << "\n";
     }
-	return 0;
+    return 0;
 }
