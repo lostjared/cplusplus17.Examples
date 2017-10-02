@@ -34,8 +34,8 @@ namespace net {
         Socket &operator=(const Socket &&);
         void setSocket(const Socket &s);
         void setSocket(Socket &&s);
-        int connectToHost(const std::string &host, const std::string &port, SocketType type);
-        int connectToHost(const std::string &hostname, int port);
+        int connectToIp(const std::string &host, const std::string &port, SocketType type);
+        int connectToIp(const std::string &hostname, int port);
         int listenAt(const std::string &port, SocketType type, int backlog);
         bool valid() const { return (sockfd >= 0); }
         int &fd() { return sockfd; }

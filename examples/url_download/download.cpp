@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
     std::cout << "IP Resolved to: " << host_ip << "\n";
-    if(sock.connectToHost(host_ip,"80", net::SocketType::STREAM) != -1) {
+    if(sock.connectToIp(host_ip,"80", net::SocketType::STREAM) != -1) {
         std::ostringstream stream;
         stream << "GET /" << path << " HTTP/1.1\r\nHost: "<<site_url<<"\r\n\r\n";
         sock.sendString(stream.str());

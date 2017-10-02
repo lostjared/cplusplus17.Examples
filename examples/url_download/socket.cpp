@@ -45,7 +45,7 @@ namespace net {
         blocking = std::move(s.blocking);
     }
     
-    int Socket::connectToHost(const std::string &host, const std::string &port, SocketType type) {
+    int Socket::connectToIp(const std::string &host, const std::string &port, SocketType type) {
         addrinfo hints;
         addrinfo *rt, *rp;
         int sfd, s;
@@ -79,7 +79,7 @@ namespace net {
         return (rp == NULL) ? -1 : sfd;
     }
     
-    int Socket::connectToHost(const std::string &hostname, int port) {
+    int Socket::connectToIp(const std::string &hostname, int port) {
         sockfd = socket(AF_INET,SOCK_STREAM,0);
         if(sockfd == -1) {
             herror("socket");
