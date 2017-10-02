@@ -57,11 +57,11 @@ int main(int argc, char **argv) {
         std::fstream file;
         auto t = path.rfind("/");
         std::string filename;
-        if(t == std::string::npos) {
+        if(t == std::string::npos)
             filename = path;
-        } else {
-        	filename = path.substr(t+1, path.length()-t);
-        }
+		else
+			filename = path.substr(t+1, path.length()-t);
+        
         file.open(filename, std::ios::out | std::ios::binary);
         if(!file.is_open()) {
             std::cerr << "Couldn't open: " << filename << " for writing!\n";
