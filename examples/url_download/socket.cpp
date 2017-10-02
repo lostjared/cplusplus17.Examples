@@ -1,5 +1,5 @@
 /*
- uxload
+ UNIX Socket class
  written by Jared Bruni
  
  License: GNU LESSER GENERAL PUBLIC LICENSE Version 3
@@ -85,7 +85,7 @@ namespace net {
         return (rp == NULL) ? -1 : sfd;
     }
     
-    int Socket::connectToHostName(const std::string &hostname, int port) {
+    int Socket::connectToHost(const std::string &hostname, int port) {
         sockfd = socket(AF_INET,SOCK_STREAM,0);
         if(sockfd == -1) {
             herror("socket");

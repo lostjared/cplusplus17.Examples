@@ -1,10 +1,15 @@
+// Program will download file from HTTP server
+// works with zip, rar, etc..
+
 #include"socket.hpp"
 #include<fstream>
 #include<sstream>
 
 
-void extract_url(const std::string &url, std::string &site_url, std::string &path) {
+bool extract_url(const std::string &url, std::string &site_url, std::string &path) {
     auto pos = url.find("http://");
+    if(pos == std::string::npos) return false;
+    
     std::string url_right = url.substr(pos+7, url.length()-7);
     auto pos2 = url_right.find("/");
     if(pos2 != std::string::npos) {
@@ -16,8 +21,8 @@ void extract_url(const std::string &url, std::string &site_url, std::string &pat
         site_url = url_right;
         path = "/";
     }
+    return true;
 }
-
 
 
 int main(int argc, char **argv) {
@@ -32,7 +37,10 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
     std::string site_url, path;
-    extract_url(url, site_url, path);
+    if(!extract_url(url, site_url, path)) {
+        std::cerr << "Could not extract url..\n";
+        exit(EXIT_FAILURE);
+    }
     net::Socket sock;
     std::cout << "Connecting to: " << site_url << " port 80\n";
     std::string host_ip;
@@ -65,10 +73,12 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
         }
         std::cout << "Saving file: " << filename << "\n";
+        char buffer[1024*8];
+        memset(buffer, 0, sizeof(buffer));
         while(1) {
-            char buffer[1024*8];
             ssize_t len = sock.receive(buffer, 1024*8);
-            if(len == 0) break;
+            buffer[len] = 0;
+            if(len == 0 || len == -1) break;
             file.write(buffer, len);
         }
         file.close();
