@@ -8,7 +8,6 @@
 
 #include "socket.hpp"
 
-
 namespace net {
     
     Socket::Socket() : sockfd(0), addrlen(0), blocking(true) {
@@ -79,9 +78,7 @@ namespace net {
             this->sockfd = sfd;
             this->addrlen = rp->ai_addrlen;
         }
-        
         freeaddrinfo(rt);
-        
         return (rp == NULL) ? -1 : sfd;
     }
     
@@ -112,7 +109,6 @@ namespace net {
         addrinfo hints;
         addrinfo *rt, *rp;
         int sfd, optval, s;
-        
         memset(&hints, 0, sizeof(addrinfo));
         hints.ai_canonname = NULL;
         hints.ai_addr = NULL;
@@ -120,13 +116,10 @@ namespace net {
         hints.ai_socktype = (type == SocketType::STREAM) ? SOCK_STREAM : SOCK_DGRAM;
         hints.ai_family = AF_UNSPEC;
         hints.ai_flags = AI_PASSIVE;
-        
         s = getaddrinfo(NULL, port.c_str(), &hints, &rt);
         if(s != 0)
             return -1;
-        
         optval = 1;
-        
         for(rp = rt; rp != NULL; rp = rp->ai_next) {
             sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
             if(sfd == -1)
@@ -234,17 +227,14 @@ namespace net {
     }
     
     void Socket::setBlocking(bool state) {
-        
         if(sockfd >= 0) {
             int flags = fcntl(sockfd, F_GETFL);
             if(flags == -1) {
                 std::cerr << "Error getting flags for: " << sockfd << "\n";
                 return;
             }
-            
             if(state == true) flags &= ~O_NONBLOCK;
             else flags |= O_NONBLOCK;
-            
             blocking = state;
             if(fcntl(sockfd, F_SETFL, flags) == -1)
                 std::cerr << "Error settings flags on: " << sockfd << "\n";

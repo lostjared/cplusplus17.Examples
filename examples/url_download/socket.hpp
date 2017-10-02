@@ -47,7 +47,6 @@ namespace net {
         ssize_t readLine(std::string &buf);
         ssize_t readHeader(std::string &buf);
         std::string readLine(ssize_t &bytesRead);
-        
         ssize_t receive(void *buf, size_t len);
         ssize_t sendData(const void *buf, size_t len);
         ssize_t sendString(const std::string &text);
@@ -61,7 +60,6 @@ namespace net {
     
     void ignorePipeSignal();
     bool convertHostToIp(const std::string &hostname , std::string &ip);
-
 }
 
 
