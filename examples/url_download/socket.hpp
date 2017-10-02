@@ -1,9 +1,6 @@
 /*
  UNIX Socket class
  written by Jared Bruni
- 
- License: GNU LESSER GENERAL PUBLIC LICENSE Version 3
- 
 */
 
 #ifndef __SOCKET__H___X
@@ -61,22 +58,5 @@ namespace net {
     void ignorePipeSignal();
     bool convertHostToIp(const std::string &hostname , std::string &ip);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif
