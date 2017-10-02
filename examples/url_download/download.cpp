@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
         }
         std::cout << "Saving file: " << filename << "\n";
-        char buffer[1024*8];
+        char buffer[(1024*8)+1];
         memset(buffer, 0, sizeof(buffer));
         while(1) {
             ssize_t len = sock.receive(buffer, 1024*8);
