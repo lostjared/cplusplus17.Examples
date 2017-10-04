@@ -1,0 +1,12 @@
+CXX=clang++-5.0
+CXXFLAGS=-std=c++17
+
+PRIMEN=primen
+
+all: $(PRIMEN)
+
+$(PRIMEN): $(PRIMEN).cpp
+	$(CXX) $(CXXFLAGS) $(PRIMEN).cpp -o $(PRIMEN)
+clean:
+	rm -f $(PRIMEN)
+
