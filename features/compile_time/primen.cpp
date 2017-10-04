@@ -8,20 +8,18 @@ constexpr bool is_Prime(unsigned int p) {
     return p > 1;
 }
 
-// calculate at run time whether 9 is prime or not
-constexpr bool ninePrime = is_Prime(9);
-
-
 template<int N, bool = is_Prime(N)>
-struct Prime;
+class Prime;
 
 template<int N>
-struct Prime<N, false> {
+class Prime<N, false> {
+public:
     void print() { std::cout << "Value: " << N << " is not Prime..\n"; }
 };
 
 template<int N>
-struct Prime<N, true> {
+class Prime<N, true> {
+public:
     void print() { std::cout << "Value: " << N << " is prime..\n"; }
 };
 
