@@ -2,11 +2,15 @@ CXX=clang++-5.0
 CXXFLAGS=-std=c++17
 
 PRIMEN=primen
+CONSTIF=constexpr_if
 
-all: $(PRIMEN)
+all: $(PRIMEN) $(CONSTIF)
 
 $(PRIMEN): $(PRIMEN).cpp
 	$(CXX) $(CXXFLAGS) $(PRIMEN).cpp -o $(PRIMEN)
+
+$(CONSTIF): $(CONSTIF).cpp
+	$(CXX) $(CXXFLAGS) $(CONSTIF).cpp -o $(CONSTIF)
 clean:
-	rm -f $(PRIMEN)
+	rm -f $(PRIMEN) $(CONSTIF)
 
