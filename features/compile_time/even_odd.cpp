@@ -1,6 +1,5 @@
 #include<iostream>
 
-
 constexpr bool isEven(unsigned int n) {
     if((n%2)==0) return true;
     return false;
@@ -24,20 +23,20 @@ public:
     static constexpr unsigned int value = N;
 };
 
-template<bool value, int N>
+template<bool value>
 class Output {
 public:
     void output() {
         if(value == true) {
-            std::cout << "Value: " << N << " is even.\n";
+            std::cout << "Value is even.\n";
         } else {
-            std::cout << "Value: " << N << " is odd.\n";
+            std::cout << "Value is odd.\n";
         }
     }
 };
 
-Output<Even<1>::even, Even<1>::value> output1;
-Output<Even<2>::even, Even<2>::value> output2;
+Output<Even<1>::even> output1;
+Output<Even<2>::even> output2;
 
 int main() {
     output1.output();
