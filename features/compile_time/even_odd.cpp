@@ -1,4 +1,6 @@
 #include<iostream>
+#include<utility>
+#include<type_traits>
 
 constexpr bool isEven(unsigned int n) {
     if((n%2)==0) return true;
@@ -35,8 +37,25 @@ public:
     }
 };
 
+
+// program will generate a error at compile time
+// if you try to pass EvenNumber an odd number
+template<int N>
+using enable_even = std::enable_if_t<Even<N>::even>;
+
+template<int N, typename = enable_even<N>>
+class EvenNumber {
+public:
+    void printValue() {
+        std::cout << "Value is: " << N << "\n";
+    }
+    
+};
+
 Output<Even<1>::even> output1;
 Output<Even<2>::even> output2;
+EvenNumber<10> even;
+//EvenNumber<7> odd; // error is odd so not found
 
 int main() {
     output1.output();
