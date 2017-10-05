@@ -1,10 +1,16 @@
+/* Source file shows a few ways
+   you can use a compile time check to ensure
+   a value is even versus odd.
+ 
+   - Jared Bruni
+*/
+
 #include<iostream>
 #include<utility>
 #include<type_traits>
 
 constexpr bool isEven(unsigned int n) {
-    if((n%2)==0) return true;
-    return false;
+    return ((n%2)==0) ? true : false;
 }
 
 template<int N, bool = isEven(N)>
@@ -25,6 +31,7 @@ public:
     static constexpr unsigned int value = N;
 };
 
+// will cause a error if value is false
 template<bool value>
 class Output {
 public:
@@ -51,6 +58,12 @@ public:
     }
 };
 
+template<int N>
+class testIfEven {
+public:
+    static_assert(isEven(N)==true, "Value is odd");
+};
+
 Output<Even<6>::even> output1;
 Output<Even<2>::even> output2;
 EvenNumber<10> even;
@@ -60,5 +73,7 @@ int main() {
     //Output<Even<3>::even> output3; // will cause compile error because of static assert
     output1.output();
     output2.output();
+    even.printValue();
+    //testIfEven<9> value; // will cause an error if passed an odd number
     return 0;
 }
