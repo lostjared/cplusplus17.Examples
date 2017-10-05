@@ -42,5 +42,7 @@ int main() {
         if(is_Prime(i)==true)
             std::cout << i << " is prime.\n";
     }
+    Prime<13> prime;
+    prime.print();
     return 0;
 }
