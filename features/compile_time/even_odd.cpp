@@ -28,6 +28,7 @@ public:
 template<bool value>
 class Output {
 public:
+    static_assert((value==true),"value is odd");
     void output() {
         if(value == true) {
             std::cout << "Value is even.\n";
@@ -36,7 +37,6 @@ public:
         }
     }
 };
-
 
 // program will generate a error at compile time
 // if you try to pass EvenNumber an odd number
@@ -49,15 +49,15 @@ public:
     void printValue() {
         std::cout << "Value is: " << N << "\n";
     }
-    
 };
 
-Output<Even<1>::even> output1;
+Output<Even<6>::even> output1;
 Output<Even<2>::even> output2;
 EvenNumber<10> even;
 //EvenNumber<7> odd; // error is odd so not found
 
 int main() {
+    //Output<Even<3>::even> output3; // will cause compile error because of static assert
     output1.output();
     output2.output();
     return 0;
