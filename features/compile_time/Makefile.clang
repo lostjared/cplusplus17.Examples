@@ -4,8 +4,9 @@ CXXFLAGS=-std=c++17
 PRIMEN=primen
 CONSTIF=constexpr_if
 EVENODD=even_odd
+PRIME_TEST=prime_test
 
-all: $(PRIMEN) $(CONSTIF) $(EVENODD)
+all: $(PRIMEN) $(CONSTIF) $(EVENODD) $(PRIME_TEST)
 
 $(PRIMEN): $(PRIMEN).cpp
 	$(CXX) $(CXXFLAGS) $(PRIMEN).cpp -o $(PRIMEN)
@@ -16,6 +17,9 @@ $(CONSTIF): $(CONSTIF).cpp
 $(EVENODD): $(EVENODD).cpp
 	$(CXX) $(CXXFLAGS) $(EVENODD).cpp -o $(EVENODD)
 
+$(PRIME_TEST): $(PRIME_TEST).cpp
+	$(CXX) $(CXXFLAGS) $(PRIME_TEST).cpp -o $(PRIME_TEST)
+
 clean:
-	rm -f $(PRIMEN) $(CONSTIF) $(EVENODD)
+	rm -f $(PRIMEN) $(CONSTIF) $(EVENODD) $(PRIME_TEST)
 
