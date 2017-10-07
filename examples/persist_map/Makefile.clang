@@ -1,0 +1,13 @@
+CXX=clang++-5.0
+CXX_FLAGS= -std=c++17
+
+PERMAP=persist_map
+
+all: $(PERMAP)
+
+$(PERMAP): $(PERMAP).cpp permap.hpp
+	$(CXX) $(CXX_FLAGS) $(PERMAP).cpp -o $(PERMAP)
+clean:
+	rm -f $(PERMAP)
+
+
