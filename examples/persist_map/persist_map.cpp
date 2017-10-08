@@ -2,7 +2,8 @@
 #include<algorithm>
 
 int main() {
-    PersistMap<std::string> string_data("data.txt", [](std::fstream &file, std::string &val) {
+    
+    persist::PersistMap<std::string> string_data("data.txt", [](std::fstream &file, std::string &val) {
         unsigned int value;
         file.read(reinterpret_cast<char*>(&value), sizeof(value));
         char *buf = new char[value+1];
@@ -26,7 +27,8 @@ int main() {
     	std::getline(std::cin, key_value);
         string_data[key_text] = key_value;
         for (auto i = string_data->begin(); i != string_data->end(); ++i) {
-            std::cout << i->first << " = " << i->second << "\n";
+            auto [s_key, s_value] = *i;
+            std::cout << s_key << " = " << s_value << "\n";
         }
     }
     return 0;
