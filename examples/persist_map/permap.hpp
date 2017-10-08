@@ -30,13 +30,18 @@ namespace persist {
         
         PersistMap<T> &operator=(const PersistMap<T> &p);
         PersistMap<T> &operator=(PersistMap<T> &&p);
+        PersistMap<T> &operator<<(const PersistMap<T> &p);
+
         
         void WriteMap();
         void ReadMap();
+        void EraseFile();
         T &operator[](const std::string &pos);
         void set(std::string key, const T &type);
         T &get(std::string key);
+        void concat(const PersistMap<T> &p);
         std::unordered_map<std::string, T> *operator->();
+        std::unordered_map<std::string, T> *Map();
     private:
         std::unordered_map<std::string, T> map_;
         Read read_;
@@ -84,6 +89,14 @@ namespace persist {
         return *this;
     }
     
+    template<typename T>
+    PersistMap<T> &PersistMap<T>::operator<<(const PersistMap<T> &p) {
+        for(auto i = p.map_.begin(); i != p.map_.end(); ++i) {
+            auto [key,value] = *i;
+            map_[key] = value;
+        }
+        return *this;
+    }
     
     template<typename T>
     T &PersistMap<T>::operator[](const std::string &pos) {
@@ -136,7 +149,20 @@ namespace persist {
     }
     
     template<typename T>
+    void PersistMap<T>::EraseFile() {
+        std::fstream file;
+        file.open(filename, std::ios::out);
+        file.close();
+        map_.erase(map_.begin(), map_.end());
+    }
+    
+    template<typename T>
     std::unordered_map<std::string, T> *PersistMap<T>::operator->() {
+        return &map_;
+    }
+    
+    template<typename T>
+    std::unordered_map<std::string, T> *PersistMap<T>::Map() {
         return &map_;
     }
     
@@ -147,6 +173,10 @@ namespace persist {
     template<typename T>
     T &PersistMap<T>::get(std::string key) {
         return map_[key];
+    }
+    template<typename T>
+    void PersistMap<T>::concat(const PersistMap<T> &p) {
+        this->operator<<(p);
     }
 }
 

@@ -1,3 +1,6 @@
+// Enter quit for the requested key to quit program
+// Enter erase to erase file/map
+
 #include"permap.hpp"
 #include<algorithm>
 #include<cstdlib>
@@ -9,6 +12,11 @@ int main() {
         std::cout << "Enter key: ";
         std::getline(std::cin, key);
         if(key == "quit") break;
+        if(key == "erase") {
+            int_map.EraseFile();
+            std::cout << "Erased..\n";
+            continue;
+        }
         std::cout << "Enter value: ";
         std::getline(std::cin, value);
         int_map[key] = atoi(value.c_str());

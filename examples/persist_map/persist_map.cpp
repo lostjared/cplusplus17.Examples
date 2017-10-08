@@ -1,3 +1,5 @@
+// Enter quit for the requested key to quit program
+
 #include "permap.hpp"
 #include<algorithm>
 
