@@ -102,7 +102,8 @@ void PersistMap<T>::ReadMap() {
         delete [] buf;
         T type;
         read_(file,type);
-        map_[key] = type;
+        if(key.length()>0)
+        	map_[key] = type;
     }
     file.close();
 }
