@@ -91,10 +91,7 @@ namespace persist {
     
     template<typename T>
     PersistMap<T> &PersistMap<T>::operator<<(const PersistMap<T> &p) {
-        for(auto i = p.map_.begin(); i != p.map_.end(); ++i) {
-            auto [key,value] = *i;
-            map_[key] = value;
-        }
+        concat(p);
         return *this;
     }
     
@@ -176,7 +173,10 @@ namespace persist {
     }
     template<typename T>
     void PersistMap<T>::concat(const PersistMap<T> &p) {
-        this->operator<<(p);
+        for(auto i = p.map_.begin(); i != p.map_.end(); ++i) {
+            auto [key,value] = *i;
+            map_[key] = value;
+        }
     }
 }
 
