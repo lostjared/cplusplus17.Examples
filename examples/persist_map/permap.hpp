@@ -32,10 +32,12 @@ namespace persist {
         PersistMap<T> &operator=(PersistMap<T> &&p);
         PersistMap<T> &operator<<(const PersistMap<T> &p);
 
+
         
         void WriteMap();
         void ReadMap();
         void EraseFile();
+        bool key_exisits(const std::string &text);
         T &operator[](const std::string &pos);
         void set(std::string key, const T &type);
         T &get(std::string key);
@@ -100,8 +102,6 @@ namespace persist {
         return map_[pos];
     }
     
-    
-    
     template<typename T>
     void PersistMap<T>::WriteMap() {
         std::cout << "Writing to disk...\n";
@@ -151,6 +151,12 @@ namespace persist {
         file.open(filename, std::ios::out);
         file.close();
         map_.erase(map_.begin(), map_.end());
+    }
+    template<typename T>
+    bool PersistMap<T>::key_exisits(const std::string &text) {
+        auto index = map_.find(text);
+        if(index == map_.end()) return false;
+        return true;
     }
     
     template<typename T>
