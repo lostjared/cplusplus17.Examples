@@ -27,13 +27,9 @@ namespace persist {
         typedef void (*Read)(std::fstream &file, T &type);
         typedef void (*Write)(std::fstream &file, const T &type);
         PersistMap(std::string filename, Read re, Write wr);
-        
         PersistMap<T> &operator=(const PersistMap<T> &p);
         PersistMap<T> &operator=(PersistMap<T> &&p);
         PersistMap<T> &operator<<(const PersistMap<T> &p);
-
-
-        
         void WriteMap();
         void ReadMap();
         void EraseFile();
