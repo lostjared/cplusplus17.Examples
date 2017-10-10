@@ -1,0 +1,12 @@
+CXX=clang++-5.0
+CXX_FLAGS= -std=c++17
+
+INV_T=invoke_test
+
+all: $(INV_T)
+
+$(INV_T): $(INV_T).cpp
+	$(CXX) $(CXX_FLAGS) $(INV_T).cpp -o $(INV_T)
+clean:
+	rm -f $(INV_T)
+
