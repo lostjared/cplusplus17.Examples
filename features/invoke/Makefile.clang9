@@ -1,5 +1,5 @@
-CXX=clang++-5.0
-CXX_FLAGS= -std=c++17 -Dinvoke=__invoke
+CXX=clang++
+CXX_FLAGS= -std=c++1z
 
 INV_T=invoke_test
 
