@@ -1,7 +1,7 @@
 
 // for some reason on clang++-5.0 library invoke is declared __invoke
-// comment this out if using a new/other compiler with correct name
-#define invoke __invoke
+// uncomment below if using a clang++-5.0 for Linux
+//#define invoke __invoke
 
 // invoke will allow you to use different types to be called including, function, function pointer
 // functor or member function pointer
