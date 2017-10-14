@@ -1,0 +1,22 @@
+CXX=clang++
+CXX_FLAGS= -std=c++1z
+
+PERMAP=persist_map
+PERMAP_INT=persist_map_int
+PERCAT=persist_concat
+PERSTRUCT=persist_struct
+
+all: $(PERMAP) $(PERMAP_INT) $(PERCAT) $(PERSTRUCT)
+
+$(PERMAP): $(PERMAP).cpp permap.hpp
+	$(CXX) $(CXX_FLAGS) $(PERMAP).cpp -o $(PERMAP)
+$(PERMAP_INT): $(PERMAP_INT).cpp permap.hpp
+	$(CXX) $(CXX_FLAGS) $(PERMAP_INT).cpp -o $(PERMAP_INT)
+$(PERCAT): $(PERCAT).cpp permap.hpp
+	$(CXX) $(CXX_FLAGS) $(PERCAT).cpp -o $(PERCAT)
+$(PERSTRUCT): $(PERSTRUCT).cpp permap.hpp
+	$(CXX) $(CXX_FLAGS) $(PERSTRUCT).cpp -o $(PERSTRUCT)
+clean:
+	rm -f $(PERMAP) $(PERMAP_INT) $(PERCAT) $(PERSTRUCT)
+
+
