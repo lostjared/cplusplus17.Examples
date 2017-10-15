@@ -1,5 +1,4 @@
 #include<iostream>
-#include<vector>
 
 int main() {
     enum class Option { OP_1, OP_2, OP_3 };
