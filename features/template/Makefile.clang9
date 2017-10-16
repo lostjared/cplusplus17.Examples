@@ -1,5 +1,5 @@
-CXX=clang++-5.0
-CXX_FLAGS=-std=c++17
+CXX=clang++
+CXX_FLAGS=-std=c++1z
 
 TEMP_STACK=template_stack
 ARRAY_C=array_cast
