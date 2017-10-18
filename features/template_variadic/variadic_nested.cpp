@@ -26,11 +26,16 @@ public:
             TestOutput(args...);
             TestOutput(argx...);
         }
+        void PrintValues() {
+            std::cout << sizeof...(args) << " arguments.\n";
+            TestOutput(args...);
+        }
     };
 };
 
 int main() {
     Outer<int, char, int>::Inner<10, 'a', 25> c;
     c.PrintValues(12, 'b', 26);
+    c.PrintValues();
     return 0;
 }
