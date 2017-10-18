@@ -7,8 +7,9 @@ TEMP_FOLD=variadic_fold
 TEMP_INDI=variadic_indices
 TEMP_SIZE=variadic_sizeof
 TEMP_CON=variadic_construct
+TEMP_NEST=variadic_nested
 
-all: $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI) $(TEMP_SIZE) $(TEMP_CON)
+all: $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI) $(TEMP_SIZE) $(TEMP_CON) $(TEMP_NEST)
 
 $(TEMP_FUNC): $(TEMP_FUNC).cpp
 	$(CXX) $(CXX_FLAGS) $(TEMP_FUNC).cpp -o $(TEMP_FUNC)
@@ -22,6 +23,8 @@ $(TEMP_SIZE): $(TEMP_SIZE).cpp
 	$(CXX) $(CXX_FLAGS) $(TEMP_SIZE).cpp -o $(TEMP_SIZE)
 $(TEMP_CON): $(TEMP_CON).cpp
 	$(CXX) $(CXX_FLAGS) $(TEMP_CON).cpp -o $(TEMP_CON)
+$(TEMP_NEST): $(TEMP_NEST).cpp
+	$(CXX) $(CXX_FLAGS) $(TEMP_NEST).cpp -o $(TEMP_NEST)
 clean:
-	rm -f $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI) $(TEMP_SIZE) $(TEMP_CON)
+	rm -f $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI) $(TEMP_SIZE) $(TEMP_CON) $(TEMP_NEST)
 
