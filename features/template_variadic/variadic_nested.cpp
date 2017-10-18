@@ -23,7 +23,6 @@ public:
         }
         void PrintValues(Args... argx) {
             std::cout << sizeof...(argx) << " arguments.\n";
-            TestOutput(args...);
             TestOutput(argx...);
         }
         void PrintValues() {
