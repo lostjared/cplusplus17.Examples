@@ -30,7 +30,7 @@ int main() {
                 std::getline(std::cin, first);
                 std::cout << "Enter last name (50 char max): ";
                 std::getline(std::cin, last);
-                if(first.length()>49||first.length()>49) {
+                if(first.length()>49||last.length()>49) {
                     std::cout << "Error: name to long..\n";
                     continue;
                 }

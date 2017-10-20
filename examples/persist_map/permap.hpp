@@ -148,7 +148,7 @@ namespace persist {
         }
         std::cout << "Reading from disk...\n";
         while(!file.eof()) {
-            std::string key;6
+            std::string key;
             unsigned int value = 0;
             file.read(reinterpret_cast<char*>(&value), sizeof(value));
             char *buf = new char[value+1];
