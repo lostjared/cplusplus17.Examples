@@ -19,7 +19,7 @@ int main() {
     
     while(active) {
         std::string item;
-        std::cout << "1) Add User 2) Print User 3) Print Users 4) Remove User 5) Exit\n";
+        std::cout << "1) Add User 2) Print User 3) Print Users 4) Remove User 5) Clear File 6) Exit\n";
         std::cout << "Enter Choice: ";
         std::getline(std::cin, item);
         switch(atoi(item.c_str())) {
@@ -86,6 +86,10 @@ int main() {
             }
                 break;
             case 5:
+                user_db.EraseFile();
+                std::cout << "Erased..\n";
+                break;
+            case 6:
                 active = false;
                 break;
             default:

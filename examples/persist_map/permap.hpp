@@ -165,10 +165,8 @@ namespace persist {
     
     template<typename T>
     void PersistMap<T>::EraseFile() {
-        std::fstream file;
-        file.open(filename, std::ios::out);
-        file.close();
         map_.erase(map_.begin(), map_.end());
+        WriteMap();
     }
     template<typename T>
     bool PersistMap<T>::key_exisits(const std::string &text) {
