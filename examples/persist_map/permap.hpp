@@ -39,36 +39,46 @@ namespace persist {
         file.write(type.c_str(), len);
     }
     
+    // Persistent Hash Table
     template<typename T>
     class PersistMap {
     public:
+        // the Read/Write functions for T
         using Read = void (*)(std::fstream &file, T &type);
         using Write = void (*)(std::fstream &file, const T &type);
+        // default constructor not available
         PersistMap() = delete;
         PersistMap(const PersistMap<T> &p);
         PersistMap(PersistMap<T> &&p);
         ~PersistMap();
+        // Constructor pass filename for file, Read/Write functions for T
         PersistMap(std::string filename, Read re, Write wr);
+        // overloaded operators
         PersistMap<T> &operator=(const PersistMap<T> &p);
         PersistMap<T> &operator=(PersistMap<T> &&p);
         PersistMap<T> &operator<<(const PersistMap<T> &p);
+        // File stuff Read/Write Map / Erase File
         void WriteMap();
         void ReadMap();
         void EraseFile();
+        // does a given key exisit?
         bool key_exisits(const std::string &text);
+        // [] overlaoded operator for accessing data by key
         T &operator[](const std::string &pos);
+        // set/get functions
         void set(std::string key, const T &type);
         T &get(std::string key);
+        // concat merge map of same type
         void concat(const PersistMap<T> &p);
+        // overloaded -> operator for accessing unordered_map
         std::unordered_map<std::string, T> *operator->();
         std::unordered_map<std::string, T> *Map();
     private:
-        std::unordered_map<std::string, T> map_;
+        std::unordered_map<std::string, T> map_; // the map
         Read read_;
         Write write_;
-        std::string filename;
+        std::string filename; // filename
     };
-    
     
     template<typename T>
     PersistMap<T>::PersistMap(const PersistMap<T> &p) : map_(p.map_), read_(p.read_), write_(p.write_), filename(p.filename) {
