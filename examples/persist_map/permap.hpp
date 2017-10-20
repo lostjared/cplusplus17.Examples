@@ -140,14 +140,15 @@ namespace persist {
     }
     template<typename T>
     void PersistMap<T>::ReadMap() {
-        std::cout << "Reading from disk...\n";
-        std::fstream file;
+         std::fstream file;
         file.open(filename, std::ios::in | std::ios::binary);
         if(!file.is_open()) {
+            std::cout << "New file...\n";
             return;
         }
+        std::cout << "Reading from disk...\n";
         while(!file.eof()) {
-            std::string key;
+            std::string key;6
             unsigned int value = 0;
             file.read(reinterpret_cast<char*>(&value), sizeof(value));
             char *buf = new char[value+1];
