@@ -42,12 +42,12 @@ namespace persist {
     template<typename T>
     class PersistMap {
     public:
+        using Read = void (*)(std::fstream &file, T &type);
+        using Write = void (*)(std::fstream &file, const T &type);
         PersistMap() = delete;
         PersistMap(const PersistMap<T> &p);
         PersistMap(PersistMap<T> &&p);
         ~PersistMap();
-        typedef void (*Read)(std::fstream &file, T &type);
-        typedef void (*Write)(std::fstream &file, const T &type);
         PersistMap(std::string filename, Read re, Write wr);
         PersistMap<T> &operator=(const PersistMap<T> &p);
         PersistMap<T> &operator=(PersistMap<T> &&p);
