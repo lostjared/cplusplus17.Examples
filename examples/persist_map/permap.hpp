@@ -8,13 +8,35 @@
 
 namespace persist {
     
+    // for generic read for built in types/structs
     template<typename T>
     void GenericRead(std::fstream &file, T &type) {
         file.read(reinterpret_cast<char*>(&type), sizeof(type));
     }
+    // for generic write for built in types/structs
     template<typename T>
     void GenericWrite(std::fstream &file, const T &type) {
         file.write(reinterpret_cast<const char*>(&type), sizeof(type));
+    }
+    // read of string class
+    void StringRead(std::fstream &file, std::string &type) {
+        unsigned int len = 0;
+        file.read(reinterpret_cast<char*>(&len), sizeof(len));
+        if(len > 0) {
+        	char *buf = new char [len+1];
+            file.read(buf, len);
+            buf[len] = 0;
+            type = buf;
+            delete [] buf;
+        } else {
+            std::cerr << "Error on string read..\n";
+        }
+    }
+    // write of string class
+    void StringWrite(std::fstream &file, const std::string &type) {
+        unsigned int len = type.length();
+        file.write(reinterpret_cast<char*>(&len), sizeof(len));
+        file.write(type.c_str(), len);
     }
     
     template<typename T>
