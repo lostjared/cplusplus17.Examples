@@ -8,8 +8,10 @@ TEMP_INDI=variadic_indices
 TEMP_SIZE=variadic_sizeof
 TEMP_CON=variadic_construct
 TEMP_NEST=variadic_nested
+TEMP_VEC=variadic_vec_fold
 
-all: $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI) $(TEMP_SIZE) $(TEMP_CON) $(TEMP_NEST)
+
+all: $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI) $(TEMP_SIZE) $(TEMP_CON) $(TEMP_NEST) $(TEMP_VEC)
 
 $(TEMP_FUNC): $(TEMP_FUNC).cpp
 	$(CXX) $(CXX_FLAGS) $(TEMP_FUNC).cpp -o $(TEMP_FUNC)
@@ -25,6 +27,9 @@ $(TEMP_CON): $(TEMP_CON).cpp
 	$(CXX) $(CXX_FLAGS) $(TEMP_CON).cpp -o $(TEMP_CON)
 $(TEMP_NEST): $(TEMP_NEST).cpp
 	$(CXX) $(CXX_FLAGS) $(TEMP_NEST).cpp -o $(TEMP_NEST)
+$(TEMP_VEC): $(TEMP_VEC).cpp
+	$(CXX) $(CXX_FLAGS) $(TEMP_VEC).cpp -o $(TEMP_VEC)
+
 clean:
-	rm -f $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI) $(TEMP_SIZE) $(TEMP_CON) $(TEMP_NEST)
+	rm -f $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI) $(TEMP_SIZE) $(TEMP_CON) $(TEMP_NEST) $(TEMP_VEC)
 
