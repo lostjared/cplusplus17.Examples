@@ -3,12 +3,17 @@
 #include<algorithm>
 #include<cstdlib>
 #include<cstring>
+#include<vector>
+
 
 struct User {
     char first[50];
     char last[50];
-    unsigned int id;
+    char id[50];
 };
+
+void printSorted(persist::PersistMap<User> &u);
+std::ostream &operator<<(std::ostream &out, const User &u);
 
 int main() {
     
@@ -19,7 +24,7 @@ int main() {
     
     while(active) {
         std::string item;
-        std::cout << "1) Add User 2) Print User 3) Print Users 4) Remove User 5) Clear File 6) Exit\n";
+        std::cout << "1) Add User 2) Print User 3) Print Users Sorted 4) Remove User 5) Clear File 6) Exit\n";
         std::cout << "Enter Choice: ";
         std::getline(std::cin, item);
         switch(atoi(item.c_str())) {
@@ -34,15 +39,13 @@ int main() {
                     std::cout << "Error: name to long..\n";
                     continue;
                 }
-                sprintf(u.first, "%s", first.c_str());
-                sprintf(u.last, "%s", last.c_str());
+                snprintf(u.first, 50, "%s", first.c_str());
+                snprintf(u.last, 50, "%s", last.c_str());
                 std::string id;
                 std::cout << "Enter user ID: ";
                 std::getline(std::cin, id);
-                int i = atoi(id.c_str());
-                if(i > 0) {
-                    user_db[id] = u;
-                }
+                snprintf(u.id, 50, "%s", id.c_str());
+                user_db[id] = u;
             }
                 break;
             case 2: {
@@ -63,13 +66,7 @@ int main() {
             }
                 break;
             case 3: {
-                for(auto i = user_db->begin(); i != user_db->end(); ++i) {
-                    auto [key,value] = *i;
-                    std::cout << "-------------------------------\n";
-                    std::cout << "User ID: " << key << "\n";
-                    std::cout << "Name: " << value.last << ", " << value.first << "\n";
-                    std::cout << "-------------------------------\n";
-                }
+                printSorted(user_db);
             }
                 break;
             case 4: {
@@ -100,4 +97,23 @@ int main() {
     
     
     return 0;
+}
+
+void printSorted(persist::PersistMap<User> &u) {
+    std::vector<std::string> keys;
+    for(auto i = u->begin(); i != u->end(); ++i) {
+        keys.push_back(i->first);
+    }
+    std::sort(keys.begin(), keys.end());
+    for(unsigned int q = 0; q < keys.size(); ++q) {
+        std::cout << u[keys[q]] << "\n";
+    }
+}
+
+std::ostream &operator<<(std::ostream &out, const User &value) {
+    out << "-------------------------------\n";
+    out << "User ID: " << value.id << "\n";
+    out << "Name: " << value.last << ", " << value.first << "\n";
+    out << "-------------------------------\n";
+    return out;
 }
