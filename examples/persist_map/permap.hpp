@@ -5,6 +5,8 @@
 #include<string>
 #include<unordered_map>
 #include<fstream>
+#include<algorithm>
+#include<vector>
 
 namespace persist {
     
@@ -63,6 +65,7 @@ namespace persist {
         void EraseFile();
         // does a given key exisit?
         bool key_exisits(const std::string &text);
+        void GetSortedKeys(std::vector<std::string> &v);
         // [] overlaoded operator for accessing data by key
         T &operator[](const std::string &pos);
         // set/get functions
@@ -179,6 +182,15 @@ namespace persist {
         map_.erase(map_.begin(), map_.end());
         WriteMap();
     }
+    
+    template<typename T>
+    void PersistMap<T>::GetSortedKeys(std::vector<std::string> &v) {
+        for(auto i = map_.begin(), e = map_.end(); i != e; i++) {
+            v.push_back(i->first);
+        }
+        std::sort(v.begin(), v.end());
+    }
+    
     template<typename T>
     bool PersistMap<T>::key_exisits(const std::string &text) {
         auto index = map_.find(text);

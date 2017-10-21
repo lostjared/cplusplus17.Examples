@@ -101,10 +101,7 @@ int main() {
 
 void printSorted(persist::PersistMap<User> &u) {
     std::vector<std::string> keys;
-    for(auto i = u->begin(); i != u->end(); ++i) {
-        keys.push_back(i->first);
-    }
-    std::sort(keys.begin(), keys.end());
+    u.GetSortedKeys(keys);
     for(unsigned int q = 0; q < keys.size(); ++q) {
         std::cout << u[keys[q]] << "\n";
     }
