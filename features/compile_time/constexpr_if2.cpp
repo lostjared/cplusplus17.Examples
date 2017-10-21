@@ -22,7 +22,20 @@ public:
     }
 };
 
+template<int val>
+class Y {
+public:
+    void test() {
+        if constexpr(val == 55) {
+            std::cout << "This code is generated only when val is equal to 55\n";
+        } else {
+            std::cout << "Otherwise this code is generated..\n";
+        }
+    }
+};
+
 int main() {
+    // some different tests
     Only64<unsigned int>(10);
     Only64<unsigned long>(10);
     X<int> x;
@@ -33,5 +46,9 @@ int main() {
     x.f(x_x);
     y.f(y_y);
     y.f(x_x);
+    Y<55> y_val;
+    y_val.test();
+    Y<100> y_val2;
+    y_val2.test();
     return 0;
 }
