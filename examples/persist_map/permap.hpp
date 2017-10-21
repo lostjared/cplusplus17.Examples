@@ -63,9 +63,10 @@ namespace persist {
         void WriteMap();
         void ReadMap();
         void EraseFile();
+        bool GetSortedKeys(std::vector<std::string> &v);
         // does a given key exisit?
         bool key_exisits(const std::string &text);
-        void GetSortedKeys(std::vector<std::string> &v);
+        
         // [] overlaoded operator for accessing data by key
         T &operator[](const std::string &pos);
         // set/get functions
@@ -184,11 +185,13 @@ namespace persist {
     }
     
     template<typename T>
-    void PersistMap<T>::GetSortedKeys(std::vector<std::string> &v) {
+    bool PersistMap<T>::GetSortedKeys(std::vector<std::string> &v) {
+        if(map_.empty()) return false;
         for(auto i = map_.begin(), e = map_.end(); i != e; i++) {
             v.push_back(i->first);
         }
         std::sort(v.begin(), v.end());
+        return true;
     }
     
     template<typename T>
