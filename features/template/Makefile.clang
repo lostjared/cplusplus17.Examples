@@ -4,8 +4,9 @@ CXX_FLAGS=-std=c++17
 TEMP_STACK=template_stack
 ARRAY_C=array_cast
 FOR_E=for_each
+VAR_TEMP=variable_template
 
-all: $(TEMP_STACK) $(ARRAY_C) $(FOR_E)
+all: $(TEMP_STACK) $(ARRAY_C) $(FOR_E) $(VAR_TEMP)
 
 $(FOR_E): $(FOR_E).cpp
 	$(CXX) $(CXX_FLAGS) $(FOR_E).cpp -o $(FOR_E)
@@ -15,6 +16,8 @@ $(TEMP_STACK): $(TEMP_STACK).cpp
 
 $(ARRAY_C): $(ARRAY_C).cpp
 	$(CXX) $(CXX_FLAGS) $(ARRAY_C).cpp -o $(ARRAY_C)
+$(VAR_TEMP): $(VAR_TEMP).cpp
+	$(CXX) $(CXX_FLAGS) $(VAR_TEMP).cpp -o $(VAR_TEMP)
 clean:
-	rm -f $(TEMP_STACK) $(ARRAY_C) $(FOR_E)
+	rm -f $(TEMP_STACK) $(ARRAY_C) $(FOR_E) $(VAR_TEMP)
 
