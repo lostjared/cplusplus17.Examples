@@ -1,5 +1,5 @@
-CXX=clang++-5.0
-CXXFLAGS=-std=c++17
+CXX=clang++
+CXXFLAGS=-std=c++1z
 
 PRIMEN=primen
 CONSTIF=constexpr_if
