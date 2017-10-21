@@ -99,9 +99,10 @@ int main() {
 
 void printSorted(persist::PersistMap<User> &u) {
     std::vector<std::string> keys;
-    u.GetSortedKeys(keys);
-    for(unsigned int q = 0; q < keys.size(); ++q) {
-        std::cout << u[keys[q]] << "\n";
+    if(u.GetSortedKeys(keys)) {
+        for(unsigned int q = 0; q < keys.size(); ++q) {
+            std::cout << u[keys[q]] << "\n";
+        }
     }
 }
 
