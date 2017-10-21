@@ -14,7 +14,7 @@ class X {
 public:
     template<typename T2>
     void f(T2 t) {
-        if(sizeof(t) == sizeof(T)) {
+        if constexpr(sizeof(t) == sizeof(T)) {
             std::cout << "Same size...\n";
         } else {
             std::cout << "Not equal...\n";
