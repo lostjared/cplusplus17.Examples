@@ -44,6 +44,10 @@ int main() {
                 std::string id;
                 std::cout << "Enter user ID: ";
                 std::getline(std::cin, id);
+                if(id.length()>49) {
+                    std::cout << "ID to long..\n";
+                    continue;
+                }
                 snprintf(u.id, 50, "%s", id.c_str());
                 user_db[id] = u;
             }
@@ -62,7 +66,6 @@ int main() {
                 } else {
                     std::cout << "ID does not exisit.\n";
                 }
-                
             }
                 break;
             case 3: {
