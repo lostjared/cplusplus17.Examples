@@ -6,9 +6,9 @@ ARRAY_C=array_cast
 FOR_E=for_each
 VAR_TEMP=variable_template
 ERARR=erase_arr
+MDIM=multi_dim
 
-
-all: $(TEMP_STACK) $(ARRAY_C) $(FOR_E) $(VAR_TEMP) $(ERARR)
+all: $(TEMP_STACK) $(ARRAY_C) $(FOR_E) $(VAR_TEMP) $(ERARR) $(MDIM)
 
 $(FOR_E): $(FOR_E).cpp
 	$(CXX) $(CXX_FLAGS) $(FOR_E).cpp -o $(FOR_E)
@@ -22,6 +22,8 @@ $(VAR_TEMP): $(VAR_TEMP).cpp
 	$(CXX) $(CXX_FLAGS) $(VAR_TEMP).cpp -o $(VAR_TEMP)
 $(ERARR): $(ERARR).cpp
 	$(CXX) $(CXX_FLAGS) $(ERARR).cpp -o $(ERARR)
+$(MDIM): $(MDIM).cpp
+	$(CXX) $(CXX_FLAGS) $(MDIM).cpp -o $(MDIM)
 clean:
-	rm -f $(TEMP_STACK) $(ARRAY_C) $(FOR_E) $(VAR_TEMP) $(ERARR)
+	rm -f $(TEMP_STACK) $(ARRAY_C) $(FOR_E) $(VAR_TEMP) $(ERARR) $(MDIM)
 
