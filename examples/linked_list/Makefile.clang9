@@ -1,0 +1,8 @@
+CXX=clang++
+CXX_FLAGS=-std=c++1z
+
+list_test: main.cpp linked.hpp
+	$(CXX) $(CXX_FLAGS) main.cpp -o list_test
+clean:
+	rm -f list_test
+

@@ -1,0 +1,8 @@
+CXX=clang++-5.0
+CXX_FLAGS=-std=c++17
+
+list_test: main.cpp
+	$(CXX) $(CXX_FLAGS) main.cpp -o list_test
+clean:
+	rm -f list_test
+
