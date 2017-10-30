@@ -100,7 +100,7 @@ namespace util {
         void PrintList(Node<T> *n) {
             if(n != nullptr)
                 std::cout << "Item: " << n->value << "\n";
-            if(n->next != nullptr)
+            if(n != nullptr && n->next != nullptr)
                 PrintList(n->next);
         }
         
@@ -112,7 +112,7 @@ namespace util {
         Node<T> root;
         
         void release(Node<T> *n) {
-            if(n->next != nullptr)
+            if(n != nullptr && n->next != nullptr)
                 release(n->next);
             
             if(n != nullptr) {
