@@ -51,9 +51,6 @@ namespace util {
             return i->next;
         }
         
-        void release() {
-            release(rootNode());
-        }
 
         bool remove(int index) {
             if(index == 0) {
@@ -107,6 +104,10 @@ namespace util {
                 PrintList(n->next);
         }
         
+        void PrintList() {
+            PrintList(rootNode());
+        }
+        
     private:
         Node<T> root;
         
@@ -117,8 +118,15 @@ namespace util {
             if(n != nullptr) {
                 std::cout << "Deleted: " << n->value << "\n";
                 delete n;
+                n = nullptr;
             }
         }
+        
+        void release() {
+            if(rootNode() != nullptr)
+            	release(rootNode());
+        }
+
     };
     
 }
