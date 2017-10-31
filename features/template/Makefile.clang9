@@ -1,4 +1,4 @@
-CXX=clang++
+CXX=g++
 CXX_FLAGS=-std=c++1z
 
 TEMP_STACK=template_stack
@@ -7,8 +7,9 @@ FOR_E=for_each
 VAR_TEMP=variable_template
 ERARR=erase_arr
 MDIM=multi_dim
+SPEC=specialize
 
-all: $(TEMP_STACK) $(ARRAY_C) $(FOR_E) $(VAR_TEMP) $(ERARR) $(MDIM)
+all: $(TEMP_STACK) $(ARRAY_C) $(FOR_E) $(VAR_TEMP) $(ERARR) $(MDIM) $(SPEC)
 
 $(FOR_E): $(FOR_E).cpp
 	$(CXX) $(CXX_FLAGS) $(FOR_E).cpp -o $(FOR_E)
@@ -24,6 +25,8 @@ $(ERARR): $(ERARR).cpp
 	$(CXX) $(CXX_FLAGS) $(ERARR).cpp -o $(ERARR)
 $(MDIM): $(MDIM).cpp
 	$(CXX) $(CXX_FLAGS) $(MDIM).cpp -o $(MDIM)
+$(SPEC): $(SPEC).cpp
+	$(CXX) $(CXX_FLAGS) $(SPEC).cpp -o $(SPEC)
 clean:
-	rm -f $(TEMP_STACK) $(ARRAY_C) $(FOR_E) $(VAR_TEMP) $(ERARR) $(MDIM)
+	rm -f $(TEMP_STACK) $(ARRAY_C) $(FOR_E) $(VAR_TEMP) $(ERARR) $(MDIM) $(SPEC)
 
