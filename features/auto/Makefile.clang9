@@ -1,0 +1,18 @@
+CXX=g++
+CXX_FLAGS=-std=c++1z
+A_LAMBDA=lambda
+A_AUTO=auto
+A_DECL=decltype
+
+all: $(A_LAMBDA) $(A_AUTO) $(A_DECL)
+
+$(A_LAMBDA): $(A_LAMBDA).cpp
+	$(CXX) $(CXX_FLAGS) $(A_LAMBDA).cpp -o $(A_LAMBDA)
+$(A_AUTO): $(A_AUTO).cpp
+	$(CXX) $(CXX_FLAGS) $(A_AUTO).cpp -o $(A_AUTO)
+$(A_DECL): $(A_DECL).cpp
+	$(CXX) $(CXX_FLAGS) $(A_DECL).cpp -o $(A_DECL)
+
+clean:
+	rm -f $(A_LAMBDA) $(A_AUTO) $(A_DECL)
+
