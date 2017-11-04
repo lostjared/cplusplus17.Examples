@@ -95,7 +95,7 @@ public:
 template<typename T>
 class ValueStreamPolicy {
 public:
-    static auto operation(T start, T val) {
+    static T operation(T start, T val) {
         std::cout << "Stream output: " << val << "\n";
         return start;
     }
