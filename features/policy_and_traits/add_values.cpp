@@ -22,14 +22,14 @@ template<>
 class ValueTraits<int> {
 public:
     using Type = long;
-    static constexpr int zero() { return 0; }
+    static constexpr long zero() { return 0; }
 };
 
 template<>
 class ValueTraits<long> {
 public:
     using Type = long;
-    static constexpr int zero() { return 0; }
+    static constexpr long zero() { return 0; }
 };
 
 template<>
