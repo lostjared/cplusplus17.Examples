@@ -13,8 +13,8 @@ class ValueTraits;
 template<>
 class ValueTraits<char> {
 public:
-    using Type = int;
-    static constexpr int zero() { return 0; }
+    using Type = char;
+    static constexpr char zero() { return 0; }
     
 };
 
