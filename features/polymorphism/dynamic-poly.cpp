@@ -5,7 +5,9 @@ class Life {
 public:
     Life(std::string n) : name(n) {
     }
-    virtual ~Life() = default;
+    virtual ~Life() {
+        std::cout << "Life: " << name << " restarts..\n";
+    }
     virtual void birth() = 0;
     virtual void death() = 0;
     virtual void say(std::string s) = 0;
@@ -21,18 +23,18 @@ public:
     Ape(std::string n) : Life(n) {
         birth();
     }
-    ~Ape() {
+    ~Ape() override {
         death();
     }
-    virtual void birth() override {
+    void birth() override {
         std::cout << "Ape was born...\n";
     }
     
-    virtual void death() override {
+    void death() override {
         std::cout << "Ape died...\n";
     }
     
-    virtual void say(std::string s) override {
+    void say(std::string s) override {
         std::cout << "Ape says: " << s << "\n";
     }
 };
@@ -42,18 +44,18 @@ public:
     Human(std::string n) : Life(n) {
         birth();
     }
-    ~Human() {
+    ~Human() override {
         death();
     }
-    virtual void birth() override {
+    void birth() override {
         std::cout << "Human was born...\n";
     }
     
-    virtual void death() override {
+    void death() override {
         std::cout << "Human died...\n";
     }
     
-    virtual void say(std::string s) override {
+    void say(std::string s) override {
         std::cout << "Human says: " << s << "\n";
     }
 };
@@ -63,16 +65,16 @@ public:
     Alien(std::string n) : Life(n) {
         birth();
     }
-    ~Alien() {
+    ~Alien() override {
         death();
     }
-    virtual void birth() override {
+    void birth() override {
         std::cout << "Alien was born...\n";
     }
-    virtual void death() override {
+    void death() override {
         std::cout << "Alien died...\n";
     }
-    virtual void say(std::string s) override {
+    void say(std::string s) override {
         std::cout << "Alien says: " << s << "\n";
     }
 };
