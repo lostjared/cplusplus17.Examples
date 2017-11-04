@@ -93,7 +93,7 @@ public:
 
 // Output via Stream
 template<typename T>
-class ValueStream {
+class ValueStreamPolicy {
 public:
     static std::string operation(std::string start, std::string val) {
         std::cout << "Stream output: " << val << "\n";
@@ -124,7 +124,7 @@ int main(){
     std::cout << "Ch./ total: " << total << "\n";
     // stream output using different Policy
     using vIt = typename std::vector<std::string>::iterator;
-    procValues<std::string, vIt, ValueStream<std::string>>(string_values.begin(), string_values.end());
+    procValues<std::string, vIt, ValueStreamPolicy<std::string>>(string_values.begin(), string_values.end());
     
     
     return 0;
