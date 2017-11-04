@@ -21,7 +21,7 @@ public:
     Ape(std::string n) : Life(n) {
         birth();
     }
-    virtual ~Ape() {
+    ~Ape() {
         death();
     }
     virtual void birth() override {
@@ -42,7 +42,7 @@ public:
     Human(std::string n) : Life(n) {
         birth();
     }
-    virtual ~Human() {
+    ~Human() {
         death();
     }
     virtual void birth() override {
@@ -63,7 +63,7 @@ public:
     Alien(std::string n) : Life(n) {
         birth();
     }
-    virtual ~Alien() {
+    ~Alien() {
         death();
     }
     virtual void birth() override {
