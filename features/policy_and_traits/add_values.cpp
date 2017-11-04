@@ -123,8 +123,7 @@ int main(){
     int total = procValues<char>(ch_values.begin(), ch_values.end());
     std::cout << "Ch./ total: " << total << "\n";
     // stream output using different Policy
-    using vIt = typename std::vector<std::string>::iterator;
-    procValues<std::string, vIt, ValueStreamPolicy<std::string>>(string_values.begin(), string_values.end());
+    procValues<std::string, typename std::vector<std::string>::iterator, ValueStreamPolicy<std::string>>(string_values.begin(), string_values.end());
     procValues<int, typename std::vector<int>::iterator, ValueStreamPolicy<int>>(values.begin(), values.end());
     
     
