@@ -13,7 +13,7 @@ class ValueTraits;
 template<>
 class ValueTraits<char> {
 public:
-    using Type = char;
+    using Type = int;
     static constexpr char zero() { return 0; }
     
 };
@@ -114,5 +114,8 @@ int main(){
     std::vector<std::string> string_values {"Hello, ", "World!", " with ", " Traits!\n"};
     std::string string_result = addValues<std::string>(string_values.begin(), string_values.end());
     std::cout << "String concat: " << string_result << "\n";
+    std::vector<char> ch_values { 'a', 'z', 'q' };
+    int total = addValues<char>(ch_values.begin(), ch_values.end());
+    std::cout << "Ch total: " << total << "\n";
     return 0;
 }
