@@ -113,7 +113,7 @@ auto procValues(Iter start, Iter stop) {
 }
 
 int main(){
-    std::vector<int> values {5,5,5,5};
+    std::vector<int> values {5,15,25,55};
     long result = procValues<int>(values.begin(), values.end());
     std::cout << "Value: " << result << "\n";
     std::vector<std::string> string_values {"Hello, ", "World!", " with ", " Traits!"};
@@ -125,6 +125,7 @@ int main(){
     // stream output using different Policy
     using vIt = typename std::vector<std::string>::iterator;
     procValues<std::string, vIt, ValueStreamPolicy<std::string>>(string_values.begin(), string_values.end());
+    procValues<int, typename std::vector<int>::iterator, ValueStreamPolicy<int>>(values.begin(), values.end());
     
     
     return 0;
