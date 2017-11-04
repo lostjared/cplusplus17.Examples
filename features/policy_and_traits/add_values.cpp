@@ -52,7 +52,7 @@ class ValueAddPolicy;
 template<>
 class ValueAddPolicy<char> {
 public:
-    static int operation(int start, int val) {
+    static int operation(int start, char val) {
         return (start+val);
     }
 };
