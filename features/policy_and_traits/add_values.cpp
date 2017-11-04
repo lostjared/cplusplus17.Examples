@@ -91,6 +91,11 @@ public:
     }
 };
 
+// define other Policies for different operations
+// ex:
+// template<typename T>
+// class ValueMultPolicy;
+
 template<typename T, typename Iter, typename Policy = ValueAddPolicy<T>>
 auto addValues(Iter start, Iter stop) {
     using Type = typename ValueTraits<T>::Type;
