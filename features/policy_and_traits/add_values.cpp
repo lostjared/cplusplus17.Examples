@@ -91,10 +91,15 @@ public:
     }
 };
 
-// define other Policies for different operations
-// ex:
-// template<typename T>
-// class ValueMultPolicy;
+// Output via Stream
+template<typename T>
+class ValueStream {
+public:
+    static std::string operation(std::string start, std::string val) {
+        std::cout << "Stream output: " << val << "\n";
+        return start;
+    }
+};
 
 template<typename T, typename Iter, typename Policy = ValueAddPolicy<T>>
 auto procValues(Iter start, Iter stop) {
@@ -111,11 +116,19 @@ int main(){
     std::vector<int> values {5,5,5,5};
     long result = procValues<int>(values.begin(), values.end());
     std::cout << "Value: " << result << "\n";
-    std::vector<std::string> string_values {"Hello, ", "World!", " with ", " Traits!\n"};
+    std::vector<std::string> string_values {"Hello, ", "World!", " with ", " Traits!"};
     std::string string_result = procValues<std::string>(string_values.begin(), string_values.end());
     std::cout << "String concat: " << string_result << "\n";
     std::vector<char> ch_values { 'a', 'z', 'q' };
     int total = procValues<char>(ch_values.begin(), ch_values.end());
-    std::cout << "Ch total: " << total << "\n";
+    std::cout << "Ch./ total: " << total << "\n";
+    // stream output using different Policy
+    using vIt = typename std::vector<std::string>::iterator;
+    procValues<std::string, vIt, ValueStream<std::string>>(string_values.begin(), string_values.end());
+    
+    
     return 0;
 }
+
+
+
