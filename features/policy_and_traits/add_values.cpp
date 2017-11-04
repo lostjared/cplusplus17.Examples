@@ -97,7 +97,7 @@ public:
 // class ValueMultPolicy;
 
 template<typename T, typename Iter, typename Policy = ValueAddPolicy<T>>
-auto addValues(Iter start, Iter stop) {
+auto procValues(Iter start, Iter stop) {
     using Type = typename ValueTraits<T>::Type;
     Type type = ValueTraits<T>::zero();
     while(start != stop) {
@@ -109,13 +109,13 @@ auto addValues(Iter start, Iter stop) {
 
 int main(){
     std::vector<int> values {5,5,5,5};
-    long result = addValues<int>(values.begin(), values.end());
+    long result = procValues<int>(values.begin(), values.end());
     std::cout << "Value: " << result << "\n";
     std::vector<std::string> string_values {"Hello, ", "World!", " with ", " Traits!\n"};
-    std::string string_result = addValues<std::string>(string_values.begin(), string_values.end());
+    std::string string_result = procValues<std::string>(string_values.begin(), string_values.end());
     std::cout << "String concat: " << string_result << "\n";
     std::vector<char> ch_values { 'a', 'z', 'q' };
-    int total = addValues<char>(ch_values.begin(), ch_values.end());
+    int total = procValues<char>(ch_values.begin(), ch_values.end());
     std::cout << "Ch total: " << total << "\n";
     return 0;
 }
