@@ -47,56 +47,56 @@ public:
 };
 
 template<typename T>
-class ValuePolicy;
+class ValueAddPolicy;
 
 template<>
-class ValuePolicy<char> {
+class ValueAddPolicy<char> {
 public:
-    static int add(int start, int val) {
+    static int operation(int start, int val) {
         return (start+val);
     }
 };
 
 template<>
-class ValuePolicy<int> {
+class ValueAddPolicy<int> {
 public:
-    static long add(int start, int val) {
+    static long operation(int start, int val) {
         return (start+val);
     }
 };
 
 template<>
-class ValuePolicy<long> {
+class ValueAddPolicy<long> {
 public:
-    static long add(long start, long val) {
+    static long operation(long start, long val) {
         return (start+val);
     }
 };
 
 template<>
-class ValuePolicy<float> {
+class ValueAddPolicy<float> {
 public:
-    static float add(float start, float val) {
+    static float operation(float start, float val) {
         return (start+val);
     }
 };
 
 template<>
-class ValuePolicy<std::string> {
+class ValueAddPolicy<std::string> {
 public:
-    static std::string add(std::string start, std::string val) {
+    static std::string operation(std::string start, std::string val) {
         std::string value = start;
         value += val;
         return value;
     }
 };
 
-template<typename T, typename Iter, typename Policy = ValuePolicy<T>>
+template<typename T, typename Iter, typename Policy = ValueAddPolicy<T>>
 auto addValues(Iter start, Iter stop) {
     using Type = typename ValueTraits<T>::Type;
     Type type = ValueTraits<T>::zero();
     while(start != stop) {
-        type = ValuePolicy<T>::add(type, *start);
+        type = Policy::operation(type, *start);
         start++;
     }
     return type;
