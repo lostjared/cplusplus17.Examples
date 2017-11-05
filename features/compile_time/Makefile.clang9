@@ -1,28 +1,13 @@
-CXX=clang++
-CXXFLAGS=-std=c++1z
+CXX=g++
+CXX_FLAGS= -std=c++1z
 
-PRIMEN=primen
-CONSTIF=constexpr_if
-CONSTIF2=constexpr_if2
-EVENODD=even_odd
-PRIME_TEST=prime_test
+CPP_FILES := $(wildcard *.cpp)
+EXE_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.prog)))
 
-all: $(PRIMEN) $(CONSTIF) $(EVENODD) $(PRIME_TEST) $(CONSTIF2)
+%.prog: %.cpp
+	$(CXX) $(CXX_FLAGS) -o $@ $<
 
-$(PRIMEN): $(PRIMEN).cpp
-	$(CXX) $(CXXFLAGS) $(PRIMEN).cpp -o $(PRIMEN)
-
-$(CONSTIF): $(CONSTIF).cpp
-	$(CXX) $(CXXFLAGS) $(CONSTIF).cpp -o $(CONSTIF)
-
-$(EVENODD): $(EVENODD).cpp
-	$(CXX) $(CXXFLAGS) $(EVENODD).cpp -o $(EVENODD)
-
-$(PRIME_TEST): $(PRIME_TEST).cpp
-	$(CXX) $(CXXFLAGS) $(PRIME_TEST).cpp -o $(PRIME_TEST)
-$(CONSTIF2): $(CONSTIF2).cpp
-	$(CXX) $(CXXFLAGS) $(CONSTIF2).cpp -o $(CONSTIF2)
+all: $(EXE_FILES)
 
 clean:
-	rm -f $(PRIMEN) $(CONSTIF) $(EVENODD) $(PRIME_TEST) $(CONSTIF2)
-
+	rm -f *.prog
