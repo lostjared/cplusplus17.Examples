@@ -1,12 +1,13 @@
-CXX=clang++
+CXX=g++
 CXX_FLAGS= -std=c++1z
 
-INV_T=invoke_test
+CPP_FILES := $(wildcard *.cpp)
+EXE_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.prog)))
 
-all: $(INV_T)
+%.prog: %.cpp
+	$(CXX) $(CXX_FLAGS) -o $@ $<
 
-$(INV_T): $(INV_T).cpp
-	$(CXX) $(CXX_FLAGS) $(INV_T).cpp -o $(INV_T)
+all: $(EXE_FILES)
+
 clean:
-	rm -f $(INV_T)
-
+	rm -f *.prog

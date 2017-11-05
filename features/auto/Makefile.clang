@@ -1,18 +1,13 @@
 CXX=clang++-5.0
-CXX_FLAGS=-std=c++17
-A_LAMBDA=lambda
-A_AUTO=auto
-A_DECL=decltype
+CXX_FLAGS= -std=c++17
 
-all: $(A_LAMBDA) $(A_AUTO) $(A_DECL)
+CPP_FILES := $(wildcard *.cpp)
+EXE_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.prog)))
 
-$(A_LAMBDA): $(A_LAMBDA).cpp
-	$(CXX) $(CXX_FLAGS) $(A_LAMBDA).cpp -o $(A_LAMBDA)
-$(A_AUTO): $(A_AUTO).cpp
-	$(CXX) $(CXX_FLAGS) $(A_AUTO).cpp -o $(A_AUTO)
-$(A_DECL): $(A_DECL).cpp
-	$(CXX) $(CXX_FLAGS) $(A_DECL).cpp -o $(A_DECL)
+%.prog: %.cpp
+	$(CXX) $(CXX_FLAGS) -o $@ $<
+
+all: $(EXE_FILES)
 
 clean:
-	rm -f $(A_LAMBDA) $(A_AUTO) $(A_DECL)
-
+	rm -f *.prog

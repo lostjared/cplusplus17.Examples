@@ -1,36 +1,13 @@
 CXX=clang++-5.0
-CXX_FLAGS=-std=c++17
+CXX_FLAGS= -std=c++17
 
-TEMP_FUNC=variadic_func
-TEMP_BASE=variadic_base
-TEMP_FOLD=variadic_fold
-TEMP_INDI=variadic_indices
-TEMP_SIZE=variadic_sizeof
-TEMP_CON=variadic_construct
-TEMP_NEST=variadic_nested
-TEMP_VEC=variadic_vec_fold
-TEMP_FWD=variadic_forward
+CPP_FILES := $(wildcard *.cpp)
+EXE_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.prog)))
 
-all: $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI) $(TEMP_SIZE) $(TEMP_CON) $(TEMP_NEST) $(TEMP_VEC) $(TEMP_FWD)
+%.prog: %.cpp
+	$(CXX) $(CXX_FLAGS) -o $@ $<
 
-$(TEMP_FUNC): $(TEMP_FUNC).cpp
-	$(CXX) $(CXX_FLAGS) $(TEMP_FUNC).cpp -o $(TEMP_FUNC)
-$(TEMP_BASE): $(TEMP_BASE).cpp
-	$(CXX) $(CXX_FLAGS) $(TEMP_BASE).cpp -o $(TEMP_BASE)
-$(TEMP_FOLD): $(TEMP_FOLD).cpp
-	$(CXX) $(CXX_FLAGS) $(TEMP_FOLD).cpp -o $(TEMP_FOLD)
-$(TEMP_INDI): $(TEMP_INDI).cpp
-	$(CXX) $(CXX_FLAGS) $(TEMP_INDI).cpp -o $(TEMP_INDI)
-$(TEMP_SIZE): $(TEMP_SIZE).cpp
-	$(CXX) $(CXX_FLAGS) $(TEMP_SIZE).cpp -o $(TEMP_SIZE)
-$(TEMP_CON): $(TEMP_CON).cpp
-	$(CXX) $(CXX_FLAGS) $(TEMP_CON).cpp -o $(TEMP_CON)
-$(TEMP_NEST): $(TEMP_NEST).cpp
-	$(CXX) $(CXX_FLAGS) $(TEMP_NEST).cpp -o $(TEMP_NEST)
-$(TEMP_VEC): $(TEMP_VEC).cpp
-	$(CXX) $(CXX_FLAGS) $(TEMP_VEC).cpp -o $(TEMP_VEC)
-$(TEMP_FWD): $(TEMP_FWD).cpp
-	$(CXX) $(CXX_FLAGS) $(TEMP_FWD).cpp -o $(TEMP_FWD)
+all: $(EXE_FILES)
+
 clean:
-	rm -f $(TEMP_FUNC) $(TEMP_BASE) $(TEMP_FOLD) $(TEMP_INDI) $(TEMP_SIZE) $(TEMP_CON) $(TEMP_NEST) $(TEMP_VEC) $(TEMP_FWD)
-
+	rm -f *.prog

@@ -1,15 +1,13 @@
 CXX=clang++-5.0
 CXX_FLAGS= -std=c++17
-TEMPLATEA=template_auto
-TEMPSTACK=template_stack_auto
 
-all: $(TEMPLATEA) $(TEMPSTACK)
+CPP_FILES := $(wildcard *.cpp)
+EXE_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.prog)))
 
-$(TEMPLATEA): $(TEMPLATEA).cpp
-	$(CXX) $(CXX_FLAGS) $(TEMPLATEA).cpp -o $(TEMPLATEA)
+%.prog: %.cpp
+	$(CXX) $(CXX_FLAGS) -o $@ $<
 
-$(TEMPSTACK): $(TEMPSTACK).cpp
-	$(CXX) $(CXX_FLAGS) $(TEMPSTACK).cpp -o $(TEMPSTACK)
+all: $(EXE_FILES)
+
 clean:
-	rm -f $(TEMPLATEA) $(TEMPSTACK)
- 
+	rm -f *.prog

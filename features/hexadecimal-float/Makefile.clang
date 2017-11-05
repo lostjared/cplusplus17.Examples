@@ -1,7 +1,13 @@
-CXX_FLAGS=-std=c++17
 CXX=clang++-5.0
+CXX_FLAGS= -std=c++17
 
-hex_float: hex_float.cpp
-	$(CXX) $(CXX_FLAGS) hex_float.cpp -o hex_float
+CPP_FILES := $(wildcard *.cpp)
+EXE_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.prog)))
+
+%.prog: %.cpp
+	$(CXX) $(CXX_FLAGS) -o $@ $<
+
+all: $(EXE_FILES)
+
 clean:
-	rm -f hex_float
+	rm -f *.prog

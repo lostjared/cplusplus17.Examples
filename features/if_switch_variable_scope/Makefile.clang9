@@ -1,15 +1,13 @@
-CXX_FLAGS=-std=c++1z
-# change CXX to your compiler below
-CXX=clang++
+CXX=g++
+CXX_FLAGS= -std=c++1z
 
-PROGRAM=program
+CPP_FILES := $(wildcard *.cpp)
+EXE_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.prog)))
 
-all: scope $(PROGRAM)
+%.prog: %.cpp
+	$(CXX) $(CXX_FLAGS) -o $@ $<
 
-$(PROGRAM): $(PROGRAM).cpp
-	$(CXX) $(CXX_FLAGS) $(PROGRAM).cpp -o $(PROGRAM)
+all: $(EXE_FILES)
 
-scope: scope.cpp
-	$(CXX) $(CXX_FLAGS) scope.cpp -o scope
 clean:
-	rm -f scope $(PROGRAM)
+	rm -f *.prog

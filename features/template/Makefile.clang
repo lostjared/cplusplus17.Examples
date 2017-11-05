@@ -1,32 +1,13 @@
 CXX=clang++-5.0
-CXX_FLAGS=-std=c++17
+CXX_FLAGS= -std=c++17
 
-TEMP_STACK=template_stack
-ARRAY_C=array_cast
-FOR_E=for_each
-VAR_TEMP=variable_template
-ERARR=erase_arr
-MDIM=multi_dim
-SPEC=specialize
+CPP_FILES := $(wildcard *.cpp)
+EXE_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.prog)))
 
-all: $(TEMP_STACK) $(ARRAY_C) $(FOR_E) $(VAR_TEMP) $(ERARR) $(MDIM) $(SPEC)
+%.prog: %.cpp
+	$(CXX) $(CXX_FLAGS) -o $@ $<
 
-$(FOR_E): $(FOR_E).cpp
-	$(CXX) $(CXX_FLAGS) $(FOR_E).cpp -o $(FOR_E)
+all: $(EXE_FILES)
 
-$(TEMP_STACK): $(TEMP_STACK).cpp
-	$(CXX) $(CXX_FLAGS) $(TEMP_STACK).cpp -o $(TEMP_STACK)
-
-$(ARRAY_C): $(ARRAY_C).cpp
-	$(CXX) $(CXX_FLAGS) $(ARRAY_C).cpp -o $(ARRAY_C)
-$(VAR_TEMP): $(VAR_TEMP).cpp
-	$(CXX) $(CXX_FLAGS) $(VAR_TEMP).cpp -o $(VAR_TEMP)
-$(ERARR): $(ERARR).cpp
-	$(CXX) $(CXX_FLAGS) $(ERARR).cpp -o $(ERARR)
-$(MDIM): $(MDIM).cpp
-	$(CXX) $(CXX_FLAGS) $(MDIM).cpp -o $(MDIM)
-$(SPEC): $(SPEC).cpp
-	$(CXX) $(CXX_FLAGS) $(SPEC).cpp -o $(SPEC)
 clean:
-	rm -f $(TEMP_STACK) $(ARRAY_C) $(FOR_E) $(VAR_TEMP) $(ERARR) $(MDIM) $(SPEC)
-
+	rm -f *.prog
