@@ -119,7 +119,7 @@ std::ostream &operator<<(std::ostream &out, VAR_TYPE type) {
             out << "void";
             break;
         default:
-            out << "Unkown type..\n";
+            out << "Unknown type..\n";
             break;
             
     }
