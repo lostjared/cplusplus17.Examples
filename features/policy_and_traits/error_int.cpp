@@ -24,5 +24,6 @@ int main() {
     ErrorInt<long> value2;
     // uncomment below to for it cause an error
     // ErrorInt<int> err;
+    std::cout << "Error Int\n";
     return 0;
 }
