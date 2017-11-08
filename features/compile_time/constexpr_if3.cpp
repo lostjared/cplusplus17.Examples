@@ -20,7 +20,6 @@ void PrintValue(const T &type) {
     }
 }
 
-
 int main() {
     PrintValue(100);
     PrintValue(long(100000));
