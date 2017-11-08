@@ -5,7 +5,7 @@
 #include<string>
 #include<cstdlib>
 
-template<typename T, int size>
+template<typename T, std::size_t size>
 constexpr T Average(const T *arr) {
     T total = T();
     for(unsigned int i = 0; i < size; ++i) {
