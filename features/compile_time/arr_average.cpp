@@ -4,10 +4,9 @@
 #include<iostream>
 #include<string>
 #include<cstdlib>
-#include<array>
 
 template<typename T, int size>
-constexpr std::size_t Average(const T *arr) {
+constexpr T Average(const T *arr) {
     T total = T();
     for(unsigned int i = 0; i < size; ++i) {
         total += arr[i];
