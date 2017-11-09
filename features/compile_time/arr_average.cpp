@@ -29,7 +29,7 @@ int main() {
     
     // calculated size at compile time
     std::array<int, AverageT<int, 10, arr>::value> array_sized;
-    for(std::size_t i = 0; i < v; ++i) {
+    for(std::size_t i = 0; i < array_sized.size(); ++i) {
         array_sized[i] = i*i;
         std::cout << "array at index: " << i << " := " << array_sized[i] << "\n";
     }
