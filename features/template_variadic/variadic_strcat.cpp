@@ -2,7 +2,6 @@
 #include<string>
 #include<sstream>
 
-
 class StringCat {
 public:
     template<typename T>
