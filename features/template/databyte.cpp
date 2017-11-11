@@ -84,5 +84,7 @@ int main() {
     std::cout << std::hex << b.value() << "\n";
     b = 0xFF00FF00;
     std::cout << std::hex << b.value() << "\n";
+    DataBytes<unsigned int> m(std::move(b));
+    std::cout << m.value() << "\n";
     return 0;
 }
