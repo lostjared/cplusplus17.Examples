@@ -55,15 +55,18 @@ DataBytes<T>::DataBytes(DataBytes<T> &&value) {
 template<typename T>
 DataBytes<T> &DataBytes<T>::operator=(const DataBytes<T> &byte) {
     bytes = byte.byteval;
+    return *this;
 }
 
 template<typename T>
 DataBytes<T> &DataBytes<T>::operator=(const DataBytes<T> &&r) {
     bytes = std::move(r.bytes);
+    return *this;
 }
 template<typename T>
 DataBytes<T>  &DataBytes<T>::operator=(const T &type) {
-    bytes.value = type;
+    bytes.type = type;
+    return *this;
 }
 
 template<typename T>
@@ -78,6 +81,8 @@ int main() {
     //DataByte<std::string> test;
     std::cout << std::hex << b.value() << "\n";
     b[1] = 0;
+    std::cout << std::hex << b.value() << "\n";
+    b = 0xFF00FF00;
     std::cout << std::hex << b.value() << "\n";
     return 0;
 }
