@@ -3,7 +3,7 @@
 #include<vector>
 #include<memory>
 
-// only change through create new object
+// only change through creating a new object
 class User {
 public:
     User(const std::string &firstn, const std::string &lastn, const bool &en) : first(firstn), last(lastn), enabled(en) {}
@@ -11,24 +11,26 @@ public:
     std::string getLast() const { return last; }
     bool getEnabled() const { return enabled; }
 private:
-    std::string first, last;
-    bool enabled;
+    const std::string first, last;
+    const bool enabled;
 };
 
 // create List with recursion
 template<typename Iter, typename Func>
-void createList(bool enabled, std::vector<std::string> &l, std::vector<User> &users, Iter index, Func func) {
+void createList(bool enabled, std::vector<std::string> &l, std::vector<std::unique_ptr<User>> &users, Iter index, Func func) {
     if(index != users.end()) {
-        if(index->getEnabled() == enabled) l.push_back(func(*index));
+        User *u = (*index).get();
+        if(u->getEnabled() == enabled) l.push_back(func(*u));
     	createList(enabled, l, users, index+1, func);
     }
 }
 
 // enable all in list with recursion
 template<typename Iter>
-void updateListEnableAll(bool enabled, std::vector<User> &u, Iter index) {
+void updateListEnableAll(bool enabled, std::vector<std::unique_ptr<User>> &u, Iter index) {
     if(index != u.end()) {
-        *index = User(index->getFirst(), index->getLast(), index->getEnabled());
+        User *user = (*index).get();
+        index->reset(new User(user->getFirst(), user->getLast(), user->getEnabled()));
         updateListEnableAll(enabled, u, index+1);
     }
 }
@@ -42,7 +44,12 @@ void printList(Iter start, Iter stop) {
 }
 // main function
 int main() {
-    std::vector<User> users { {"Jared", "Bruni", true},  { "Pink", "Floyd",true}, {"Black", "Sabbath",true}, {"David", "Bowie", false}};
+    User *user[] = {new User("Jared", "Bruni", true), new User("Pink", "Floyd", true), new User("Black", "Sabbath", true),
+        new User("David", "Bowie", false), nullptr };
+    std::vector<std::unique_ptr<User>> users;
+    for(unsigned int i = 0; user[i] != 0; ++i)
+         users.push_back(std::unique_ptr<User>(user[i]));
+    
     std::vector<std::string> first_name, all_last;
     createList(true, first_name, users, users.begin(), [](auto &u) -> std::string { return u.getFirst(); });
     updateListEnableAll(true,users,users.begin());
