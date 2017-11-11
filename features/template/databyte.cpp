@@ -1,6 +1,6 @@
 /*
  create a type that can be changed through manipulating each byte
- kind of like a bitset.
+ kind of like a bitset but for bytes not bits.
  
  http://lostsidedead.com
 */
