@@ -17,6 +17,7 @@ public:
     DataBytes(const T &type);
     DataBytes(const DataBytes<T> &value);
     DataBytes(DataBytes<T> &&value);
+    DataBytes<T> &operator=(const T &type);
     DataBytes<T> &operator=(const DataBytes<T> &byte);
     DataBytes<T> &operator=(const DataBytes<T> &&r);
     
@@ -59,6 +60,10 @@ DataBytes<T> &DataBytes<T>::operator=(const DataBytes<T> &byte) {
 template<typename T>
 DataBytes<T> &DataBytes<T>::operator=(const DataBytes<T> &&r) {
     bytes = std::move(r.bytes);
+}
+template<typename T>
+DataBytes<T>  &DataBytes<T>::operator=(const T &type) {
+    bytes.value = type;
 }
 
 template<typename T>
