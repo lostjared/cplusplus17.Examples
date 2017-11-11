@@ -10,7 +10,7 @@ public:
     bool enabled;
 };
 
-// could do it like this
+// could take this approach but lots of typing
 void createListOfFirstNames(std::vector<User> &users, std::vector<std::string> &u) {
     for(auto i  = users.begin(); i != users.end(); ++i) {
         if(i->enabled) u.push_back(i->first);
@@ -18,7 +18,18 @@ void createListOfFirstNames(std::vector<User> &users, std::vector<std::string> &
 }
 void createListOfLastName(std::vector<User> &users, std::vector<std::string> &u) {
     for(auto i  = users.begin(); i != users.end(); ++i) {
-        if(i->enabled) u.push_back(i->first);
+        if(i->enabled) u.push_back(i->last);
+    }
+}
+
+void createListODisabledFirstName(std::vector<User> &users, std::vector<std::string> &u) {
+    for(auto i  = users.begin(); i != users.end(); ++i) {
+        if(i->enabled == false) u.push_back(i->first);
+    }
+}
+void createListOfDisabledLastName(std::vector<User> &users, std::vector<std::string> &u) {
+    for(auto i  = users.begin(); i != users.end(); ++i) {
+        if(i->enabled == false) u.push_back(i->last);
     }
 }
 
