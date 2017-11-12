@@ -30,16 +30,16 @@ template<typename Iter>
 void updateListEnableAll(bool enabled, std::vector<std::unique_ptr<User>> &u, Iter index) {
     if(index != u.end()) {
         User *user = (*index).get();
-        index->reset(new User(user->getFirst(), user->getLast(), user->getEnabled()));
+        index->reset(new User(user->getFirst(), user->getLast(), true));
         updateListEnableAll(enabled, u, index+1);
     }
 }
 // print the list with recursion
 template<typename Iter>
-void printList(Iter start, Iter stop) {
+void printList(const std::string &item, Iter start, Iter stop) {
     if(start != stop) {
-        std::cout << "value is:  " << *start << "\n";
-        printList(start+1, stop);
+        std::cout << item << " name is:  " << *start << "\n";
+        printList(item, start+1, stop);
     }
 }
 // main function
@@ -54,7 +54,7 @@ int main() {
     createList(true, first_name, users, users.begin(), [](auto &u) -> std::string { return u.getFirst(); });
     updateListEnableAll(true,users,users.begin());
     createList(true, all_last, users, users.begin(), [](auto &u) -> std::string { return u.getLast(); });
-    printList(first_name.begin(), first_name.end());
-    printList(all_last.begin(), all_last.end());
+    printList("First", first_name.begin(), first_name.end());
+    printList("Last", all_last.begin(), all_last.end());
     return 0;
 }
