@@ -34,7 +34,10 @@ void createListOfDisabledLastName(std::vector<User> &users, std::vector<std::str
 }
 
 // but less typing like this
-// pure function - only operates on types passed in as arguments
+// using first class function (passed as parameter)
+// In computer science, a programming language is said to have first-class functions if it treats functions as first-class citizens.
+// This means the language supports passing functions as arguments to other functions, returning them as the values from other functions,
+// and assigning them to variables or storing them in data structures
 template<typename F>
 void createList(bool enabled, std::vector<User> &users, std::vector<std::string> &u,F func) {
     for(auto i = users.begin(); i != users.end(); ++i) {
