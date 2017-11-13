@@ -4,7 +4,7 @@
 
 int main(int argc, char **argv) {
     if(argc !=3 && argc != 5) {
-        std::cerr << argv[0] << ": Requires 4 arguments file output varname type (c or s)\n";
+        std::cerr << argv[0] << ": Requires 4 arguments file output varname type (c or s)\n Or requires two arguments and reads from stdin and prints to stdout\n$" << argv[0] << " sourcefile outputfile variablename s\n$ cat sourcefile | " << argv[0] << " varname s\n";
         exit(EXIT_FAILURE);
     }
     if(argc == 5) {
