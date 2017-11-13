@@ -10,5 +10,9 @@ OUTPUT_NAME=list2cpp
 all: $(OBJ_FILES) 
 	$(CXX) $(OBJ_FILES)  -o $(OUTPUT_NAME)  $(LDFLAGS)
 
+install: all
+	cp $(OUTPUT_NAME) /usr/local/bin
+
 clean:
 	rm -f $(OUTPUT_NAME) *.o 
+
