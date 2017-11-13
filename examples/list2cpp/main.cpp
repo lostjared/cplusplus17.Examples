@@ -20,6 +20,9 @@ int main(int argc, char **argv) {
         } else {
             std::cout << "Encountered an error..\n";
         }
+    } else {
+        std::cerr << "Error could not load list from text file: " << argv[1] << "\n";
+        exit(EXIT_FAILURE);
     }
     return 0;
 }

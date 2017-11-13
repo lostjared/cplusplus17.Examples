@@ -3,12 +3,28 @@
 #include<string>
 
 
-inline unsigned long varname_size = 78;
+inline unsigned long varname_size = 94;
 
 
 inline std::string varname_arr[] = {
 "#include \"list2cpp.hpp\"",
 "namespace lst {",
+"    ",
+"    OutputList::OutputList(const OutputList &l) : items(l.items) {",
+"        ",
+"    }",
+"    OutputList::OutputList(OutputList &&l) : items(std::move(l.items)) {",
+"        ",
+"    }",
+"    OutputList& OutputList::operator=(OutputList &l) {",
+"        items = l.items;",
+"        return *this;",
+"    }",
+"    ",
+"    OutputList& OutputList::operator=(OutputList &&l) {",
+"        items = std::move(l.items);",
+"        return *this;",
+"    }",
 "    ",
 "    std::string OutputList::escapeSequence(const std::string &s) {",
 "        std::string temp;",
