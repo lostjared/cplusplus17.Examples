@@ -84,7 +84,7 @@ inline std::string varname_arr[] = {
 "                break;",
 "            case ListType::CHAR: {",
 "                file << \"inline unsigned long \" << varname << \"_size = \" << size() << \";\\n\";",
-"            	file << \"\\n\\n\\ninline const char *str[] = {\";",
+"            	file << \"\\n\\n\\ninline const char *\" << varname << \"_str[] = {\";",
 "                for(std::size_t i = 0; i < size(); ++i) {",
 "                    if(i > size()-2) {",
 "                        file << \"\\\"\" << items[i] << \"\\\"\\n};\\n\";",
