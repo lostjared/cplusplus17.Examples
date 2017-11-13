@@ -37,7 +37,7 @@ namespace lst {
             return false;
         }
         for(unsigned int i = 0; i < s.length(); ++i) {
-            if (!isdigit(s[i]) && !isalpha(s[i])) {
+            if (!isdigit(s[i]) && !isalpha(s[i]) && s[i] != '_') {
                 return false;
             }
         }
