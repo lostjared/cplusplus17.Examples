@@ -10,3 +10,12 @@ to use std::string:
 
 list2cpp inputfile outputfile variable_name s
 
+or
+
+cat sourcefile  | list2cpp variable_name s
+
+or
+
+cat sourcefile  | list2cpp variable_name c
+
+
