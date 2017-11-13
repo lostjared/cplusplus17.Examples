@@ -1,7 +1,6 @@
 #include "list2cpp.hpp"
 
 namespace lst {
-
     
     std::string OutputList::escapeSequence(const std::string &s) {
         std::string temp;

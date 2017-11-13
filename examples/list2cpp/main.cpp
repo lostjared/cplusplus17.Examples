@@ -3,15 +3,12 @@
 #include"list2cpp.hpp"
 
 int main(int argc, char **argv) {
-    
     if(argc != 5) {
         std::cerr << "Requires two arguments file output varname type\n";
         exit(EXIT_FAILURE);
     }
-    
     lst::OutputList str_list;
     if(str_list.addFile(argv[1])) {
-        
         lst::ListType listvar;
         if(argv[4][0] == 'c')
             listvar = lst::ListType::CHAR;
@@ -24,6 +21,5 @@ int main(int argc, char **argv) {
             std::cout << "Encountered an error..\n";
         }
     }
-    
     return 0;
 }
