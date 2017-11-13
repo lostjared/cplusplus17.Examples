@@ -56,22 +56,21 @@ namespace lst {
             std::cerr << "Error: could not open file...\n";
             return false;
         }
+        addStream(file);
+        file.close();
+        return true;
+    }
+    
+    bool OutputList::addStream(std::istream &file) {
         while(!file.eof()) {
             std::string value;
             std::getline(file, value);
             if(file && value.length()>0) items.push_back(escapeSequence(value));
         }
-        file.close();
         return true;
     }
     
-    bool OutputList::outputToFile(std::string filename,std::string varname,ListType type) {
-        std::fstream file;
-        file.open(filename, std::ios::out);
-        if(!file.is_open()) {
-            std::cerr << "Error: could not open output file...\n";
-            return false;
-        }
+    bool OutputList::outputToFile(std::ostream &file, std::string varname, ListType type) {
         file << "#ifndef __LIST2CPP_" << varname << "\n";
         file << "#define __LIST2CPP_" << varname << "\n";
         switch(type) {
@@ -90,7 +89,7 @@ namespace lst {
                 break;
             case ListType::CHAR: {
                 file << "inline unsigned long " << varname << "_size = " << size() << ";\n";
-            	file << "\n\n\ninline const char *" << varname << "_str[] = {";
+                file << "\n\n\ninline const char *" << varname << "_str[] = {";
                 for(std::size_t i = 0; i < size(); ++i) {
                     if(i > size()-2) {
                         file << "\"" << items[i] << "\"\n};\n";
@@ -102,6 +101,17 @@ namespace lst {
                 break;
         }
         file << "\n\n#endif\n\n";
+        return true;
+    }
+    
+    bool OutputList::outputToFile(std::string filename,std::string varname,ListType type) {
+        std::fstream file;
+        file.open(filename, std::ios::out);
+        if(!file.is_open()) {
+            std::cerr << "Error: could not open output file...\n";
+            return false;
+        }
+        outputToFile(file, varname, type);
         file.close();
         return true;
     }

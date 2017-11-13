@@ -18,8 +18,10 @@ namespace lst {
         OutputList& operator=(OutputList &&);
         void addItem(std::string item);
         bool addFile(std::string filename);
+        bool addStream(std::istream &in);
         std::size_t size() const { return items.size(); }
         bool outputToFile(std::string filename, std::string varname, ListType type);
+        bool outputToFile(std::ostream &file, std::string varname, ListType type);
         bool validName(const std::string &s);
     private:
         std::vector<std::string> items;
