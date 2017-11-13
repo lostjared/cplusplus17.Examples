@@ -2,6 +2,22 @@
 
 namespace lst {
     
+    OutputList::OutputList(const OutputList &l) : items(l.items) {
+        
+    }
+    OutputList::OutputList(OutputList &&l) : items(std::move(l.items)) {
+        
+    }
+    OutputList& OutputList::operator=(OutputList &l) {
+        items = l.items;
+        return *this;
+    }
+    
+    OutputList& OutputList::operator=(OutputList &&l) {
+        items = std::move(l.items);
+        return *this;
+    }
+    
     std::string OutputList::escapeSequence(const std::string &s) {
         std::string temp;
         for(std::size_t i = 0; i < s.length(); ++i) {

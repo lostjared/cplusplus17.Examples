@@ -4,7 +4,7 @@
 
 int main(int argc, char **argv) {
     if(argc != 5) {
-        std::cerr << "Requires two arguments file output varname type\n";
+        std::cerr << argv[0] << ": Requires 4 arguments file output varname type (c or s)\n";
         exit(EXIT_FAILURE);
     }
     lst::OutputList str_list;

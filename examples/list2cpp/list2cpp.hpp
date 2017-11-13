@@ -10,10 +10,10 @@ namespace lst {
     class OutputList {
     public:
         OutputList() = default;
-        OutputList(const OutputList &l) = delete;
-        OutputList(OutputList &&) = delete;
-        OutputList& operator=(OutputList &) = delete;
-        OutputList& operator=(OutputList &&) = delete;
+        OutputList(const OutputList &l);
+        OutputList(OutputList &&);
+        OutputList& operator=(OutputList &);
+        OutputList& operator=(OutputList &&);
         void addItem(std::string item);
         bool addFile(std::string filename);
         std::size_t size() const { return items.size(); }
