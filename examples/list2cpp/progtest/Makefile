@@ -4,7 +4,7 @@ PROGRAM_NAME=headertest
 
 all: $(PROGRAM_NAME)
 
-$(PROGRAM_NAME): $(PROGRAM_NAME).cpp
+$(PROGRAM_NAME): $(PROGRAM_NAME).cpp header.hpp
 	$(CXX) $(CXX_FLAGS) $(PROGRAM_NAME).cpp -o $(PROGRAM_NAME)
 clean:
 	rm -f $(PROGRAM_NAME)

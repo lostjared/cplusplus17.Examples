@@ -47,6 +47,7 @@ namespace lst {
             std::getline(file, value);
             if(file && value.length()>0) items.push_back(escapeSequence(value));
         }
+        file.close();
         return true;
     }
     
@@ -57,10 +58,8 @@ namespace lst {
             std::cerr << "Error: could not open output file...\n";
             return false;
         }
-        
         file << "#ifndef __LIST2CPP_" << varname << "\n";
         file << "#define __LIST2CPP_" << varname << "\n";
-        
         switch(type) {
             case ListType::STRING: {
                 file << "#include<string>\n\n\n";
@@ -88,8 +87,8 @@ namespace lst {
             }
                 break;
         }
-        
         file << "\n\n#endif\n\n";
+        file.close();
         return true;
     }
 

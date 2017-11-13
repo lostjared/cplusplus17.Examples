@@ -3,7 +3,7 @@
 #include<string>
 
 
-inline unsigned long varname_size = 94;
+inline unsigned long varname_size = 93;
 
 
 inline std::string varname_arr[] = {
@@ -55,6 +55,7 @@ inline std::string varname_arr[] = {
 "            std::getline(file, value);",
 "            if(file && value.length()>0) items.push_back(escapeSequence(value));",
 "        }",
+"        file.close();",
 "        return true;",
 "    }",
 "    ",
@@ -65,10 +66,8 @@ inline std::string varname_arr[] = {
 "            std::cerr << \"Error: could not open output file...\\n\";",
 "            return false;",
 "        }",
-"        ",
 "        file << \"#ifndef __LIST2CPP_\" << varname << \"\\n\";",
 "        file << \"#define __LIST2CPP_\" << varname << \"\\n\";",
-"        ",
 "        switch(type) {",
 "            case ListType::STRING: {",
 "                file << \"#include<string>\\n\\n\\n\";",
@@ -96,8 +95,8 @@ inline std::string varname_arr[] = {
 "            }",
 "                break;",
 "        }",
-"        ",
 "        file << \"\\n\\n#endif\\n\\n\";",
+"        file.close();",
 "        return true;",
 "    }",
 "}"
