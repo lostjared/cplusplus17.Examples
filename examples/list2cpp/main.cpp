@@ -15,6 +15,11 @@ int main(int argc, char **argv) {
         else
             listvar = lst::ListType::STRING;
         
+        if(str_list.validName(argv[3]) == false) {
+            std::cerr << "Invalid variable name, must start with a letter and only contain digits and alpha characters.\n";
+            exit(EXIT_FAILURE);
+        }
+        
         if(str_list.outputToFile(argv[2],argv[3], listvar)) {
             std::cout << "Sucessfully output list to: " << argv[2] << "\n";
             std::cout << "Input: " << argv[1] << "\n";

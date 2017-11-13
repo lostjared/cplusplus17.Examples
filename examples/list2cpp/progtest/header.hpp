@@ -3,7 +3,7 @@
 #include<string>
 
 
-inline unsigned long varname_size = 93;
+inline unsigned long varname_size = 107;
 
 
 inline std::string varname_arr[] = {
@@ -38,6 +38,20 @@ inline std::string varname_arr[] = {
 "        }",
 "        return temp;",
 "    }",
+"    ",
+"    bool OutputList::validName(const std::string &s) {",
+"        if(s.length() == 0) return false;",
+"        if(isdigit(s[0])) {",
+"            return false;",
+"        }",
+"        for(unsigned int i = 0; i < s.length(); ++i) {",
+"            if (!isdigit(s[i]) && !isalpha(s[i])) {",
+"                return false;",
+"            }",
+"        }",
+"        return true;",
+"    }",
+"    ",
 "    ",
 "    void OutputList::addItem(std::string type) {",
 "        items.push_back(type);",
