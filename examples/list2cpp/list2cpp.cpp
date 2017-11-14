@@ -70,6 +70,13 @@ namespace lst {
         return true;
     }
     
+    void OutputList::sort(bool greater) {
+        if(greater == true)
+        	std::sort(items.begin(), items.end(), std::greater<std::string>());
+        else
+            std::sort(items.begin(), items.end(), std::less<std::string>());
+    }
+    
     bool OutputList::outputToFile(std::ostream &file, std::string varname, ListType type) {
         file << "#ifndef __LIST2CPP_" << varname << "\n";
         file << "#define __LIST2CPP_" << varname << "\n";

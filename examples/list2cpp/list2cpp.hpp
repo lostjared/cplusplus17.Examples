@@ -19,6 +19,7 @@ namespace lst {
         void addItem(std::string item);
         bool addFile(std::string filename);
         bool addStream(std::istream &in);
+        void sort(bool greater);
         std::size_t size() const { return items.size(); }
         bool outputToFile(std::string filename, std::string varname, ListType type);
         bool outputToFile(std::ostream &file, std::string varname, ListType type);

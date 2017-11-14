@@ -18,4 +18,18 @@ or
 
 cat sourcefile  | list2cpp variable_name c
 
+optional sorting use g for greater than, l for less than like this
+
+for greater than sorting use
+
+list2cpp inputfile outputfile variable_name sg
+
+or less than sorting use
+
+list2cpp inputfile outputfile variablename sl
+
+also works with pipes
+
+cat sourcefile | list2cpp variable_name cl
+
 
