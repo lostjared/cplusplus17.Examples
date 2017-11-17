@@ -1,10 +1,10 @@
 
 /*
-
-- Jared
-
-
-*/
+ 
+ - Jared
+ 
+ 
+ */
 
 #include<iostream>
 #include<string>
@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
     int num = atoi(argv[2]);
     if(num > 0) {
         if(argv[1][0] == 't')
-    		swapTabSpace(std::cin, std::cout, num);
+            swapTabSpace(std::cin, std::cout, num);
         else
             swapSpaceTab(std::cin, std::cout, num);
     } else {
@@ -60,7 +60,7 @@ void swapSpaceTab(std::istream &in, std::ostream &out, int spaces) {
                     }
                 } while(c == ' ');
                 if(buf.length() == spaces) {
-                    	out << "\t" << c;
+                    out << "\t" << c;
                 } else {
                     out << buf << c;
                 }
