@@ -1,17 +1,18 @@
-CXX=g++
-CXX_FLAGS= -std=c++1z
-
+CXX_FLAGS=-std=c++1z
+LDFLAGS=
 CPP_FILES := $(wildcard *.cpp)
-EXE_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.prog)))
+OBJ_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.o)))
+OUTPUT_NAME=tabs2space
 
-%.prog: %.cpp
-	$(CXX) $(CXX_FLAGS) -o $@ $<
-
-all: $(EXE_FILES)
-
+%.o: %.cpp
+	$(CXX) $(CXX_FLAGS) -c -o $@ $<
+  
+all: $(OBJ_FILES) 
+	$(CXX) $(OBJ_FILES)  -o $(OUTPUT_NAME)  $(LDFLAGS)
 
 install: all
-	cp tabs2space.prog /usr/local/bin
+	cp $(OUTPUT_NAME) /usr/local/bin
 
 clean:
-	rm -f *.prog
+	rm -f $(OUTPUT_NAME) *.o 
+
