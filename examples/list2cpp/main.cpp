@@ -33,12 +33,13 @@ int main(int argc, char **argv) {
                 std::cout << "Sucessfully output list to: " << argv[2] << "\n";
                 std::cout << "Input: " << argv[1] << "\n";
                 std::cout << "Output: " << argv[2] << "\n";
+                std::cout << "Variables: " << argv[3] << "_arr and " << argv[3] << "_size"<< "\n";
                 if(listvar == lst::ListType::STRING) {
-                    std::cout << "Variables: " << argv[3] << "_arr and " << argv[3] << "_size"<< "\n";
                     std::cout << "Varaible type: std::string\n";
-                } else {
-                    std::cout << "Variables: " << argv[3] << "_str and " << argv[3] << "_size"<< "\n";
-                    std::cout << "Varaible type: const char *\n";
+                } else if(listvar == lst::ListType::CHAR) {
+                    std::cout << "Variable type: const char *\n";
+                } else if(listvar == lst::ListType::BINARY) {
+                    std::cout << "Varaible type: char array[]\n";
                 }
             } else {
                 std::cout << "Encountered an error..\n";

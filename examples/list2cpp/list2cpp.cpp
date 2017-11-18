@@ -114,6 +114,7 @@ namespace lst {
             len += items[i].length();
             len++;
         }
+        len++;
         file << "\ninline unsigned long " << varname << "_size = " << len << ";\n";
         file << "inline char " << varname << "_arr[" << len << "] = {\n";
         
