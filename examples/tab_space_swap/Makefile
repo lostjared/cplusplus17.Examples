@@ -9,5 +9,9 @@ EXE_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.prog)))
 
 all: $(EXE_FILES)
 
+
+install: all
+	cp tabs2space.prog /usr/local/bin
+
 clean:
 	rm -f *.prog
