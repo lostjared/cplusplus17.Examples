@@ -82,34 +82,14 @@ namespace lst {
         file << "#ifndef __LIST2CPP_" << varname << "\n";
         file << "#define __LIST2CPP_" << varname << "\n";
         switch(type) {
-            case ListType::STRING: {
-                file << "#include<string>\n\n\n";
-                file << "inline unsigned long " << varname << "_size = " << size() << ";\n";
-                file << "\n\ninline std::string " << varname << "_arr"  << "[] = {\n";
-                for(std::size_t i = 0; i < size(); ++i) {
-                    if(i > size()-2) {
-                        file << "\"" << items[i] << "\"\n};\n";
-                    } else {
-                        file << "\"" << items[i] << "\",\n";
-                    }
-                }
-            }
+            case ListType::STRING:
+                outputToFileAsString(file, varname);
                 break;
-            case ListType::CHAR: {
-                file << "inline unsigned long " << varname << "_size = " << size() << ";\n";
-                file << "\n\n\ninline const char *" << varname << "_str[] = {";
-                for(std::size_t i = 0; i < size(); ++i) {
-                    if(i > size()-2) {
-                        file << "\"" << items[i] << "\"\n};\n";
-                    } else {
-                        file << "\"" << items[i] << "\",\n";
-                    }
-                }
-            }
+            case ListType::CHAR:
+                outputToFileAsChar(file, varname);
                 break;
-            case ListType::BINARY: {
+            case ListType::BINARY:
                 outputToFileAsBinary(file, varname);
-            }
                 break;
         }
         file << "\n\n#endif\n\n";
@@ -148,5 +128,31 @@ namespace lst {
         file << "0 };\n";
         file << "\ninline unsigned long " << varname << "_size = " << length << ";\n";
     }
+    
+    void OutputList::outputToFileAsChar(std::ostream &file, std::string varname) {
+        file << "inline unsigned long " << varname << "_size = " << size() << ";\n";
+        file << "\n\n\ninline const char *" << varname << "_str[] = {";
+        for(std::size_t i = 0; i < size(); ++i) {
+            if(i > size()-2) {
+                file << "\"" << items[i] << "\"\n};\n";
+            } else {
+                file << "\"" << items[i] << "\",\n";
+            }
+        }
+    }
+    
+    void OutputList::outputToFileAsString(std::ostream &file, std::string varname) {
+        file << "#include<string>\n\n\n";
+        file << "inline unsigned long " << varname << "_size = " << size() << ";\n";
+        file << "\n\ninline std::string " << varname << "_arr"  << "[] = {\n";
+        for(std::size_t i = 0; i < size(); ++i) {
+            if(i > size()-2) {
+                file << "\"" << items[i] << "\"\n};\n";
+            } else {
+                file << "\"" << items[i] << "\",\n";
+            }
+        }
+    }
+    
 
 }

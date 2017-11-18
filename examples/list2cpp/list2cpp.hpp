@@ -24,6 +24,8 @@ namespace lst {
         bool outputToFile(std::string filename, std::string varname, ListType type);
         bool outputToFile(std::ostream &file, std::string varname, ListType type);
         void outputToFileAsBinary(std::ostream &file, std::string varname);
+        void outputToFileAsChar(std::ostream &file, std::string varname);
+        void outputToFileAsString(std::ostream &file, std::string varname);
         bool validName(const std::string &s);
     private:
         std::vector<std::string> items;
