@@ -8,7 +8,7 @@
 #include<cctype>
 
 namespace lst {
-    enum class ListType { STRING, CHAR };
+    enum class ListType { STRING, CHAR, BINARY};
     class OutputList {
     public:
         OutputList() = default;
@@ -23,6 +23,7 @@ namespace lst {
         std::size_t size() const { return items.size(); }
         bool outputToFile(std::string filename, std::string varname, ListType type);
         bool outputToFile(std::ostream &file, std::string varname, ListType type);
+        void outputToFileAsBinary(std::ostream &file, std::string varname);
         bool validName(const std::string &s);
     private:
         std::vector<std::string> items;

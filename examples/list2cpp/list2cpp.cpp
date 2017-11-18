@@ -1,4 +1,5 @@
 #include "list2cpp.hpp"
+#include<iomanip>
 
 namespace lst {
     
@@ -106,6 +107,10 @@ namespace lst {
                 }
             }
                 break;
+            case ListType::BINARY: {
+                outputToFileAsBinary(file, varname);
+            }
+                break;
         }
         file << "\n\n#endif\n\n";
         return true;
@@ -121,6 +126,27 @@ namespace lst {
         outputToFile(file, varname, type);
         file.close();
         return true;
+    }
+    
+    void OutputList::outputToFileAsBinary(std::ostream &file, std::string varname) {
+        file << "inline char " << varname << "_arr[] = {\n";
+        unsigned long length = 0;
+        for(unsigned int i = 0; i < items.size(); ++i) {
+            for(unsigned int z = 0; z  < items[i].length(); ++z) {
+                file << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(items[i][z])) << ", ";
+                static unsigned int r_count = 0;
+                length ++;
+                ++r_count;
+                if(r_count > 25) {
+                    file << "\n";
+                    r_count = 0;
+                }
+            }
+            file << "0x" << std::hex << static_cast<unsigned int>('\n') << ", ";
+            length++;
+        }
+        file << "0 };\n";
+        file << "\ninline unsigned long " << varname << "_size = " << length << ";\n";
     }
 
 }

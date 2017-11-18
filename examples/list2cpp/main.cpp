@@ -14,7 +14,9 @@ int main(int argc, char **argv) {
             std::string arg = argv[4];
             if(argv[4][0] == 'c')
                 listvar = lst::ListType::CHAR;
-            else
+            else if(argv[4][0] == 'b')
+                listvar = lst::ListType::BINARY;
+            else if(argv[4][0] == 's')
                 listvar = lst::ListType::STRING;
             
             if(str_list.validName(argv[3]) == false) {
@@ -53,8 +55,11 @@ int main(int argc, char **argv) {
             std::string arg = argv[2];
             if(arg[0] == 'c')
                 listvar = lst::ListType::CHAR;
-            else
+            else if(arg[0] == 's')
                 listvar = lst::ListType::STRING;
+            else if(arg[0] == 'b')
+                listvar = lst::ListType::BINARY;
+            
             if(arg.length() > 1 && arg[1] == 'g')
                 str_list.sort(true);
             else if(arg.length() > 1 && arg[1] == 'l')
@@ -64,6 +69,7 @@ int main(int argc, char **argv) {
                 std::cerr << "Invalid variable name, must start with a letter and only contain digits and alpha characters.\n";
                 exit(EXIT_FAILURE);
             }
+            
             if(str_list.outputToFile(std::cout,argv[1], listvar) == false) {
                 std::cout << "Failed to output stream...\n";
             }
