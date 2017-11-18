@@ -4,7 +4,7 @@
 
 int main(int argc, char **argv) {
     if(argc !=3 && argc != 5) {
-        std::cerr << argv[0] << ": Requires 4 arguments file output varname type (c or s)\n Or requires two arguments and reads from stdin and prints to stdout\n$ " << argv[0] << " sourcefile outputfile variablename s\n$ cat sourcefile | " << argv[0] << " varname s\nTo use greater than sorting add a g type variable:\n$ " << argv[0] << " inputfile outputfile varname cg\n" << "For less than add l to type variable like this:\n$ " << argv[0] << " inputfile outputfile varname sl\n";
+        std::cerr << argv[0] << ": Requires 4 arguments file output varname type (c or s or b)\n Or requires two arguments and reads from stdin and prints to stdout\n$ " << argv[0] << " sourcefile outputfile variablename s\n$ cat sourcefile | " << argv[0] << " varname s\nTo use greater than sorting add a g type variable:\n$ " << argv[0] << " inputfile outputfile varname cg\n" << "For less than add l to type variable like this:\n$ " << argv[0] << " inputfile outputfile varname sl\n";
         exit(EXIT_FAILURE);
     }
     if(argc == 5) {

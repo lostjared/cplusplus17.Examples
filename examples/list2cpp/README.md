@@ -10,6 +10,10 @@ to use std::string:
 
 list2cpp inputfile outputfile variable_name s
 
+to use a character array char arr[]
+
+list2cpp inputfile outputfile variable_name b
+
 or
 
 cat sourcefile  | list2cpp variable_name s
@@ -17,6 +21,11 @@ cat sourcefile  | list2cpp variable_name s
 or
 
 cat sourcefile  | list2cpp variable_name c
+
+or
+
+cat sourcefile | list2cpp variable_name b
+
 
 optional sorting use g for greater than, l for less than like this
 
