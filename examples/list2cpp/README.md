@@ -27,6 +27,10 @@ or
 cat sourcefile | list2cpp variable_name b
 
 
+optional skip blank lines with p argument
+
+list2cpp inputfile outputfile varaiblename sp
+
 optional sorting use g for greater than, l for less than like this
 
 for greater than sorting use
