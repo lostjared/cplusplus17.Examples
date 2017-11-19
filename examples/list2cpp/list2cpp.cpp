@@ -3,10 +3,10 @@
 
 namespace lst {
     
-    OutputList::OutputList(const OutputList &l) : items(l.items) {
+    OutputList::OutputList(const OutputList &l) : items(l.items), skip_lines(l.skip_lines) {
         
     }
-    OutputList::OutputList(OutputList &&l) : items(std::move(l.items)) {
+    OutputList::OutputList(OutputList &&l) : items(std::move(l.items)), skip_lines(l.skip_lines) {
         
     }
     OutputList& OutputList::operator=(OutputList &l) {
@@ -65,7 +65,15 @@ namespace lst {
         while(!file.eof()) {
             std::string value;
             std::getline(file, value);
-            if(file && value.length()>0) items.push_back(escapeSequence(value));
+            if(file) {
+                if(skip_lines == true) {
+                    if(value.length()>0)
+                        items.push_back(value);
+                    
+                } else {
+                    items.push_back(value);
+                }
+            }
         }
         return true;
     }

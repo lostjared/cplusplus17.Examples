@@ -27,9 +27,11 @@ namespace lst {
         void outputToFileAsChar(std::ostream &file, std::string varname);
         void outputToFileAsString(std::ostream &file, std::string varname);
         bool validName(const std::string &s);
+        void setSkip(bool b) { skip_lines = b; }
     private:
         std::vector<std::string> items;
         std::string escapeSequence(const std::string &s);
+        bool skip_lines;
     };
 }
 #endif

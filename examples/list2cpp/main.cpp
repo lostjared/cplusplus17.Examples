@@ -9,6 +9,10 @@ int main(int argc, char **argv) {
     }
     if(argc == 5) {
         lst::OutputList str_list;
+        str_list.setSkip(false);
+        std::string arg_chk = argv[2];
+        if(arg_chk.length()>1 && arg_chk[1] == 'p')
+            str_list.setSkip(true);
         if(str_list.addFile(argv[1])) {
             lst::ListType listvar;
             std::string arg = argv[4];
@@ -23,11 +27,13 @@ int main(int argc, char **argv) {
                 std::cerr << "Invalid variable name, must start with a letter and only contain digits and alpha characters.\n";
                 exit(EXIT_FAILURE);
             }
-            
+
             if(arg.length() > 1 && arg[1] == 'g')
                 str_list.sort(true);
             else if(arg.length() > 1 && arg[1] == 'l')
                 str_list.sort(false);
+            else if(arg.length() > 1 && arg[1] == 'p')
+                str_list.setSkip(true);
             
             if(str_list.outputToFile(argv[2],argv[3], listvar)) {
                 std::cout << "Sucessfully output list to: " << argv[2] << "\n";
@@ -50,6 +56,12 @@ int main(int argc, char **argv) {
         }
     } else if(argc == 3) {
         lst::OutputList str_list;
+        str_list.setSkip(false);
+        std::string arg_chk = argv[2];
+        if(arg_chk.length()>1 && arg_chk[1] == 'p')
+            str_list.setSkip(true);
+        
+        
         if(str_list.addStream(std::cin)) {
             lst::ListType listvar;
             
@@ -65,6 +77,8 @@ int main(int argc, char **argv) {
                 str_list.sort(true);
             else if(arg.length() > 1 && arg[1] == 'l')
                 str_list.sort(false);
+          
+            
             
             if(str_list.validName(argv[1]) == false) {
                 std::cerr << "Invalid variable name, must start with a letter and only contain digits and alpha characters.\n";
