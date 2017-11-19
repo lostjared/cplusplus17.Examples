@@ -52,8 +52,7 @@ namespace lst {
     
     bool OutputList::addFile(std::string name) {
         std::fstream file;
-        file.open(name, std::ios::in);
-        if(!file.is_open()) {
+        if(file.open(name, std::ios::in); !file.is_open()) {
             std::cerr << "Error: could not open file...\n";
             return false;
         }
@@ -98,8 +97,7 @@ namespace lst {
     
     bool OutputList::outputToFile(std::string filename,std::string varname,ListType type) {
         std::fstream file;
-        file.open(filename, std::ios::out);
-        if(!file.is_open()) {
+        if(file.open(filename, std::ios::out); !file.is_open()) {
             std::cerr << "Error: could not open output file...\n";
             return false;
         }
