@@ -116,11 +116,12 @@ namespace lst {
         }
         len++;
         file << "\ninline unsigned long " << varname << "_size = " << len << ";\n";
-        file << "inline char " << varname << "_arr[" << len << "] = {\n";
-        
+        file << "inline unsigned char " << varname << "_arr[" << len << "] = {\n";
          for(unsigned int i = 0; i < items.size(); ++i) {
             for(unsigned int z = 0; z  < items[i].length(); ++z) {
-                file << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(items[i][z])) << ", ";
+                std::string temp;
+                unsigned int value = static_cast<unsigned int>(static_cast<unsigned char>(items[i][z]));;
+                file << "0x" << std::setfill('0') << std::setw(2) << std::hex << std::uppercase << value << ", ";
                 static unsigned int r_count = 0;
                 ++r_count;
                 if(r_count > 25) {
