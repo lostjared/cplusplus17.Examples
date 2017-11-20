@@ -121,8 +121,8 @@ namespace lst {
             len++;
         }
         len++;
-        file << "\ninline unsigned long " << varname << "_size = " << len << ";\n";
-        file << "inline unsigned char " << varname << "_arr[" << len << "] = {\n";
+        file << "\ninline constexpr unsigned long " << varname << "_size = " << len << ";\n";
+        file << "inline constexpr unsigned char " << varname << "_arr[" << varname << "_size" << "] = {\n";
          unsigned int counter = 0;
          for(unsigned int i = 0; i < items.size(); ++i) {
             for(unsigned int z = 0; z  < items[i].length(); ++z) {
