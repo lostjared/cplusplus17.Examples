@@ -4,7 +4,7 @@ CPP_FILES := $(wildcard *.cpp)
 OBJ_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.o)))
 OUTPUT_NAME=list2cpp
 
-%.o: %.cpp
+%.o: %.cpp list2cpp.hpp
 	$(CXX) $(CXX_FLAGS) -c -o $@ $<
   
 all: $(OBJ_FILES) 

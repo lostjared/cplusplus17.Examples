@@ -140,8 +140,8 @@ namespace lst {
     }
     
     void OutputList::outputToFileAsChar(std::ostream &file, std::string varname) {
-        file << "inline unsigned long " << varname << "_size = " << size() << ";\n";
-        file << "\ninline const char *" << varname << "_arr[] = {";
+        file << "inline constexpr unsigned long " << varname << "_size = " << size() << ";\n";
+        file << "\ninline const char *" << varname << "_arr[" << varname << "_size] = {\n";
         for(std::size_t i = 0; i < size(); ++i) {
             if(i > size()-2) {
                 file << "\"" << items[i] << "\"\n};\n";
@@ -153,8 +153,8 @@ namespace lst {
     
     void OutputList::outputToFileAsString(std::ostream &file, std::string varname) {
         file << "#include<string>\n\n";
-        file << "inline unsigned long " << varname << "_size = " << size() << ";\n";
-        file << "\n\ninline std::string " << varname << "_arr"  << "[] = {\n";
+        file << "inline constexpr unsigned long " << varname << "_size = " << size() << ";\n";
+        file << "\n\ninline std::string " << varname << "_arr"  << "[" << varname << "_size] = {\n";
         for(std::size_t i = 0; i < size(); ++i) {
             if(i > size()-2) {
                 file << "\"" << items[i] << "\"\n};\n";
