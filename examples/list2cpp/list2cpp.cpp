@@ -71,7 +71,7 @@ namespace lst {
                         items.push_back(value);
                     
                 } else {
-                    items.push_back(value);
+                    items.push_back(escapeSequence(value));
                 }
             }
         }
