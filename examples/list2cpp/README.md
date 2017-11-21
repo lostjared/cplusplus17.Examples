@@ -31,6 +31,10 @@ optional skip blank lines with p argument
 
 	$ list2cpp inputfile outputfile varaiblename sp
 
+or skip lines with char array[]:
+
+	$ cat source | list2cpp var_name bp
+
 optional sorting use g for greater than, l for less than like this
 
 for greater than sorting use
