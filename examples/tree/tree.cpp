@@ -62,17 +62,22 @@ int main() {
     Tree<std::string> data;
     data.root->left = new Node<std::string>("Hello ", 's', new Node<std::string>(" World", 's', nullptr, nullptr), new Node<std::string>(" Tree!", 's', nullptr, nullptr));
     data.print();
+    
+    // add some leaves to the tree
     Tree<std::string> assign;
     Node<std::string> *node;
     assign.root->id = '=';
     assign.root->token = "=";
     assign.root->left = new Node<std::string>("x", 'v', nullptr, nullptr);
-    assign.root->right = new Node<std::string>("10", 'd', nullptr, nullptr);
+    assign.root->right = new Node<std::string>("+", 'v', nullptr, nullptr);
     node = assign.root->right;
-    node->id = '+';
-    node->token = "+";
+    node->left = new Node<std::string>("10", 'd', nullptr, nullptr);
+    node = node->left;
+    node->right = new Node<std::string>("+", '+', nullptr, nullptr);
+    node = node->right;
     node->left = new Node<std::string>("x", 'v', nullptr, nullptr);
     node->right = new Node<std::string>("y", 'v', nullptr, nullptr);
+    // print the leaves
     assign.print();
     return 0;
 }
