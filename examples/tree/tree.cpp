@@ -72,7 +72,6 @@ int main() {
     assign.root->right = new Node<std::string>("+", 'v', nullptr, nullptr);
     node = assign.root->right;
     node->left = new Node<std::string>("10", 'd', nullptr, nullptr);
-    node = node->left;
     node->right = new Node<std::string>("+", '+', nullptr, nullptr);
     node = node->right;
     node->left = new Node<std::string>("x", 'v', nullptr, nullptr);
