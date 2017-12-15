@@ -65,10 +65,12 @@ int main() {
     Tree<std::string> assign;
     Node<std::string> *node;
     assign.root->id = '=';
+    assign.root->token = "=";
     assign.root->left = new Node<std::string>("x", 'v', nullptr, nullptr);
-    assign.root->right = new Node<std::string>("10", 'n', nullptr, nullptr);
+    assign.root->right = new Node<std::string>("10", 'd', nullptr, nullptr);
     node = assign.root->right;
     node->id = '+';
+    node->token = "+";
     node->left = new Node<std::string>("x", 'v', nullptr, nullptr);
     node->right = new Node<std::string>("y", 'v', nullptr, nullptr);
     assign.print();
