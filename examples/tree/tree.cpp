@@ -50,8 +50,10 @@ private:
             release(n->left);
         if(n->right != nullptr)
             release(n->right);
-        if(n != 0)
+        if(n != 0) {
+            std::cout << "releasing: " << n->token << "\n";
             delete n;
+        }
     }
 };
 
