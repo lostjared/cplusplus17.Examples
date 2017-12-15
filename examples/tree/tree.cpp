@@ -21,35 +21,37 @@ public:
 template<typename T>
 class Tree {
 public:
+    Node<T> *root;
+    
     Tree() {
         root = new Node<T>("Root", 0, nullptr, nullptr);
     }
     ~Tree() {
         release(root);
     }
-    Node<T> *root;
-    
-    void printNodes(Node<T> *n) {
-        
-        if(n != 0)
-            std::cout << "Node: " << n->token << ":" << n->id << "\n";
-        
-        if(n->left != 0)
-            printNodes(n->left);
-        
-        if(n->right != 0)
-            printNodes(n->right);
-        
-    }
     
     void print() {
         printNodes(root);
     }
     
+private:
+    void printNodes(Node<T> *n) {
+        
+        if(n != nullptr)
+            std::cout << "Node: " << n->token << ":" << n->id << "\n";
+        
+        if(n->left != nullptr)
+            printNodes(n->left);
+        
+        if(n->right != nullptr)
+            printNodes(n->right);
+        
+    }
+    
     void release(Node<T> *n) {
-        if(n->left != 0)
+        if(n->left != nullptr)
             release(n->left);
-        if(n->right != 0)
+        if(n->right != nullptr)
             release(n->right);
         if(n != 0)
             delete n;
