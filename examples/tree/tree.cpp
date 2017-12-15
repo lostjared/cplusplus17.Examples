@@ -8,9 +8,9 @@ class Node {
 public:
     T token;
     unsigned int id;
-    Node *left, *right;
+    Node<T> *left, *right;
     Node() : id(0), left(nullptr), right(nullptr) {}
-    Node(const T &n_token, unsigned int n_id, Node *n_left, Node *n_right) {
+    Node(const T &n_token, unsigned int n_id, Node<T> *n_left, Node<T> *n_right) {
         token = n_token;
         id = n_id;
         left = n_left;
@@ -33,10 +33,8 @@ public:
     void print() {
         printNodes(root);
     }
-    
 private:
     void printNodes(Node<T> *n) {
-        
         if(n != nullptr)
             std::cout << "Node: " << n->token << ":" << n->id << "\n";
         
@@ -45,7 +43,6 @@ private:
         
         if(n->right != nullptr)
             printNodes(n->right);
-        
     }
     
     void release(Node<T> *n) {
