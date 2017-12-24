@@ -25,7 +25,8 @@ namespace tree {
     public:
         Tree();
         ~Tree() {
-            cleanValues(root);
+            if(root != nullptr)
+                cleanValues(root);
         }
         void addItem(const std::string &s_it, const T &item);
         bool getItem(T &tval, const std::string &s_it);
@@ -33,14 +34,12 @@ namespace tree {
         void printValues();
     private:
         TreeNode<T> *root;
-        void printValues(TreeNode<T> *root);
-        void cleanValues(TreeNode<T> *root);
+        void printValues(TreeNode<T> *node);
+        void cleanValues(TreeNode<T> *node);
     };
-
+    
     template<typename T>
-    Tree<T>::Tree() : root(nullptr) {
-        
-    }
+    Tree<T>::Tree() : root(nullptr) {}
     
     template<typename T>
     void Tree<T>::addItem(const std::string &s_it, const T &item) {
@@ -87,7 +86,6 @@ namespace tree {
     
     template<typename T>
     bool Tree<T>::getItem(T &tval, const std::string &s_it) {
-        //TreeNode<T>
         TreeNode<T> **values = &root, *current;
         while((current = *values) != nullptr) {
             if(current->id == s_it) {
@@ -115,33 +113,39 @@ namespace tree {
     void Tree<T>::printValues() {
         printValues(root);
     }
-
+    
     template<typename T>
-    void Tree<T>::printValues(TreeNode<T> *root) {
-        if(root != nullptr)
-            std::cout << root->id << ":" << root->value << "\n";
-        if(root != nullptr && root->left != nullptr)
-            printValues(root->left);
-        if(root != nullptr && root->right != nullptr)
-            printValues(root->right);;
+    void Tree<T>::printValues(TreeNode<T> *node) {
+        if(node != nullptr)
+            std::cout << node->id << ":" << node->value << "\n";
+        if(node != nullptr && node->left != nullptr)
+            printValues(node->left);
+        if(node != nullptr && node->right != nullptr)
+            printValues(node->right);
     }
     
     template<typename T>
-    void Tree<T>::cleanValues(TreeNode<T> *root) {
-        if(root != nullptr && root->left != nullptr)
-            cleanValues(root->left);
-        if(root != nullptr && root->right != nullptr)
-            cleanValues(root->right);
-        
-        if(root != nullptr) {
+    void Tree<T>::cleanValues(TreeNode<T> *node) {
+        if(node != nullptr && node->left != nullptr) {
 #ifdef DEBUG_INFO
-            std::cout << "erasing: " << root->id << ":" << root->value << "\n";
+            std::cout << "release left: " << node->left->id << "\n";
 #endif
-            delete root;
+            cleanValues(node->left);
+        }
+        if(node != nullptr && node->right != nullptr) {
+#ifdef DEBUG_INFO
+            std::cout << "release right: " << node->right->id << "\n";
+#endif
+            cleanValues(node->right);
+        }
+        
+        if(node != nullptr) {
+#ifdef DEBUG_INFO
+            std::cout << "erasing: " << node->id << ":" << node->value << "\n";
+#endif
+            delete node;
         }
     }
-
-    
 }
 
 #endif
