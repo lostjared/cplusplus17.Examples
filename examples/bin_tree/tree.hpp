@@ -30,7 +30,8 @@ namespace tree {
         }
         void addItem(const std::string &s_it, const T &item);
         bool getItem(T &tval, const std::string &s_it);
-        T operator[](const std::string &s_it);
+        T &operator[](const std::string &s_it);
+        TreeNode<T> *findNode(std::string s_it);
         void printValues();
     private:
         TreeNode<T> *root;
@@ -101,11 +102,27 @@ namespace tree {
     }
     
     template<typename T>
-    T Tree<T>::operator[](const std::string &s_it) {
-        T type;
-        if(getItem(type, s_it))
-            return type;
-        
+    TreeNode<T> *Tree<T>::findNode(std::string s_it) {
+        TreeNode<T> **values = &root, *current;
+        while((current = *values) != nullptr) {
+            if(current->id == s_it) {
+#ifdef DEBUG_INFO
+                std::cout << "Exisiting key found:: " << current->id <<":" << current->value << "\n";
+#endif
+                return current;
+            }
+            values = (current->id < s_it) ? &current->left : &current->right;
+        }
+        return nullptr;
+    }
+    
+    
+    template<typename T>
+    T &Tree<T>::operator[](const std::string &s_it) {
+        TreeNode<T> *cur = findNode(s_it);
+        if(cur != nullptr) {
+            return cur->value;
+        }
         throw KeyNotFound();
     }
     
