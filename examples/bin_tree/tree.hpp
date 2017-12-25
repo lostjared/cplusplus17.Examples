@@ -30,7 +30,7 @@ namespace tree {
         }
         void addItem(const std::string &s_it, const T &item);
         bool getItem(T &tval, const std::string &s_it);
-        T &operator[](const std::string &s_it);
+        T operator[](const std::string &s_it);
         void printValues();
     private:
         TreeNode<T> *root;
@@ -101,7 +101,7 @@ namespace tree {
     }
     
     template<typename T>
-    T &Tree<T>::operator[](const std::string &s_it) {
+    T Tree<T>::operator[](const std::string &s_it) {
         T type;
         if(getItem(type, s_it))
             return type;

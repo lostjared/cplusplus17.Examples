@@ -7,9 +7,9 @@ int main() {
         tree::Tree<std::string> values;
         std::cout << "Enter Key/Value loop, type quit for key to break loop...\n";
         while(1) {
-        	std::string keyval, value;
-        	std::cout << "Enter key: ";
-        	std::getline(std::cin, keyval);
+            std::string keyval, value;
+            std::cout << "Enter key: ";
+            std::getline(std::cin, keyval);
             if(keyval == "quit") break;
             std::cout << "Enter value: ";
             std::getline(std::cin, value);
