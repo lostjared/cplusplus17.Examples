@@ -23,6 +23,9 @@ namespace tree {
     template<typename T>
     class Tree {
     public:
+        using node_type = TreeNode<T>;
+        using value_type = T;
+        
         Tree();
         ~Tree() {
             if(root != nullptr)
@@ -30,8 +33,10 @@ namespace tree {
         }
         void addItem(const std::string &s_it, const T &item);
         bool getItem(T &tval, const std::string &s_it);
-        T operator[](const std::string &s_it);
+        T &operator[](const std::string &s_it);
+        node_type *findNode(std::string s_it);
         void printValues();
+        node_type rootNode() { return root; }
     private:
         TreeNode<T> *root;
         void printValues(TreeNode<T> *node);
@@ -101,11 +106,27 @@ namespace tree {
     }
     
     template<typename T>
-    T Tree<T>::operator[](const std::string &s_it) {
-        T type;
-        if(getItem(type, s_it))
-            return type;
-        
+    typename Tree<T>::node_type *Tree<T>::findNode(std::string s_it) {
+        TreeNode<T> **values = &root, *current;
+        while((current = *values) != nullptr) {
+            if(current->id == s_it) {
+#ifdef DEBUG_INFO
+                std::cout << "Exisiting key found:: " << current->id <<":" << current->value << "\n";
+#endif
+                return current;
+            }
+            values = (current->id < s_it) ? &current->left : &current->right;
+        }
+        return nullptr;
+    }
+    
+    
+    template<typename T>
+    T &Tree<T>::operator[](const std::string &s_it) {
+        TreeNode<T> *cur = findNode(s_it);
+        if(cur != nullptr) {
+            return cur->value;
+        }
         throw KeyNotFound();
     }
     
