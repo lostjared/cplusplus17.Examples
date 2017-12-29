@@ -37,7 +37,7 @@ namespace tree {
         node_type *findNode(std::string s_it);
         node_type *findCreate(std::string s_it);
         void printValues();
-        node_type rootNode() { return root; }
+        node_type *rootNode() { return root; }
     private:
         node_type *root;
         void printValues(node_type *node);
