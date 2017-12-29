@@ -35,6 +35,7 @@ namespace tree {
         bool getItem(T &tval, const std::string &s_it);
         T &operator[](const std::string &s_it);
         node_type *findNode(std::string s_it);
+        node_type *findCreate(std::string s_it);
         void printValues();
         node_type rootNode() { return root; }
     private:
@@ -49,7 +50,7 @@ namespace tree {
     template<typename T>
     void Tree<T>::addItem(const std::string &s_it, const T &item) {
         if(root == nullptr) {
-            root = new TreeNode<T>();
+            root = new node_type();
             if(!root) {
                 std::cerr << "Error creating node..\n";
                 return;
@@ -63,7 +64,7 @@ namespace tree {
 #endif
             return;
         } else {
-            TreeNode<T> **values = &root, *current;
+            node_type **values = &root, *current;
             while((current = *values) != nullptr) {
                 if(current->id == s_it) {
                     current->value = item;
@@ -74,7 +75,7 @@ namespace tree {
                 }
                 values = (current->id < s_it) ? &current->left : &current->right;
             }
-            *values = new TreeNode<T>();
+            *values = new node_type();
             current = *values;
             if(!*values) {
                 std::cerr << "Error could not allocate memory for tree node..\n";
@@ -91,7 +92,7 @@ namespace tree {
     
     template<typename T>
     bool Tree<T>::getItem(T &tval, const std::string &s_it) {
-        TreeNode<T> **values = &root, *current;
+        node_type **values = &root, *current;
         while((current = *values) != nullptr) {
             if(current->id == s_it) {
 #ifdef DEBUG_INFO
@@ -107,7 +108,7 @@ namespace tree {
     
     template<typename T>
     typename Tree<T>::node_type *Tree<T>::findNode(std::string s_it) {
-        TreeNode<T> **values = &root, *current;
+        node_type **values = &root, *current;
         while((current = *values) != nullptr) {
             if(current->id == s_it) {
 #ifdef DEBUG_INFO
@@ -119,11 +120,29 @@ namespace tree {
         }
         return nullptr;
     }
+    template<typename T>
+	typename Tree<T>::node_type *Tree<T>::findCreate(std::string s_it)  {
+        
+        node_type **values = &root, *current;
+        while((current = *values) != nullptr) {
+            if(current->id == s_it) {
+#ifdef DEBUG_INFO
+                std::cout << "Exisiting key found:: " << current->id <<":" << current->value << "\n";
+#endif
+                return current;
+            }
+            values = (current->id < s_it) ? &current->left : &current->right;
+        }
+        *values = new node_type();
+        current = *values;
+        current->id = s_it;
+        return current;
+    }
     
     
     template<typename T>
     T &Tree<T>::operator[](const std::string &s_it) {
-        TreeNode<T> *cur = findNode(s_it);
+        node_type *cur = findNode(s_it);
         if(cur != nullptr) {
             return cur->value;
         }
@@ -136,7 +155,7 @@ namespace tree {
     }
     
     template<typename T>
-    void Tree<T>::printValues(TreeNode<T> *node) {
+    void Tree<T>::printValues(node_type *node) {
         if(node != nullptr)
             std::cout << node->id << ":" << node->value << "\n";
         if(node != nullptr && node->left != nullptr)
@@ -146,7 +165,7 @@ namespace tree {
     }
     
     template<typename T>
-    void Tree<T>::cleanValues(TreeNode<T> *node) {
+    void Tree<T>::cleanValues(node_type *node) {
         if(node != nullptr && node->left != nullptr) {
 #ifdef DEBUG_INFO
             std::cout << "release left: " << node->left->id << "\n";
