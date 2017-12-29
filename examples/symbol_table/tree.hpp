@@ -151,7 +151,8 @@ namespace tree {
     
     template<typename T>
     void Tree<T>::printValues() {
-        printValues(root);
+        if(root != nullptr)
+        	printValues(root);
     }
     
     template<typename T>

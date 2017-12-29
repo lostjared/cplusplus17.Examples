@@ -18,6 +18,7 @@ namespace sym {
         void insertTop(std::string n, const T &type);
         void insertGlobal(std::string n, const T &type);
         typename tree::Tree<T>::node_type *searchStack(std::string n);
+        void printTable();
         
     private:
         std::vector<tree::Tree<T>> tree_stack;
@@ -68,6 +69,15 @@ namespace sym {
     void SymbolTable<T>::insertGlobal(std::string n, const T &type) {
         if(tree_stack.size()>0)
             tree_stack[0].addItem(n, type);
+    }
+    
+    template<typename T>
+    void SymbolTable<T>::printTable() {
+        for(int i = tree_stack.size()-1; i > 0; --i) {
+            if(i == 0) std::cout << "******************* GLOBAL ****************\n";
+            else std::cout << "********************* LEVEL - " << i << " ************\n";
+            tree_stack[i].printValues();
+        }
     }
 }
 
