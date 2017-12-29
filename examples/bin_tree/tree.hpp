@@ -39,9 +39,9 @@ namespace tree {
         void printValues();
         node_type rootNode() { return root; }
     private:
-        TreeNode<T> *root;
-        void printValues(TreeNode<T> *node);
-        void cleanValues(TreeNode<T> *node);
+        node_type *root;
+        void printValues(node_type *node);
+        void cleanValues(node_type *node);
     };
     
     template<typename T>
