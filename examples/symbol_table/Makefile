@@ -4,7 +4,7 @@ CPP_FILES := $(wildcard *.cpp)
 OBJ_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.o)))
 OUTPUT_NAME=sym-test
 
-%.o: %.cpp tree.hpp
+%.o: %.cpp tree.hpp table.hpp
 	$(CXX) $(CXX_FLAGS) -c -o $@ $<
   
 all: $(OBJ_FILES)
