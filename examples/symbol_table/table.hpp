@@ -15,10 +15,12 @@ namespace sym {
         bool exisits(std::string n);
         void pushTree();
         void popTree();
+        void insertLevel(int level, std::string n, const T &type);
         void insertTop(std::string n, const T &type);
         void insertGlobal(std::string n, const T &type);
         typename tree::Tree<T>::node_type *searchStack(std::string n);
         void printTable();
+        tree::Tree<T> *getTree(int index);
         
     private:
         std::vector<tree::Tree<T>> tree_stack;
@@ -41,7 +43,7 @@ namespace sym {
     
 	template<typename T>
     bool SymbolTable<T>::exisits(std::string n) {
-        for(int i = tree_stack.size()-1; i > 0; --i) {
+        for(int i = tree_stack.size()-1; i >= 0; --i) {
             typename tree::Tree<T>::node_type *node;
             node = tree_stack[i].findNode(n);
             if(node != nullptr) return true;
@@ -51,7 +53,7 @@ namespace sym {
     
     template<typename T>
     typename tree::Tree<T>::node_type *SymbolTable<T>::searchStack(std::string n) {
-        for(int i = tree_stack.size()-1; i > 0; --i) {
+        for(int i = tree_stack.size()-1; i >= 0; --i) {
             typename tree::Tree<T>::node_type *node;
             node = tree_stack[i].findNode(n);
             if(node != nullptr) return node;
@@ -70,15 +72,32 @@ namespace sym {
         if(tree_stack.size()>0)
             tree_stack[0].addItem(n, type);
     }
+
+    template<typename T>
+    void SymbolTable<T>::insertLevel(int level, std::string n, const T &type) {
+        if(level >= 0 && level < tree_stack.size()) {
+            tree_stack[level].addItem(n, type);
+        }
+    }
+
     
     template<typename T>
     void SymbolTable<T>::printTable() {
-        for(int i = tree_stack.size()-1; i > 0; --i) {
-            if(i == 0) std::cout << "******************* GLOBAL ****************\n";
-            else std::cout << "********************* LEVEL - " << i << " ************\n";
+        std::cout << "Symbol Table output..\n";
+        for(int i = tree_stack.size()-1; i >= 0; --i) {
+            if(i == 0) std::cout <<  "*** Global Table ***\n";
+            else std::cout << "*** Local Level: " << i << "***\n";
             tree_stack[i].printValues();
         }
     }
+
+    template<typename T>
+    tree::Tree<T> *SymbolTable<T>::getTree(int index) {
+        if(index >= 0 && index < tree_stack.size())
+            return &tree_stack[index];
+        return nullptr;
+    }
+
 }
 
 
