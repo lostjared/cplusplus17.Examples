@@ -5,6 +5,8 @@
 
 #include<iostream>
 #include<string>
+
+// comment out below line to not output debug information
 #define DEBUG_INFO
 
 namespace tree {
