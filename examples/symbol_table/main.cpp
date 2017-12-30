@@ -1,3 +1,7 @@
+/*
+ Try out using the Symbol Table with some tests...
+ */
+
 #include "table.hpp"
 
 struct SymbolType {
@@ -17,8 +21,25 @@ int main() {
     sym::SymbolTable<SymbolType> symbols;
     
     symbols.pushTree();
-    symbols.insertTop("Local", SymbolType("Local", 100));
-    symbols.insertGlobal("Global", SymbolType("Global", 100));
+    symbols.insertTop("Local_Var", SymbolType("Local", 255));
+    symbols.insertGlobal("Global_Var", SymbolType("Global", 1024));
+    symbols.insertTop("x", SymbolType("x", 1));
+    symbols.insertGlobal("x", SymbolType("x", 100));
+    
+    typename tree::Tree<SymbolType>::node_type *var = symbols.searchStack("x");
+    if(var != nullptr) {
+        std::cout << "Found symbol: " << var->value << "\n";
+    } else {
+        std::cout << "Symbol Not Found\n";
+    }
+    
+    var = symbols.searchStack("Local_Var");
+    
+    if(var != nullptr) {
+        std::cout << "Found symbol: " << var->value << "\n";
+    } else {
+        std::cout << "Symbol Not Found\n";
+    }
     
     symbols.printTable();
     

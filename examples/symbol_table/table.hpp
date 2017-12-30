@@ -80,7 +80,6 @@ namespace sym {
         }
     }
 
-    
     template<typename T>
     void SymbolTable<T>::printTable() {
         std::cout << "Symbol Table output..\n";
