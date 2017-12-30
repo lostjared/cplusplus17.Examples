@@ -21,6 +21,7 @@ namespace sym {
         typename tree::Tree<T>::node_type *searchStack(std::string n);
         void printTable();
         tree::Tree<T> *getTree(int index);
+        size_t size() const { return tree_stack.size(); }
         
     private:
         std::vector<tree::Tree<T>> tree_stack;
