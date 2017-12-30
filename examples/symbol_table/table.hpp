@@ -12,6 +12,10 @@ namespace sym {
     class SymbolTable {
     public:
         SymbolTable();
+        SymbolTable(SymbolTable<T> &st);
+        SymbolTable(SymbolTable<T> &&st);
+        SymbolTable<T> &operator=(const SymbolTable<T> &st);
+        SymbolTable<T> &operator=(SymbolTable<T> &&st);
         bool exisits(std::string n);
         void pushTree();
         void popTree();
@@ -26,6 +30,27 @@ namespace sym {
     private:
         std::vector<tree::Tree<T>> tree_stack;
     };
+    
+    template<typename T>
+    SymbolTable<T>::SymbolTable(SymbolTable<T> &st) {
+        tree_stack = st.tree_stack;
+    }
+    
+    template<typename T>
+    SymbolTable<T>::SymbolTable(SymbolTable<T> &&st) {
+        tree_stack = std::move(st.tree_stack);
+    }
+    
+    template<typename T>
+    SymbolTable<T> &SymbolTable<T>::operator=(const SymbolTable<T> &st) {
+        tree_stack = st.tree_stack;
+        return *this;
+    }
+    template<typename T>
+    SymbolTable<T> &SymbolTable<T>::operator=(SymbolTable<T> &&st) {
+        tree_stack = std::move(st.tree_stack);
+        return *this;
+    }
     
     template<typename T>
     SymbolTable<T>::SymbolTable() {
