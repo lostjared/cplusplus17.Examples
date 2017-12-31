@@ -7,7 +7,7 @@
 #include<string>
 
 // comment out below line to not output debug information
-#define DEBUG_INFO
+//#define DEBUG_INFO
 
 namespace tree {
     
@@ -33,6 +33,11 @@ namespace tree {
             if(root != nullptr)
                 cleanValues(root);
         }
+        Tree(Tree<T> &tr);
+        Tree(Tree<T> &&tr);
+        Tree<T> &operator=(Tree<T> &tr);
+        Tree<T> &operator=(Tree<T> &&tr);
+        
         void addItem(const std::string &s_it, const T &item);
         bool getItem(T &tval, const std::string &s_it);
         T &operator[](const std::string &s_it);
@@ -46,12 +51,39 @@ namespace tree {
         node_type *root;
         void printValues(node_type *node);
         void cleanValues(node_type *node);
+        void copy(Tree<T> &tr);
         std::string scope;
     };
     
     template<typename T>
     Tree<T>::Tree() : root(nullptr) {}
     
+    template<typename T>
+    void Tree<T>::copy(Tree<T> &tr) {
+        root = tr.root;
+        scope = tr.scope;
+    }
+    
+    template<typename T>
+    Tree<T>::Tree(Tree<T> &tr) {
+        copy(tr);
+    }
+    
+    template<typename T>
+    Tree<T>::Tree(Tree<T> &&tr) {
+        copy(tr);
+    }
+    
+    template<typename T>
+    Tree<T> &Tree<T>::operator=(Tree<T> &tr) {
+        copy(tr);
+    }
+    
+    template<typename T>
+    Tree<T> &Tree<T>::operator=(Tree<T> &&tr) {
+        copy(tr);
+    }
+
     template<typename T>
     void Tree<T>::addItem(const std::string &s_it, const T &item) {
         if(root == nullptr) {
