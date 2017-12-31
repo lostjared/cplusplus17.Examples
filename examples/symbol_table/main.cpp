@@ -20,7 +20,6 @@ std::ostream &operator<<(std::ostream &out, SymbolType &type) {
 
 int main() {
     sym::SymbolTable<SymbolType> symbols;
-    
     symbols.pushTree("Local[main]");
     symbols.insertTop("x", SymbolType("test", 25));
     
@@ -45,8 +44,12 @@ int main() {
         std::cout << "******* END TABLE  *******\n";
         symbols.popTree();
     }
+    
+    // test move constructor
+    sym::SymbolTable<SymbolType> move_sym(std::move(symbols));
     std::cout << "***** PRINT TABLE *****\n";
-    symbols.printTable();
+    move_sym.printTable();
     std::cout << "***** END   TABLE *****\n";
+    
     return 0;
 }
