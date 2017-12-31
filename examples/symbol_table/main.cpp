@@ -20,9 +20,10 @@ std::ostream &operator<<(std::ostream &out, SymbolType &type) {
 
 int main() {
     sym::SymbolTable<SymbolType> symbols;
-    symbols.pushTree("Local[main]");
     
-    symbols.insertTop("x", SymbolType("test", 1));
+    symbols.pushTree("Local[main]");
+    symbols.insertTop("x", SymbolType("test", 25));
+    
     typename tree::Tree<SymbolType>::node_type *var = symbols.searchStack("x");
     if(var != nullptr) {
         std::cout << "Found symbol: " << var->value << "\n";
@@ -30,7 +31,6 @@ int main() {
         std::cout << "Symbol Not Found\n";
     }
     var = symbols.searchStack("Local_Var");
-    
     if(var != nullptr) {
         std::cout << "Found symbol: " << var->value << "\n";
     } else {
@@ -40,9 +40,13 @@ int main() {
     for(int i = 0;  i < 10; ++i) {
         symbols.pushTree();
         symbols.insertTop("test1", SymbolType("test1", 1));
+        std::cout << "****** PRINT TABLE ******\n";
         symbols.printTable();
+        std::cout << "******* END TABLE  *******\n";
         symbols.popTree();
     }
+    std::cout << "***** PRINT TABLE *****\n";
     symbols.printTable();
+    std::cout << "***** END   TABLE *****\n";
     return 0;
 }
