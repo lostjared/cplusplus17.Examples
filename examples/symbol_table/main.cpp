@@ -39,7 +39,7 @@ int main() {
     
     for(int i = 0;  i < 10; ++i) {
         symbols.pushTree();
-        symbols.insertTop("test1", SymbolType("test1", 1));
+        symbols.insertTop("test1", SymbolType("test1", i));
         std::cout << "****** PRINT TABLE ******\n";
         symbols.printTable();
         std::cout << "******* END TABLE  *******\n";
