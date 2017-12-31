@@ -20,7 +20,7 @@ int main() {
     
     sym::SymbolTable<SymbolType> symbols;
     
-    symbols.pushTree();
+    symbols.pushTree("Local[main]");
     symbols.insertTop("Local_Var", SymbolType("Local", 255));
     symbols.insertGlobal("Global_Var", SymbolType("Global", 1024));
     symbols.insertTop("x", SymbolType("x", 1));

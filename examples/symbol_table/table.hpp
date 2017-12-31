@@ -18,6 +18,7 @@ namespace sym {
         SymbolTable<T> &operator=(SymbolTable<T> &&st);
         bool exisits(std::string n);
         void pushTree();
+        void pushTree(const std::string &n);
         void popTree();
         void insertLevel(int level, std::string n, const T &type);
         void insertTop(std::string n, const T &type);
@@ -54,13 +55,20 @@ namespace sym {
     
     template<typename T>
     SymbolTable<T>::SymbolTable() {
-        tree_stack.push_back(tree::Tree<T>());
+        pushTree("Global");
     }
     
     template<typename T>
     void SymbolTable<T>::pushTree() {
         tree_stack.push_back(tree::Tree<T>());
     }
+    
+    template<typename T>
+    void SymbolTable<T>::pushTree(const std::string &n) {
+        pushTree();
+        tree_stack[tree_stack.size()-1].setScope(n);
+    }
+
     
     template<typename T>
     void SymbolTable<T>::popTree() {
@@ -110,8 +118,7 @@ namespace sym {
     void SymbolTable<T>::printTable() {
         std::cout << "Symbol Table output..\n";
         for(int i = tree_stack.size()-1; i >= 0; --i) {
-            if(i == 0) std::cout <<  "*** Global Table ***\n";
-            else std::cout << "*** Local Level: " << i << "***\n";
+            std::cout << "Scope: " << tree_stack[i].getScope() << " Level: " << i << "\n";
             tree_stack[i].printValues();
         }
     }

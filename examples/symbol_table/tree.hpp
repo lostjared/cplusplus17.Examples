@@ -39,11 +39,14 @@ namespace tree {
         node_type *findNode(std::string s_it);
         node_type *findCreate(std::string s_it);
         void printValues();
+        void setScope(const std::string &s);
+        std::string getScope();
         node_type *rootNode() { return root; }
     private:
         node_type *root;
         void printValues(node_type *node);
         void cleanValues(node_type *node);
+        std::string scope;
     };
     
     template<typename T>
@@ -188,6 +191,16 @@ namespace tree {
 #endif
             delete node;
         }
+    }
+    
+    template<typename T>
+    void Tree<T>::setScope(const std::string &s) {
+        scope = s;
+    }
+    
+    template<typename T>
+    std::string Tree<T>::getScope() {
+        return scope;
     }
 }
 
