@@ -83,7 +83,7 @@ namespace tree {
     Tree<T> &Tree<T>::operator=(Tree<T> &&tr) {
         copy(tr);
     }
-
+    
     template<typename T>
     void Tree<T>::addItem(const std::string &s_it, const T &item) {
         if(root == nullptr) {
@@ -158,7 +158,7 @@ namespace tree {
         return nullptr;
     }
     template<typename T>
-	typename Tree<T>::node_type *Tree<T>::findCreate(std::string s_it)  {
+    typename Tree<T>::node_type *Tree<T>::findCreate(std::string s_it)  {
         
         node_type **values = &root, *current;
         while((current = *values) != nullptr) {
@@ -189,7 +189,7 @@ namespace tree {
     template<typename T>
     void Tree<T>::printValues() {
         if(root != nullptr)
-        	printValues(root);
+            printValues(root);
     }
     
     template<typename T>
