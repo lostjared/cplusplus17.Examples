@@ -29,7 +29,10 @@ namespace sym {
         void printTable();
         tree::Tree<T> *getTree(int index);
         size_t size() const { return tree_stack.size(); }
-        
+        auto sym_begin() { return tree_stack.begin(); }
+        auto sym_end() { return tree_stack.end(); }
+        auto sym_rbegin() { return tree_stack.rbegin(); }
+        auto sym_rend() { return tree_stack.rend(); }
     private:
         std::vector<std::unique_ptr<tree::Tree<T>>> tree_stack;
     };
@@ -127,11 +130,12 @@ namespace sym {
     
     template<typename T>
     void SymbolTable<T>::printTable() {
-        std::cout << "Symbol Table output..\n";
+        std::cout << "<-**** Symbol Table ****->\n";
         for(int i = tree_stack.size()-1; i >= 0; --i) {
-            std::cout << "Scope: " << tree_stack[i]->getScope() << " Level: " << i << "\n";
+            std::cout << "Current Scope: " << tree_stack[i]->getScope() << " Depth Level: " << i << "\n";
             tree_stack[i]->printValues();
         }
+        std::cout << "<-**** End Symbols ****->\n";
     }
     
     template<typename T>
@@ -142,7 +146,6 @@ namespace sym {
     }
     
 }
-
 
 #endif
 

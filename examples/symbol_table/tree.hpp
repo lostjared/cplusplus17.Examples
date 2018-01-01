@@ -196,7 +196,7 @@ namespace tree {
     template<typename T>
     void Tree<T>::printValues(node_type *node) {
         if(node != nullptr)
-            std::cout << node->id << ":" << node->value << "\n";
+            std::cout << "Node ID: " << node->id << " Node Value:" << node->value << "\n";
         if(node != nullptr && node->left != nullptr)
             printValues(node->left);
         if(node != nullptr && node->right != nullptr)
