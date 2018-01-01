@@ -36,12 +36,13 @@ namespace tree {
         
         // move operations
         Tree(Tree<T> &&tr);
-        Tree(Tree<T> &tr) = delete;
         Tree<T> &operator=(Tree<T> &&tr);
+        Tree(Tree<T> &tr) = delete;
         Tree<T> &operator=(Tree<T> &t) = delete;
         
         void addItem(const std::string &s_it, const T &item);
         bool getItem(T &tval, const std::string &s_it);
+        
         T &operator[](const std::string &s_it);
         node_type *findNode(std::string s_it);
         node_type *findCreate(std::string s_it);
@@ -196,7 +197,7 @@ namespace tree {
     template<typename T>
     void Tree<T>::printValues(node_type *node) {
         if(node != nullptr)
-            std::cout << "Node ID: " << node->id << " Node Value:" << node->value << "\n";
+            std::cout << "Node ID: [" << node->id << "] -> Value: [" << node->value << "]\n";
         if(node != nullptr && node->left != nullptr)
             printValues(node->left);
         if(node != nullptr && node->right != nullptr)
@@ -207,20 +208,20 @@ namespace tree {
     void Tree<T>::cleanValues(node_type *node) {
         if(node != nullptr && node->left != nullptr) {
 #ifdef DEBUG_INFO
-            std::cout << "release left: " << node->left->id << "\n";
+            std::cout << "release left: [" << node->left->id << "]\n";
 #endif
             cleanValues(node->left);
         }
         if(node != nullptr && node->right != nullptr) {
 #ifdef DEBUG_INFO
-            std::cout << "release right: " << node->right->id << "\n";
+            std::cout << "release right: [" << node->right->id << "]\n";
 #endif
             cleanValues(node->right);
         }
         
         if(node != nullptr) {
 #ifdef DEBUG_INFO
-            std::cout << "erasing: " << node->id << ":" << node->value << "\n";
+            std::cout << "erasing: [" << node->id << ":" << node->value << "]\n";
 #endif
             delete node;
         }

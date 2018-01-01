@@ -14,7 +14,7 @@ struct SymbolType {
 };
 
 std::ostream &operator<<(std::ostream &out, SymbolType &type) {
-    out << type.name << ":" << type.value << ":" << type.str_val << "\n";
+    out << type.name << ":" << type.value << ":" << type.str_val;
     return out;
 }
 
@@ -30,7 +30,6 @@ int main() {
     sym::SymbolTable<SymbolType> symbols;
     symbols.pushTree("Local[main]");
     symbols.insertTop("x", SymbolType("test", 25));
-    
     typename tree::Tree<SymbolType>::node_type *var = symbols.searchStack("x");
     if(var != nullptr) {
         std::cout << "Found symbol: " << var->value << "\n";
@@ -43,14 +42,12 @@ int main() {
     } else {
         std::cout << "Symbol Not Found\n";
     }
-    
     for(int i = 0;  i < 10; ++i) {
         symbols.pushTree();
         symbols.insertTop("test1", SymbolType("test1", i));
         symbols.printTable();
         symbols.popTree();
     }
-    
     // test move constructor
     sym::SymbolTable<SymbolType> move_sym(std::move(symbols));
     // output with iterator
