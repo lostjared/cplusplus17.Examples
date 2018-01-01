@@ -36,7 +36,9 @@ namespace tree {
         
         // move operations
         Tree(Tree<T> &&tr);
+        Tree(Tree<T> &tr) = delete;
         Tree<T> &operator=(Tree<T> &&tr);
+        Tree<T> &operator=(Tree<T> &t) = delete;
         
         void addItem(const std::string &s_it, const T &item);
         bool getItem(T &tval, const std::string &s_it);
@@ -48,7 +50,7 @@ namespace tree {
         std::string getScope();
         node_type *rootNode() { return root; }
         void setOwns(bool b);
-        void copy(Tree<T> &tr);
+        void moveTree(Tree<T> &&tr);
     private:
         node_type *root;
         void printValues(node_type *node);
@@ -61,9 +63,9 @@ namespace tree {
     Tree<T>::Tree() : root(nullptr), owns(true) {}
     
     template<typename T>
-    void Tree<T>::copy(Tree<T> &tr) {
-        root = tr.root;
-        scope = tr.scope;
+    void Tree<T>::moveTree(Tree<T> &&tr) {
+        root = std::move(tr.root);
+        scope = std::move(tr.scope);
         tr.setOwns(false);
         owns = true;
     }
@@ -75,12 +77,12 @@ namespace tree {
     
     template<typename T>
     Tree<T>::Tree(Tree<T> &&tr) {
-        copy(tr);
+        moveTree(tr);
     }
     
     template<typename T>
     Tree<T> &Tree<T>::operator=(Tree<T> &&tr) {
-        copy(tr);
+        moveTree(tr);
     }
     
     template<typename T>
