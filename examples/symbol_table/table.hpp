@@ -12,6 +12,7 @@ namespace sym {
     template<typename T>
     class SymbolTable {
     public:
+        using value_type = T;
         SymbolTable();
         SymbolTable(SymbolTable<T> &st);
         SymbolTable(SymbolTable<T> &&st);
@@ -29,10 +30,7 @@ namespace sym {
         void printTable();
         tree::Tree<T> *getTree(int index);
         size_t size() const { return tree_stack.size(); }
-        auto sym_begin() { return tree_stack.begin(); }
-        auto sym_end() { return tree_stack.end(); }
-        auto sym_rbegin() { return tree_stack.rbegin(); }
-        auto sym_rend() { return tree_stack.rend(); }
+        std::vector<std::unique_ptr<tree::Tree<T>>> *operator->() { return &tree_stack; }
     private:
         std::vector<std::unique_ptr<tree::Tree<T>>> tree_stack;
     };

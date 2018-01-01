@@ -20,7 +20,7 @@ std::ostream &operator<<(std::ostream &out, SymbolType &type) {
 
 template<typename T>
 void outputTable(sym::SymbolTable<T> &type) {
-    for(auto i = type.sym_rbegin(); i != type.sym_rend(); ++i) {
+    for(auto i = type->rbegin(); i != type->rend(); ++i) {
         auto v = i->get();
         v->printValues();
     }
