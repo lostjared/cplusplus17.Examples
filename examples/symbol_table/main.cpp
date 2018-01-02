@@ -4,6 +4,7 @@
 // comment out below line for no debug info
 //#define DEBUG_INFO
 #include "table.hpp"
+#include<algorithm>
 
 struct SymbolType {
     std::string name, str_val;
@@ -28,29 +29,24 @@ void outputTable(sym::SymbolTable<T> &type) {
 
 int main() {
     sym::SymbolTable<SymbolType> symbols;
-    symbols.pushTree("Local[main]");
-    symbols.insertTop("x", SymbolType("test", 25));
-    typename tree::Tree<SymbolType>::node_type *var = symbols.searchStack("x");
-    if(var != nullptr) {
-        std::cout << "Found symbol: " << var->value << "\n";
-    } else {
-        std::cout << "Symbol Not Found\n";
-    }
-    var = symbols.searchStack("Local_Var");
-    if(var != nullptr) {
-        std::cout << "Found symbol: " << var->value << "\n";
-    } else {
-        std::cout << "Symbol Not Found\n";
-    }
-    for(int i = 0;  i < 10; ++i) {
-        symbols.pushTree();
-        symbols.insertTop("test1", SymbolType("test1", i));
-        symbols.printTable();
-        symbols.popTree();
-    }
-    // test move constructor
-    sym::SymbolTable<SymbolType> move_sym(std::move(symbols));
-    // output with iterator
-    outputTable<SymbolType>(move_sym);
+    std::string name, value;
+    std::cout << "Enter some symbols use quit as name to stop loop\n";
+    do {
+        std::cout << "Enter symbol name: ";
+        std::getline(std::cin, name);
+        if(name != "quit") {
+            std::cout << "Enter symbol value: ";
+        	std::getline(std::cin, value);
+            symbols.insertTop(name, SymbolType(name, value));
+            symbols.printTable();
+        }
+    } while(name != "quit");
+    symbols.pushTree("main_func");
+    symbols.insertTop("Test 1 2 3", SymbolType("Test 1 2 3", "Value"));
+    symbols.pushTree("local");
+    symbols.insertTop("local-if", SymbolType("local-if", "Val"));
+    symbols.printTable();
+    symbols.popTree();
+    symbols.popTree();
     return 0;
 }
