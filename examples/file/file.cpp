@@ -51,8 +51,8 @@ int main(int argc, char **argv) {
         std::cout << "Enter Last name: ";
         std::getline(std::cin, last);
         
-        snprintf(ds.name_first, 255, "%s", first.c_str());
-        snprintf(ds.name_last, 255, "%s", last.c_str());
+        snprintf(ds.name_first, ARRAY_SIZE-1, "%s", first.c_str());
+        snprintf(ds.name_last, ARRAY_SIZE-1, "%s", last.c_str());
         ds.index = rand()%255;
 
         file.write(reinterpret_cast<char*>(&ds), sizeof(DataStruct));
