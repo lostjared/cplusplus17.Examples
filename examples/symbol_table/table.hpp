@@ -13,6 +13,7 @@ namespace sym {
     class SymbolTable {
     public:
         using value_type = T;
+        using node_ptr = typename tree::Tree<T>::node_type;
         SymbolTable();
         SymbolTable(SymbolTable<T> &st);
         SymbolTable(SymbolTable<T> &&st);
@@ -29,7 +30,7 @@ namespace sym {
         typename tree::Tree<T>::node_type *searchStack(std::string n);
         void printTable();
         tree::Tree<T> *getTree(int index);
-        tree::Tree<T> *operator[](unsigned int index) { return tree_stack[index]; }
+        tree::Tree<T> *operator[](unsigned int index) { return tree_stack[index].get(); }
         size_t size() const { return tree_stack.size(); }
         std::vector<std::unique_ptr<tree::Tree<T>>> *operator->() { return &tree_stack; }
     private:
@@ -102,7 +103,10 @@ namespace sym {
         for(int i = tree_stack.size()-1; i >= 0; --i) {
             typename tree::Tree<T>::node_type *node;
             node = tree_stack[i]->findNode(n);
-            if(node != nullptr) return node;
+            if(node != nullptr) {
+                node->depth = i;
+                return node;
+            }
         }
         return nullptr;
     }
@@ -140,10 +144,9 @@ namespace sym {
     template<typename T>
     tree::Tree<T> *SymbolTable<T>::getTree(int index) {
         if(index >= 0 && index < tree_stack.size())
-            return tree_stack[index];
+            return tree_stack[index].get();
         return nullptr;
     }
-    
 }
 
 #endif

@@ -46,6 +46,16 @@ int main() {
     symbols.pushTree("local");
     symbols.insertTop("local-if", SymbolType("local-if", "Val"));
     symbols.printTable();
+    typename sym::SymbolTable<SymbolType>::node_ptr *node;
+    std::cout << "Enter id to search for: ";
+    std::string input_val;
+    std::getline(std::cin, input_val);
+    node = symbols.searchStack(input_val);
+    if(node == nullptr)
+        std::cout << input_val << " not found..\n";
+    else {
+        std::cout << "Symbol: " << node->value << " found at Scope: " << symbols[node->depth]->getScope() << "\n";
+    }
     symbols.popTree();
     symbols.popTree();
     return 0;
