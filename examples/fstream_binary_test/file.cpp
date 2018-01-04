@@ -7,7 +7,7 @@
 #include<cstdlib>
 #include<ctime>
 
-enum { ARRAY_SIZE=256 };
+constexpr unsigned int ARRAY_SIZE=256;
 
 struct DataStruct {
     char name_first[ARRAY_SIZE];
