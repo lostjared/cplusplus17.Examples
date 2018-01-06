@@ -50,11 +50,11 @@ int main() {
     std::cout << "Enter id to search for: ";
     std::string input_val;
     std::getline(std::cin, input_val);
-    node = symbols.searchStack(input_val);
-    if(node == nullptr)
+    sym::SymbolTable<SymbolType>::SymbolInfo si;
+    if(symbols.searchStack(input_val, &si) == false)
         std::cout << input_val << " not found..\n";
     else {
-        std::cout << "Symbol: " << node->value << " found at Scope: " << symbols[node->depth]->getScope() << "\n";
+        std::cout << "Symbol: " << si.nptr->value << " found at Scope: " << symbols[si.depth]->getScope() << "\n";
     }
     symbols.popTree();
     symbols.popTree();

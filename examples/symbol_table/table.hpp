@@ -9,9 +9,15 @@
 #include<memory>
 
 namespace sym {
+    
     template<typename T>
     class SymbolTable {
     public:
+        struct SymbolInfo {
+            typename tree::Tree<T>::node_type *nptr;
+            unsigned int depth;
+            std::string name;
+        };
         using value_type = T;
         using node_ptr = typename tree::Tree<T>::node_type;
         SymbolTable();
@@ -28,6 +34,7 @@ namespace sym {
         void insertGlobal(std::string n, const T &type);
         int findScopeByName(const std::string &n);
         typename tree::Tree<T>::node_type *searchStack(std::string n);
+        bool searchStack(std::string n, SymbolInfo *info);
         void printTable();
         tree::Tree<T> *getTree(int index);
         tree::Tree<T> *operator[](unsigned int index) { return tree_stack[index].get(); }
@@ -36,6 +43,8 @@ namespace sym {
     private:
         std::vector<std::unique_ptr<tree::Tree<T>>> tree_stack;
     };
+    
+   
     
     template<typename T>
     SymbolTable<T>::SymbolTable(SymbolTable<T> &st) {
@@ -103,12 +112,26 @@ namespace sym {
         for(int i = tree_stack.size()-1; i >= 0; --i) {
             typename tree::Tree<T>::node_type *node;
             node = tree_stack[i]->findNode(n);
-            if(node != nullptr) {
-                node->depth = i;
+            if(node != nullptr)
                 return node;
-            }
+            
         }
         return nullptr;
+    }
+    
+    template<typename T>
+    bool SymbolTable<T>::searchStack(std::string n, SymbolInfo *info) {
+        for(int i = tree_stack.size()-1; i >= 0; --i) {
+            typename tree::Tree<T>::node_type *node;
+            node = tree_stack[i]->findNode(n);
+            if(node != nullptr) {
+                info->depth = i;
+                info->nptr = node;
+                info->name = n;
+                return true;
+            }
+        }
+        return false;
     }
     
     template<typename T>

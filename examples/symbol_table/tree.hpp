@@ -18,9 +18,8 @@ namespace tree {
     public:
         T value;
         std::string id;
-        unsigned int depth;
         TreeNode<T> *left, *right;
-        TreeNode() : left(nullptr), right(nullptr), value(T()), depth(0) { }
+        TreeNode() : left(nullptr), right(nullptr), value(T()) { }
     };
     
     template<typename T>
