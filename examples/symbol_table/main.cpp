@@ -46,7 +46,6 @@ int main() {
     symbols.pushTree("local");
     symbols.insertTop("local-if", SymbolType("local-if", "Val"));
     symbols.printTable();
-    typename sym::SymbolTable<SymbolType>::node_ptr *node;
     std::cout << "Enter id to search for: ";
     std::string input_val;
     std::getline(std::cin, input_val);

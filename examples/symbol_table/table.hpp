@@ -94,6 +94,12 @@ namespace sym {
     
     template<typename T>
     void SymbolTable<T>::popTree() {
+#ifdef DEBUG_INFO
+        int size = tree_stack.size()-1;
+        if(size >= 0) {
+            std::cout << "pop_back tree: " << tree_stack[size]->getScope() << "\n";
+        }
+#endif
         tree_stack.pop_back();
     }
     
