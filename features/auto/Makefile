@@ -1,5 +1,5 @@
 CXX=g++
-CXX_FLAGS= -std=c++1z
+CXX_FLAGS= -std=c++17
 
 CPP_FILES := $(wildcard *.cpp)
 EXE_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.prog)))

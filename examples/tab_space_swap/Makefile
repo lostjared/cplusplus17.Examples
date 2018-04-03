@@ -1,4 +1,4 @@
-CXX_FLAGS=-std=c++1z
+CXX_FLAGS=-std=c++17
 LDFLAGS=
 CPP_FILES := $(wildcard *.cpp)
 OBJ_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.o)))

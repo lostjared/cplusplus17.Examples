@@ -1,4 +1,4 @@
-CXX_FLAGS=-std=c++1z
+CXX_FLAGS=-std=c++17
 CXX=g++
 
 inline-test: point.cpp main.cpp point.hpp header_only.hpp
