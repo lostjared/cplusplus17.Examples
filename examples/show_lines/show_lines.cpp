@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
     }
     std::stringstream stream;
     stream << file.rdbuf();
+    file.close();
     std::vector<std::string> values;
     while(!stream.eof()) {
         std::string s;
@@ -34,7 +35,7 @@ int main(int argc, char **argv) {
         strout.width(vlength);
         strout.fill('0');
         strout << (i+1);
-        std::cout << strout.str() << ": " << values[i] << "\n";
+        std::cout << strout.str() << ":\t" << values[i] << "\n";
     }
     return 0;
 }
