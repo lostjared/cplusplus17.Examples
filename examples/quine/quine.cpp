@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
         "}", 0};
     for(int i = 0; i < 5; ++i)
         std::cout << arr[i] << std::endl;
-    for(int i = 4; arr[i] != 0; ++i)
+    for(int i = 0; arr[i] != 0; ++i)
         std::cout << arr[5] << quote << arr[i] << quote << "," << std::endl;
     for(int i = 6; arr[i] != 0; ++i)
         std::cout << arr[i] << std::endl;
