@@ -14,4 +14,4 @@ Example output from Program:
 	./plugins/blank/source.cpp: 5 lines 3 blank lines for total of 8
 	./plugins/example/source.cpp: 16 lines 3 blank lines for total of 19
 	./plugins/vertsort/source.cpp: 42 lines 3 blank lines for total of 45
-	6 file(s) contain: 875 lines and 109 lines for a total of 984.
+	6 file(s) contain: 875 lines and 109 blank lines for a total of 984.
