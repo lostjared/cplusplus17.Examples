@@ -13,7 +13,7 @@
 
 void add_directory(std::string path, std::vector<std::string> &files);
 std::string toLower(const std::string &s);
-const char *file_ext[] = { ".cpp", ".h", ".hpp",".c",".cc", ".cxx", 0 };
+const char *file_ext[] = { ".cpp", ".h", ".hpp",".c",".cc", ".cxx",".m", ".mm", 0 };
 unsigned long countLines(std::vector<std::string> &v, unsigned long &blank);
 unsigned long countFile(std::string filename, unsigned long &blank);
 bool lineEmpty(const std::string &line);
