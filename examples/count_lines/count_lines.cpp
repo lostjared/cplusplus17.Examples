@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
     if(files.size() > 0) {
         unsigned long blank = 0;
         count = countLines(files, blank);
-        std::cout << files.size() << " file(s) contain: " << count << " lines and " << blank << " 	   blank lines for a total of " << blank+count << ".\n";
+        std::cout << files.size() << " file(s) contain: " << count << " lines and " << blank << "blank lines for a total of " << blank+count << ".\n";
     }
     return 0;
 }
