@@ -25,7 +25,7 @@ void life() {
 
 int main(int argc, char **argv) {
     while(1) {
-    	life();
+        life();
     }
-	return 0;
+    return 0;
 }
