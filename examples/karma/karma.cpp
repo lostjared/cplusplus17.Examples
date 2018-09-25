@@ -11,13 +11,13 @@ Thought &get(Thought &thought) {
     return thought;
 }
 Thought &give(Thought &thought) {
-    std::cout << "Gave thought " << thought.idea << "\n";
+    std::cout << "Gave thought " << (thought.idea + "++") << "\n";
     return thought;
 }
 
 void life() {
     Thought code;
-    code.idea = "Cycle\n";
+    code.idea = "Cycle";
     Thought think = get(give(code));
     std::cout << "Karma returns: " << think.idea << "\n";
 }
