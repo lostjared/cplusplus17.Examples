@@ -1,6 +1,7 @@
 Program output Counting lines of Acid Cam OSX source code:
 
 jared@LostSideDead[~/Source/gitlab/Acid.Cam.v2.OSX/Acid.Cam.v2.OSX]$ count_lines .
+
 Source File Found: ./ac-alpha.cpp
 Source File Found: ./ac-basic.cpp
 Source File Found: ./ac-box.cpp
@@ -71,5 +72,5 @@ Source File Found: ./videoprogram.mm
 ./tokenize.hpp: 91 lines 22 blank lines for total of 113
 ./videocapture.h: 60 lines 15 blank lines for total of 75
 ./videoprogram.mm: 232 lines 21 blank lines for total of 253
-35 file(s) contain: 18414 lines and 1689  blank lines for a total of 20103.
-jared@LostSideDead[~/Source/gitlab/Acid.Cam.v2.OSX/Acid.Cam.v2.OSX]$ 
+35 file(s) contain: 18414 lines and 1689  blank lines for a total of 20103
+
