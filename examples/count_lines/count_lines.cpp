@@ -19,8 +19,19 @@ unsigned long countFile(std::string filename, unsigned long &blank);
 bool lineEmpty(const std::string &line);
 
 int main(int argc, char **argv) {
+    
+    std::string path;
+    if(argc == 1)
+        path = ".";
+    else if(argc == 2) {
+        path = argv[1];
+    } else {
+        std::cerr << argv[0] << "Only requires one argument the path\n";
+        exit(EXIT_FAILURE);
+    }
+    
     std::vector<std::string> files;
-    add_directory(".", files);
+    add_directory(path, files);
     unsigned long count = 0;
     if(files.size() > 0) {
         unsigned long blank = 0;
