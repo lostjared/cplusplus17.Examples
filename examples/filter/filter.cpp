@@ -33,7 +33,24 @@ namespace ac {
     
     void SelfAlphaBlend::operator()(/*cv::Mat &frame*/) {
         // modify frame
+        alpha = 1.0;
         std::cout << "SelfAlphaBlend ...\n";
     }
     
+    void SelfAlphaBlend::reset() {
+        alpha = 0;
+    }
+    
+    SelfScale::SelfScale() : FilterObject("SelfScale") {
+        alpha = 1.0;
+    }
+    
+    void SelfScale::operator()(/*cv::Mat &frame */) {
+        std::cout << "in SelfScale ... \n";
+    }
+    
+    void SelfScale::reset() {
+        alpha = 0;
+    }
+        
 }

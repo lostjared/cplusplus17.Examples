@@ -4,9 +4,9 @@
 #include"filter.hpp"
 
 
-template<typename T>
-void procFilter(T &type) {
-    type(/*frame*/);
+
+void procFilter(ac::FilterObject *obj) {
+    (*obj)(/*mat*/);
 }
 
 int main() {
@@ -14,8 +14,10 @@ int main() {
     // Create new filter
     ac::SelfAlphaBlend blend;
     filter_stack.push_back(&blend);
+    ac::SelfScale scale;
+    filter_stack.push_back(&scale);
     for(unsigned int i = 0; i < filter_stack.size(); ++i) {
-        procFilter(*filter_stack[i]);
+        procFilter(filter_stack[i]);
     }
     return 0;
 }

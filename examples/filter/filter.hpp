@@ -14,6 +14,7 @@ namespace ac {
         FilterObject(const FilterObject &fo);
         FilterObject &operator=(const FilterObject &fo);
         void setID(const std::string &s);
+        virtual void reset() = 0;
         virtual void operator()(/*cv::Mat &frame*/) = 0;
     protected:
         double alpha;
@@ -25,6 +26,14 @@ namespace ac {
     public:
         SelfAlphaBlend();
         void operator()(/*cv::Mat &frame*/);
+        void reset();
+    };
+    
+    class SelfScale : public FilterObject {
+    public:
+        SelfScale();
+        void operator()(/*cv::Mat &frame*/);
+        void reset();
     };
 }
 
