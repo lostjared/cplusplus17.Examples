@@ -33,6 +33,7 @@ namespace ac {
     
     void SelfAlphaBlend::operator()(/*cv::Mat &frame*/) {
         // modify frame
+        std::cout << "SelfAlphaBlend ...\n";
     }
     
 }
