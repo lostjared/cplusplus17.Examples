@@ -10,14 +10,22 @@ namespace ac {
     class FilterObject {
     public:
         FilterObject();
+        FilterObject(const std::string &s);
         FilterObject(const FilterObject &fo);
         FilterObject &operator=(const FilterObject &fo);
-    private:
-        //cv::Mat frame;
+        void setID(const std::string &s);
+        virtual void operator()(/*cv::Mat &frame*/) = 0;
+    protected:
         double alpha;
+        std::string id;
         //MatriCollection
     };
     
+    class SelfAlphaBlend : public FilterObject {
+    public:
+        SelfAlphaBlend();
+        void operator()(/*cv::Mat &frame*/);
+    };
 }
 
 #endif
