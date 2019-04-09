@@ -4,11 +4,9 @@ namespace ac {
     
     // initalize
     FilterObject::FilterObject() : alpha(0) {
-        
     }
     
     FilterObject::FilterObject(const std::string &s) : alpha(0), id(s) {
-        
     }
     
     FilterObject::FilterObject(const FilterObject &fo) {
@@ -28,7 +26,7 @@ namespace ac {
     }
     
     SelfAlphaBlend::SelfAlphaBlend() : FilterObject("SelfAlphaBlend") {
-        
+        reset();
     }
     
     void SelfAlphaBlend::operator()(/*cv::Mat &frame*/) {
@@ -39,18 +37,21 @@ namespace ac {
     
     void SelfAlphaBlend::reset() {
         alpha = 0;
+        std::cout << "Filter " << id << " reset.\n";
     }
-    
+        
     SelfScale::SelfScale() : FilterObject("SelfScale") {
-        alpha = 1.0;
+        reset();
     }
     
     void SelfScale::operator()(/*cv::Mat &frame */) {
         std::cout << "in SelfScale ... \n";
+        alpha = 1;
     }
     
     void SelfScale::reset() {
         alpha = 0;
+        std::cout << "Filter " << id << " reset.\n";
     }
         
 }

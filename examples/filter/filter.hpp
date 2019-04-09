@@ -6,6 +6,13 @@
 #include<string>
 
 namespace ac {
+    
+    class FilterParameters {
+    public:
+        //MatrixCollection<Size> collection;
+        //cv::Mat blend_image
+        // cv::Vec3b color_key
+    };
 
     class FilterObject {
     public:
@@ -13,27 +20,30 @@ namespace ac {
         FilterObject(const std::string &s);
         FilterObject(const FilterObject &fo);
         FilterObject &operator=(const FilterObject &fo);
+        virtual ~FilterObject() {}
         void setID(const std::string &s);
-        virtual void reset() = 0;
         virtual void operator()(/*cv::Mat &frame*/) = 0;
+        virtual void reset() = 0;
     protected:
         double alpha;
         std::string id;
-        //MatriCollection
+        //MatrixCollection
+        //cv::Mat
+    private:
     };
     
     class SelfAlphaBlend : public FilterObject {
     public:
         SelfAlphaBlend();
-        void operator()(/*cv::Mat &frame*/);
-        void reset();
+        void operator()() override;
+        void reset() override;
     };
     
     class SelfScale : public FilterObject {
     public:
         SelfScale();
-        void operator()(/*cv::Mat &frame*/);
-        void reset();
+        void operator()(/*cv::Mat &frame*/) override;
+        void reset() override;
     };
 }
 
