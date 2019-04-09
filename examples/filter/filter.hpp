@@ -7,13 +7,6 @@
 
 namespace ac {
     
-    class FilterParameters {
-    public:
-        //MatrixCollection<Size> collection;
-        //cv::Mat blend_image
-        // cv::Vec3b color_key
-    };
-
     class FilterObject {
     public:
         FilterObject();
