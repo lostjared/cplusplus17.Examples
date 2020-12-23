@@ -50,8 +50,16 @@ int main(int argc, char **argv) {
         std::cout << "string data: " << *it << "\n";
     
     per::Per<Type, UserTypeData> utype("utype.txt", Type(0,0,0,1.0));
+    
     utype.data().x++;
+    utype.data().y += 5;
+    utype.data().z += 10;
+    utype.data().value += 0.5f;
+    
     std::cout << "x val: " << utype.data().x << "\n";
+    std::cout << "y val: " << utype.data().y << "\n";
+    std::cout << "z val: " << utype.data().z << "\n";
+    std::cout << "value val: " << utype.data().value << "\n";
     
     return 0;
 }
