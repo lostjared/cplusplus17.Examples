@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
     for(auto it = svp.data().begin(); it != svp.data().end(); ++it)
         std::cout << "string data: " << *it << "\n";
     
-    per::Per<Type, UserTypeData> utype("utype.txt", Type(0,0,0,1.0));
+    per::Per<Type, UserTypeData> utype("utype.dat", Type(0,0,0,1.0));
     
     utype.data().x++;
     utype.data().y += 5;
