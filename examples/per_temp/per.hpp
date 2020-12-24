@@ -108,7 +108,7 @@ namespace per {
     public:
         Per(std::string name) : file_name{name} {
             std::fstream file_in;
-            file_in.open(name, std::ios::in | std::ios::out | std::ios::binary);
+            file_in.open(name, std::ios::in |  std::ios::binary);
             if(file_in.is_open()) {
                 D::read(file_in, type);
                 file_in.close();
@@ -116,7 +116,7 @@ namespace per {
         }
         Per(std::string name, const T &i) : file_name{name} {
             std::fstream file_in;
-            file_in.open(name, std::ios::in | std::ios::out | std::ios::binary);
+            file_in.open(name, std::ios::in | std::ios::binary);
             if(!file_in.is_open()) {
                 type = i;
             } else {
