@@ -124,6 +124,15 @@ namespace per {
                 file_in.close();
             }
         }
+        
+        void set(const T &t) {
+            type = t;
+        }
+        
+        void reset() {
+            type = T();
+        }
+        
         ~Per() {
             std::fstream file_in;
             file_in.open(file_name, std::ios::out | std::ios::binary | std::ios::trunc);
