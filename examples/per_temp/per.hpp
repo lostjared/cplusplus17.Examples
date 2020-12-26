@@ -106,20 +106,37 @@ namespace per {
     template<typename T, typename D>
     class Per {
     public:
+        
         Per(std::string name) : file_name{name} {
-            std::fstream file_in;
-            file_in.open(name, std::ios::in |  std::ios::binary);
-            if(file_in.is_open()) {
-                D::read(file_in, type);
-                file_in.close();
-            }
+            load();
         }
+        
         Per(std::string name, const T &i) : file_name{name} {
             std::fstream file_in;
-            file_in.open(name, std::ios::in | std::ios::binary);
+            file_in.open(file_name, std::ios::in | std::ios::binary);
             if(!file_in.is_open()) {
                 type = i;
             } else {
+                file_in.close();
+                load();
+            }
+        }
+        
+        void save() {
+            std::fstream file_in;
+            file_in.open(file_name, std::ios::out | std::ios::binary | std::ios::trunc);
+            if(!file_in.is_open()) {
+                std::cerr << "Error could not open: " << file_name << " for output...\n";
+                exit(EXIT_FAILURE);
+            }
+            D::write(file_in, type);
+            file_in.close();
+        }
+        
+        void load() {
+            std::fstream file_in;
+            file_in.open(file_name, std::ios::in |  std::ios::binary);
+            if(file_in.is_open()) {
                 D::read(file_in, type);
                 file_in.close();
             }
@@ -134,16 +151,11 @@ namespace per {
         }
         
         ~Per() {
-            std::fstream file_in;
-            file_in.open(file_name, std::ios::out | std::ios::binary | std::ios::trunc);
-            if(!file_in.is_open()) {
-                std::cerr << "Error could not open: " << file_name << " for output...\n";
-                exit(EXIT_FAILURE);
-            }
-            D::write(file_in, type);
-            file_in.close();
+            save();
         }
+        
         T &data() { return type; }
+        
     private:
         T type;
         std::string file_name;
