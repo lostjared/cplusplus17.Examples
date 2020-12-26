@@ -150,6 +150,11 @@ namespace per {
             type = T();
         }
         
+        void clear() {
+            reset();
+            save();
+        }
+        
         ~Per() {
             save();
         }
