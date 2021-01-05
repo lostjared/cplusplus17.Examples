@@ -106,7 +106,7 @@ namespace per {
     template<typename T, typename D = Data<T>>
     class Per {
     public:
-        
+                
         Per(std::string name) : file_name{name} {
             load();
         }
@@ -120,6 +120,31 @@ namespace per {
                 file_in.close();
                 load();
             }
+        }
+        
+        Per(const Per<T> &p) : file_name{p.file_name}, type{p.type} {}
+        Per(const Per<T> &&p) : file_name{p.file_name}, type{std::move(p.type)} {}
+        
+        Per<T> &operator=(const Per<T> &p) {
+            file_name = p.file_name;
+            type = p.type;
+            return *this;
+        }
+        
+        Per<T> &operator=(const Per<T> &&p) {
+            file_name = p.file_name;
+            type = std::move(p.type);
+            return *this;
+        }
+        
+        Per<T> &operator=(const T &t) {
+            type = t;
+            return *this;
+        }
+        
+        Per<T> &operator=(const T &&t) {
+            type = std::move(t);
+            return *this;
         }
         
         void save() {
