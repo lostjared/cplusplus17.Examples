@@ -122,8 +122,9 @@ namespace per {
             }
         }
         
-        Per(const Per<T> &p) : file_name{p.file_name}, type{p.type} {}
-        Per(const Per<T> &&p) : file_name{p.file_name}, type{std::move(p.type)} {}
+        Per(const Per<T> &p, const std::string &file_n) : file_name{file_n}, type{p.type} {}
+        
+        Per(const Per<T> &&p, const std::string &file_n) : file_name{file_n}, type{std::move(p.type)} {}
         
         Per<T> &operator=(const Per<T> &p) {
             file_name = p.file_name;
