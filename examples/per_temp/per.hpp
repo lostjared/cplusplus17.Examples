@@ -103,7 +103,7 @@ namespace per {
         }
     };
 
-    template<typename T, typename D>
+    template<typename T, typename D = Data<T>>
     class Per {
     public:
         

@@ -30,6 +30,10 @@ int main(int argc, char **argv) {
     p.data()++;
     std::cout << "program ran: " << p.data() << "\n";
     
+    per::Per<float> p_f("float.dat", 0.0f);
+    p_f.data() += 0.5f;
+    std::cout << "Floating counter: " << p_f.data() << " incremented by 0.5\n";
+    
     per::Per<std::vector<int>, per::ContainerData<std::vector<int>, int>> vp("vec.dat");
     srand(static_cast<int>(time(0)));
     vp.data().push_back(rand()%255);
