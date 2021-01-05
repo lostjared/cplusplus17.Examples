@@ -131,11 +131,11 @@ namespace per {
         Per<T,D> &operator=(const Per<T,D> &&p) = delete;
         
         // assignment
-        Per<T> &operator=(const T &t) {
+        Per<T,D> &operator=(const T &t) {
             type = t;
             return *this;
         }
-        Per<T> &operator=(const T &&t) {
+        Per<T,D> &operator=(const T &&t) {
             type = std::move(t);
             return *this;
         }
