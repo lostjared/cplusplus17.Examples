@@ -84,8 +84,8 @@ namespace per {
         ContainerData() = default;
         static void write(std::fstream &file, const C &type) {
             if(file.is_open()) {
-                for(int i = 0; i < type.size(); ++i) {
-                    file.write(reinterpret_cast<const char *>(&type[i]), sizeof(type[i]));
+                for(auto i = type.begin(); i != type.end(); ++i) {
+                    file.write(reinterpret_cast<const char *>(&*i), sizeof(*i));
                 }
             }
         }
@@ -178,7 +178,8 @@ namespace per {
         }
         
         T &data() { return type; }
-        
+        T &operator*() { return type; }
+
     private:
         T type;
         std::string file_name;

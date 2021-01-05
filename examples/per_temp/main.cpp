@@ -32,13 +32,14 @@ int main(int argc, char **argv) {
     
     per::Per<float> p_f("float.dat", 0.0f);
     p_f.data() += 0.5f;
-    std::cout << "Floating counter: " << p_f.data() << " incremented by 0.5\n";
+    // access using overoaded * operator
+    std::cout << "Floating counter: " << *p_f << " incremented by 0.5\n";
     
     per::Per<float> p_x(p_f, "float1.dat");
-    std::cout << "Copy re-assign: " << p_x.data() << "\n";
+    std::cout << "Copy re-assign: " << *p_x << "\n";
     
     per::Per<float> p_mx(std::move(p_f), "float2.dat");
-    std::cout << "Move re-assign: " << p_mx.data() << "\n";
+    std::cout << "Move re-assign: " << *p_mx << "\n";
     
     per::Per<std::vector<int>, per::ContainerData<std::vector<int>, int>> vp("vec.dat");
     srand(static_cast<int>(time(0)));
