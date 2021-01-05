@@ -141,6 +141,11 @@ namespace per {
             return *this;
         }
         
+        void setFileName(const std::string &fn) {
+            file_name = fn;
+        }
+        std::string getFileName() const { return file_name; }
+        
         void save() {
             std::fstream file_in;
             file_in.open(file_name, std::ios::out | std::ios::binary | std::ios::trunc);
