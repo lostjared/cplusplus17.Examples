@@ -123,12 +123,12 @@ namespace per {
         }
         
         // must reassign filename
-        Per(const Per<T> &p, const std::string &file_n) : file_name{file_n}, type{p.type} {}
-        Per(const Per<T> &&p, const std::string &file_n) : file_name{file_n}, type{std::move(p.type)} {}
+        Per(const Per<T,D> &p, const std::string &file_n) : file_name{file_n}, type{p.type} {}
+        Per(const Per<T,D> &&p, const std::string &file_n) : file_name{file_n}, type{std::move(p.type)} {}
         
         // prevent
-        Per<T> &operator=(const Per<T> &p) = delete;
-        Per<T> &operator=(const Per<T> &&p) = delete;
+        Per<T,D> &operator=(const Per<T,D> &p) = delete;
+        Per<T,D> &operator=(const Per<T,D> &&p) = delete;
         
         // assignment
         Per<T> &operator=(const T &t) {
