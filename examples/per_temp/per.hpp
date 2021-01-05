@@ -110,7 +110,6 @@ namespace per {
         Per(std::string name) : file_name{name} {
             load();
         }
-        
         Per(std::string name, const T &i) : file_name{name} {
             std::fstream file_in;
             file_in.open(file_name, std::ios::in | std::ios::binary);
@@ -156,7 +155,6 @@ namespace per {
             D::write(file_in, type);
             file_in.close();
         }
-        
         void load() {
             std::fstream file_in;
             file_in.open(file_name, std::ios::in |  std::ios::binary);
@@ -165,15 +163,12 @@ namespace per {
                 file_in.close();
             }
         }
-        
         void set(const T &t) {
             type = t;
         }
-        
         void reset() {
             type = T();
         }
-        
         void clear() {
             reset();
             save();

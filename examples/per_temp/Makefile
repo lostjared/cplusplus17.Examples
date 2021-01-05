@@ -1,6 +1,18 @@
-all:
-	g++ -std=c++17 per.cpp -c -o per.o
-	g++ -std=c++17 main.cpp -c -o main.o
-	g++ per.o main.o -o per.test
+OBJ=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
+
+CFLAGS= -std=c++17
+LDFLAGS=
+
+%.o: %.cpp
+	$(CXX) $(CFLAGS) $< -c -o $@
+
+per.test: $(OBJ)
+	$(CXX) -o per.test $(OBJ) $(LDFLAGS)
+
+all: example
+
+.PHONY: clean clear
 clean:
-	rm -f *.o per.test
+	rm -f per.test *.o 
+clear:
+	rm -f *.dat
