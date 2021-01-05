@@ -129,7 +129,8 @@ namespace per {
         // prevent
         Per<T,D> &operator=(const Per<T,D> &p) = delete;
         Per<T,D> &operator=(const Per<T,D> &&p) = delete;
-        
+        Per(const Per<T,D> &) = delete;
+        Per(const Per<T,D> &&) = delete;
         // assignment
         Per<T,D> &operator=(const T &t) {
             type = t;
