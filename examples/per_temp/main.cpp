@@ -34,6 +34,12 @@ int main(int argc, char **argv) {
     p_f.data() += 0.5f;
     std::cout << "Floating counter: " << p_f.data() << " incremented by 0.5\n";
     
+    per::Per<float> p_x(p_f);
+    std::cout << "Copy constructor: " << p_x.data() << "\n";
+    
+    per::Per<float> p_mx(std::move(p_f));
+    std::cout << "Move: " << p_mx.data() << "\n";
+    
     per::Per<std::vector<int>, per::ContainerData<std::vector<int>, int>> vp("vec.dat");
     srand(static_cast<int>(time(0)));
     vp.data().push_back(rand()%255);
