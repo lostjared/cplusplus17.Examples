@@ -1,3 +1,11 @@
+/*
+ When you break the infinite while loop
+ you branch out to the greater reality
+ 
+ - Jared Bruni
+ 
+*/
+
 #include<iostream>
 #include<string>
 #include<algorithm>
