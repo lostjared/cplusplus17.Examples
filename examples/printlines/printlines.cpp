@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
         std::cerr << "Error could not open file: "<< argv[1] << "\n";
         exit(EXIT_FAILURE);
     }
-    int index = 1;
+    unsigned int index = 1;
     while(!file.eof()) {
         std::string line;
         std::getline(file, line);
