@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
         std::string line;
         std::getline(file, line);
         if(file)
-        std::cout << index++ << ": " << line << "\n";
+            std::cout << index++ << ": " << line << "\n";
     }
     file.close();
     exit(EXIT_SUCCESS);
