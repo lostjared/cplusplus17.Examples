@@ -20,6 +20,7 @@ namespace cmd {
         T key,value;
     };
 
+    // for std::string type
     class ArgumentList {
     public:
         ArgumentList(int argc, char **argv);
@@ -30,6 +31,9 @@ namespace cmd {
         std::vector<Token<std::string>> items;
         
     };
+
+    // for other string type
+    // class ArgumentWStringList {
 }
 
 #endif
