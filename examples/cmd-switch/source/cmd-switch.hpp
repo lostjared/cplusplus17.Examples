@@ -27,6 +27,7 @@ namespace cmd {
         bool check(T key);
         bool extract(T key, T &value);
         bool require(T key, T &value);
+        void print();
     protected:
         std::vector<Token<T>> items;
         
@@ -38,16 +39,17 @@ namespace cmd {
         ArgumentList<std::string> argz;
     };
 
+
     template<typename T>
     ArgumentList<T>::ArgumentList(int argc, char **argv) {
         for(int i = 1; i < argc; ++i) {
-            T s = argv[i];
+            T s{argv[i]};
             auto pos = s.find("=");
             if(pos != std::string::npos) {
                 T left = s.substr(0, pos);
                 T right = s.substr(pos+1, s.length());
                 if(right.length() == 0)
-                    throw ArgExcep<std::string>("Argument Error: Zero Length");
+                    throw ArgExcep<T>("Argument Error: Zero Length");
                 
                 Token<T> token;
                 token.key = left;
@@ -103,6 +105,17 @@ namespace cmd {
         }
         throw ArgExcep<T>("Argument Error: " + key + " Required");
         return false;
+    }
+
+
+    template<typename T>
+    void ArgumentList<T>::print() {
+        for(int i = 0; i < items.size(); ++i) {
+            if(items[i].key == "$")
+                std::cout << items[i].value << "\n";
+            else
+                std::cout << items[i].key << ":" << items[i].value << "\n";
+        }
     }
 
 }
