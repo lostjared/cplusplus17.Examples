@@ -8,6 +8,10 @@ int main(int argc, char **argv) {
         if(argz.check("--init") == true) {
             std::cout << "init flag present..\n";
         }
+        std::string pass;
+        if(argz.check("--pass") == true && argz.require("--password", pass) == true) {
+            std::cout << "Password: " << pass << "\n";
+        }
         std::string value;
         if(argz.extract("--value", value) == true) {
             std::cout << "value flag extracted: " << value << "\n";

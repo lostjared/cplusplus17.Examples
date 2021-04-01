@@ -46,4 +46,15 @@ namespace cmd {
         }
         return false;
     }
+
+    bool ArgumentList::require(std::string key, std::string &value) {
+        for(int i = 0; i < items.size(); ++i) {
+            if(items[i].key == key) {
+                value = items[i].value;
+                return true;
+            }
+        }
+        throw ArgExcep("Argument: " + key + " Required");
+        return false;
+    }
 }

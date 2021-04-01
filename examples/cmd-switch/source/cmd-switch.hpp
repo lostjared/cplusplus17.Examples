@@ -23,6 +23,7 @@ namespace cmd {
         ArgumentList(int argc, char **argv);
         bool check(std::string key);
         bool extract(std::string key, std::string &value);
+        bool require(std::string key, std::string &value);
     protected:
         std::vector<Token> items;
         
