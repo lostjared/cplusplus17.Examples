@@ -10,7 +10,7 @@ namespace cmd {
                 std::string left = s.substr(0, pos);
                 std::string right = s.substr(pos+1, s.length());
                 if(right.length() == 0)
-                    throw ArgExcep<std::string>("Argument Zero Length");
+                    throw ArgExcep<std::string>("Argument Error: Zero Length");
                 
                 Token<std::string> token;
                 token.key = left;
@@ -38,6 +38,9 @@ namespace cmd {
     
     bool ArgumentList::extract(std::string key, std::string &value) {
         for(int i = 0; i < items.size(); ++i) {
+            if(items[i].key == "$" && items[i].value == key) {
+                return false;
+            }
             if(items[i].key == key) {
                 value = items[i].value;
                 return true;
@@ -48,12 +51,18 @@ namespace cmd {
 
     bool ArgumentList::require(std::string key, std::string &value) {
         for(int i = 0; i < items.size(); ++i) {
+            
+            if(items[i].key == "$" && items[i].value == key) {
+                throw ArgExcep<std::string>("Argument Error: " + key + " required argument missing value...");
+                return false;
+            }
+            
             if(items[i].key == key) {
                 value = items[i].value;
                 return true;
             }
         }
-        throw ArgExcep<std::string>("Argument: " + key + " Required");
+        throw ArgExcep<std::string>("Argument Error: " + key + " Required");
         return false;
     }
 }
