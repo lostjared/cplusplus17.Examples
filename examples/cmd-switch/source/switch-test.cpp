@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
         if(argz.extract("--value", value) == true) {
             std::cout << "value flag extracted: " << value << "\n";
         }
-    } catch(cmd::ArgExcep &e) {
+    } catch(cmd::ArgExcep<std::string> &e) {
         std::cerr << e.what() << "\n";
         exit(EXIT_FAILURE);
     }

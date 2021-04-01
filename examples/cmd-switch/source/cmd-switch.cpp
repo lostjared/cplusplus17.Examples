@@ -3,7 +3,6 @@
 namespace cmd {
 
     ArgumentList::ArgumentList(int argc, char **argv) {
-    
         for(int i = 1; i < argc; ++i) {
             std::string s = argv[i];
             auto pos = s.find("=");
@@ -11,14 +10,14 @@ namespace cmd {
                 std::string left = s.substr(0, pos);
                 std::string right = s.substr(pos+1, s.length());
                 if(right.length() == 0)
-                    throw ArgExcep("Argument Zero Length");
+                    throw ArgExcep<std::string>("Argument Zero Length");
                 
-                Token token;
+                Token<std::string> token;
                 token.key = left;
                 token.value = right;
                 items.push_back(token);
             } else {
-                Token token;
+                Token<std::string> token;
                 token.key = "$";
                 token.value = argv[i];
                 items.push_back(token);
@@ -54,7 +53,7 @@ namespace cmd {
                 return true;
             }
         }
-        throw ArgExcep("Argument: " + key + " Required");
+        throw ArgExcep<std::string>("Argument: " + key + " Required");
         return false;
     }
 }

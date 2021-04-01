@@ -5,17 +5,19 @@
 #include<vector>
 namespace cmd {
 
+    template<typename T>
     class ArgExcep {
     public:
-        ArgExcep(const std::string &ww) : w{ww} {}
-        std::string what() const { return w; }
+        ArgExcep(const T &ww) : w{ww} {}
+        T what() const { return w; }
     protected:
-        std::string w;
+        T w;
     };
 
+    template<typename T>
     class Token {
     public:
-        std::string key,value;
+        T key,value;
     };
 
     class ArgumentList {
@@ -25,7 +27,7 @@ namespace cmd {
         bool extract(std::string key, std::string &value);
         bool require(std::string key, std::string &value);
     protected:
-        std::vector<Token> items;
+        std::vector<Token<std::string>> items;
         
     };
 }
