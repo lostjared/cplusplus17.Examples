@@ -5,7 +5,7 @@ written by Jared Bruni
 
 to build
 
-enter source directory
+enter this directory
 
 $ mkdir build
 
