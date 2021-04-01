@@ -17,6 +17,12 @@ int main(int argc, char **argv) {
             std::cout << "value flag extracted: " << value << "\n";
         }
         argz.print();
+        std::vector<std::string> lst {"--value"};
+        cmd::ArgumentStringList alst(argc, argv);
+        if(Argument_FindInList(lst, alst)) {
+            std::cout << "Value found..\n";
+        }
+        
     } catch(cmd::ArgExcep<std::string> &e) {
         std::cerr << e.what() << "\n";
         exit(EXIT_FAILURE);

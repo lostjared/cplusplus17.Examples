@@ -28,6 +28,8 @@ namespace cmd {
         bool extract(T key, T &value);
         bool require(T key, T &value);
         void print();
+        Token<T> &item(unsigned int index) { return items[index]; }
+        unsigned int size() const { return items.size(); }
     protected:
         std::vector<Token<T>> items;
         
@@ -39,6 +41,7 @@ namespace cmd {
         ArgumentList<std::string> argz;
     };
 
+    bool Argument_FindInList(std::vector<std::string> &lst, ArgumentStringList &alst);
 
     template<typename T>
     ArgumentList<T>::ArgumentList(int argc, char **argv) {
