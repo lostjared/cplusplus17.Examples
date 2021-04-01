@@ -4,7 +4,7 @@
 
 int main(int argc, char **argv) {
     try {
-        cmd::ArgumentList argz(argc, argv);
+        cmd::ArgumentList<std::string> argz(argc, argv);
         if(argz.check("--init") == true) {
             std::cout << "init flag present..\n";
         }
