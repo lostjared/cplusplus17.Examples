@@ -20,6 +20,7 @@ namespace cmd {
         T key,value;
     };
 
+    // template so you can subclass string if you want
     template<typename T>
     class ArgumentList {
     public:
