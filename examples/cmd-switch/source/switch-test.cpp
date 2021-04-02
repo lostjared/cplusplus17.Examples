@@ -16,6 +16,9 @@ int main(int argc, char **argv) {
         if(argz.extract("--value", value) == true) {
             std::cout << "value flag extracted: " << value << "\n";
         }
+        //if(argz.check_require("--test") == true) {
+        //    std::cout << "required test" << "\n";
+        //}
         argz.print();
         std::vector<std::string> lst {"--value"};
         cmd::ArgumentStringList alst(argc, argv);

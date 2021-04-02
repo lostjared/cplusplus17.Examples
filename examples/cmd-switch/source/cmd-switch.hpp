@@ -26,6 +26,7 @@ namespace cmd {
     public:
         ArgumentList(int argc, char **argv);
         bool check(T key);
+        bool check_require(T key);
         bool extract(T key, T &value);
         bool require(T key, T &value);
         void print();
@@ -76,6 +77,19 @@ namespace cmd {
                 }
             }
         }
+        return false;
+    }
+
+    template<typename T>
+    bool ArgumentList<T>::check_require(T key) {
+        for(int i = 0; i < items.size(); ++i) {
+            if(items[i].key == "$") {
+                if(items[i].value == key) {
+                    return true;
+                }
+            }
+        }
+        throw ArgExcep<T>("Argument Error: " + key + " required");
         return false;
     }
 
