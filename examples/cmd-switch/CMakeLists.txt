@@ -32,6 +32,8 @@ list(APPEND install_headers ${CMAKE_SOURCE_DIR}/source/cmd-switch.hpp)
 add_library(cmd-switch ${source_files})	
 add_executable(cmd-switch-test ${CMAKE_SOURCE_DIR}/source/switch-test.cpp)
 target_link_libraries(cmd-switch-test cmd-switch)
+add_executable(print-lines-test ${CMAKE_SOURCE_DIR}/source/print-lines-test.cpp)
+target_link_libraries(print-lines-test cmd-switch)
 install(TARGETS cmd-switch  DESTINATION lib)
 install(FILES ${install-headers} DESTINATION include/cmd-switch)
 
