@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
     try {
         cmd::ArgumentList<std::string> argz(argc, argv);
         std::string filename;
-        argz.require("--file", filename);
+        argz.require("--file", filename, "Input filename");
         std::string sep_str;
         bool line_sep=argz.extract("--sep", sep_str);
         std::fstream file;

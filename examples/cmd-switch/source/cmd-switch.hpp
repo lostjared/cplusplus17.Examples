@@ -28,7 +28,7 @@ namespace cmd {
         bool check(T key);
         bool check_require(T key);
         bool extract(T key, T &value);
-        bool require(T key, T &value);
+        bool require(T key, T &value, T desc);
         void print();
         Token<T> &item(unsigned int index) { return items[index]; }
         unsigned int size() const { return items.size(); }
@@ -108,7 +108,7 @@ namespace cmd {
     }
 
     template<typename T>
-    bool ArgumentList<T>::require(T key, T &value) {
+    bool ArgumentList<T>::require(T key, T &value, T desc) {
         for(int i = 0; i < items.size(); ++i) {
             
             if(items[i].key == "$" && items[i].value == key) {
@@ -121,7 +121,7 @@ namespace cmd {
                 return true;
             }
         }
-        throw ArgExcep<T>("Argument Error: " + key + " Required");
+        throw ArgExcep<T>("Argument Error: " + key + " Required [" + desc + "]");
         return false;
     }
 
