@@ -9,7 +9,8 @@ int main(int argc, char **argv) {
         cmd::ArgumentList<std::string> argz(argc, argv);
         std::string filename;
         argz.require("--file", filename);
-        bool line_sep=argz.check("--sep");
+        std::string sep_str;
+        bool line_sep=argz.extract("--sep", sep_str);
         std::fstream file;
         file.open(filename, std::ios::in);
         if(!file.is_open()) {
@@ -17,7 +18,7 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
         }
         unsigned int index = 1;
-        std::string sep = ": ";
+        std::string sep = sep_str+" ";
         if(line_sep == false)
             sep = " ";
         
