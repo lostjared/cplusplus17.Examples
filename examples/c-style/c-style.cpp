@@ -7,6 +7,10 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
     FILE *fptr = fopen(argv[1], "r");
+    if(!fptr) {
+        fprintf(stderr, "Error could not open %s\n", argv[1]);
+        return EXIT_FAILURE;
+    }
     unsigned int index = 1;
     printf("%d: ", index);
     while(!feof(fptr)) {
