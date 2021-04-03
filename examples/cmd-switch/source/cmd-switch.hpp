@@ -1,3 +1,9 @@
+// use form argument=value
+// so switch
+// --argument=value
+// or
+// --arguemnt="value 1 2 3"
+
 #ifndef __CMDSWITCH_HPP__
 #define __CMDSWITCH_HPP__
 #include<iostream>

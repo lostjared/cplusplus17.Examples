@@ -1,3 +1,7 @@
+// use form argument=value
+// so switch
+// --file="filename.txt"
+// --sep="seperator string"
 #include<iostream>
 #include<string>
 #include<fstream>
