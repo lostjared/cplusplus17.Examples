@@ -1,3 +1,8 @@
+// Arguments take the form of
+// --switch=value
+// --file=input-filename
+// --filter=index
+
 #include<iostream>
 #include"ac.h"
 #include"cmd-switch.hpp"
