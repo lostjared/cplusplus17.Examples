@@ -19,6 +19,7 @@ int main(int argc, char **argv) {
         cv::VideoCapture cap(filename);
         if(!cap.isOpened()) {
             std::cerr << "Could not open vidoe file: "<< filename << "\n";
+            exit(EXIT_FAILURE);
         }
         
         bool active = true;
