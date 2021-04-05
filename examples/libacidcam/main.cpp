@@ -24,10 +24,17 @@ int main(int argc, char **argv) {
         
         bool active = true;
         cv::namedWindow("acidcam");
+        int filter_index = atoi(filter.c_str());
+        
+        if(filter_index < 0 || filter_index > ac::getFilterCount()-1) {
+            std::cerr << "Error: invalid filter Index..\n";
+            exit(EXIT_FAILURE);
+        }
+        
         while(active) {
             cv::Mat frame;
             if(cap.read(frame)) {
-                ac::CallFilter(atoi(filter.c_str()), frame);
+                ac::CallFilter(filter_index, frame);
                 cv::imshow("acidcam", frame);
                 int key = cv::waitKey(10);
                 if(key == 27) exit(EXIT_SUCCESS);
