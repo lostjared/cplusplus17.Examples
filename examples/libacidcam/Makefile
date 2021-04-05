@@ -9,7 +9,7 @@ LDFLAGS= `pkg-config opencv4 acidcam --libs`
 $(PROGRAM): $(OBJ)
 	$(CXX) -o $(PROGRAM) $(OBJ) $(LDFLAGS)
 
-all: example
+all: $(PROGRAM)
 
 .PHONY: clean
 clean:
