@@ -2,7 +2,7 @@ CXX_FLAGS=-std=c++17 `pkg-config opencv4 --cflags`
 LDFLAGS= `pkg-config opencv4 --libs`
 CPP_FILES := $(wildcard *.cpp)
 OBJ_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.o)))
-OUTPUT_NAME=filter
+OUTPUT_NAME=filter.acidcam
 
 %.o: %.cpp 
 	$(CXX) $(CXX_FLAGS) -c -o $@ $<
