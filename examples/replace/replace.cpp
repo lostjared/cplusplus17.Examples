@@ -1,3 +1,7 @@
+// use on the shell with pipe
+// example
+// cat text-file.txt | ./replace-test --repalce="string" --with="replacement"
+
 #include<iostream>
 #include<string>
 #include"cmd-switch.hpp"
