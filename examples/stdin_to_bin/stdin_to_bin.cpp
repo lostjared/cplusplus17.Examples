@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
     while(!std::cin.eof()) {
         unsigned char c = std::cin.get();
         if(std::cin) {
-            std::cout << "0x" << std::hex << (unsigned int)(unsigned char)c << ",";
+            std::cout << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c)) << ",";
             ++count;
         }
     }
