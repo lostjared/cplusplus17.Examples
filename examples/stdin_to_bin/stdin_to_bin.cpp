@@ -1,3 +1,9 @@
+// pipe data to standard output stream
+// to produce C++ array of characters
+// for stream
+// example
+// $ cat text.txt | ./stdin_to_bin
+
 #include"cmd-switch.hpp"
 #include<iostream>
 
