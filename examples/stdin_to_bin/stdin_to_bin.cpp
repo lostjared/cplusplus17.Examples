@@ -10,7 +10,7 @@
 
 int main(int argc, char **argv) {
     std::cout << "unsigned char array[] = {\n";
-    int count = 0;
+    unsigned long count = 0;
     while(!std::cin.eof()) {
         unsigned char c = std::cin.get();
         if(std::cin) {
@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
         }
     }
     std::cout << "\n0 };\n";
-    std::cout << "unsigned int array_count = 0x" << std::hex << count << ";\n";
+    std::cout << "unsigned long array_count = 0x" << std::hex << count << ";\n";
     
     return 0;
 }
