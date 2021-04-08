@@ -12,7 +12,13 @@ int main(int argc, char **argv) {
     
     try {
         
-        std::cout << "unsigned char array[] = {\n";
+        cmd::ArgumentList<std::string> argz(argc, argv);
+        std::string cmd_name;
+        bool name=argz.extract("--name", cmd_name);
+        if(!name)
+            cmd_name="array";
+        
+        std::cout << "unsigned char " << cmd_name << "[] = {\n";
         unsigned long count = 0;
         while(!std::cin.eof()) {
             unsigned char c = std::cin.get();
@@ -25,8 +31,8 @@ int main(int argc, char **argv) {
         std::cout << "unsigned long array_count = 0x" << std::hex << count << ";\n";
         
     }
-    catch(cmd::ArgExcep<std::sttring> &e) {
-        std::cerr << e.what() << "\N":
+    catch(cmd::ArgExcep<std::string> &e) {
+        std::cerr << e.what() << "\n";
     }
     return 0;
 }
