@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
             }
         }
         std::cout << "\n0 };\n";
-        std::cout << "unsigned long array_count = 0x" << std::hex << count << ";\n";
+        std::cout << "unsigned long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
         
     }
     catch(cmd::ArgExcep<std::string> &e) {
