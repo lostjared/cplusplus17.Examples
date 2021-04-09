@@ -13,9 +13,7 @@
 
 
 int main(int argc, char **argv) {
-    
     try {
-        
         cmd::ArgumentList<std::string> argz(argc, argv);
         std::string cmd_name;
         bool name=argz.extract("--name", cmd_name);
@@ -30,7 +28,9 @@ int main(int argc, char **argv) {
         std::cout << type << " " << cmd_name << " [] = {\n";
         unsigned long count = 0;
         while(!std::cin.eof()) {
-            unsigned char c = std::cin.get();
+            unsigned char c = 0;
+            std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+            
             if(std::cin) {
                 std::cout << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c)) << ",";
                 ++count;
