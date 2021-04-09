@@ -13,6 +13,7 @@
 
 
 int main(int argc, char **argv) {
+    
     try {
         cmd::ArgumentList<std::string> argz(argc, argv);
         std::string cmd_name;
