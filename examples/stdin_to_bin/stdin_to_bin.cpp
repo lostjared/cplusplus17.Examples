@@ -4,6 +4,10 @@
 // example
 // $ cat text.txt | ./stdin_to_bin
 
+// Argument Types
+// --name [variable name ]
+// --type [ variable type ]
+
 #include"cmd-switch.hpp"
 #include<iostream>
 
@@ -17,8 +21,13 @@ int main(int argc, char **argv) {
         bool name=argz.extract("--name", cmd_name);
         if(!name)
             cmd_name="array";
+        std::string type;
+        bool type_;
+        type_=argz.extract("--type", type);
+        if(!type_)
+            type = "unsigned char";
         
-        std::cout << "unsigned char " << cmd_name << "[] = {\n";
+        std::cout << type << " " << cmd_name << " [] = {\n";
         unsigned long count = 0;
         while(!std::cin.eof()) {
             unsigned char c = std::cin.get();
