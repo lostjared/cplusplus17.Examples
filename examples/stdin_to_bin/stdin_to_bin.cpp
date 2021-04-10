@@ -16,7 +16,7 @@
 int main(int argc, char **argv) {
     
     try {
-        std::ostringstream stream;
+        
         cmd::ArgumentList<std::string> argz(argc, argv);
         std::string cmd_name;
         bool name=argz.extract("--name", cmd_name);
@@ -30,9 +30,6 @@ int main(int argc, char **argv) {
         std::string lang;
         int lang_type = 0;
         language_=argz.extract("--lang",lang);
-        if(!language_) {
-            lang_type = 0;
-        }
         if(lang == "python")
             lang_type = 1;
         else
@@ -42,34 +39,32 @@ int main(int argc, char **argv) {
             if(!type_)
                 type = "unsigned char";
             
-        
-            stream << type << " " << cmd_name << " [] = {\n";
+            std::cout << type << " " << cmd_name << " [] = {\n";
             unsigned long count = 0;
             while(!std::cin.eof()) {
                 unsigned char c = 0;
                 std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
                 
                 if(std::cin) {
-                    stream << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c)) << ",";
+                    std::cout << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c)) << ",";
                     ++count;
                 }
             }
-            stream << "\n0 };\n";
-            stream << "unsigned long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
+            std::cout << "\n0 };\n";
+            std::cout << "unsigned long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
         }
         else {
-            stream << cmd_name << " = [";
+            std::cout << cmd_name << " = [";
             while(!std::cin.eof()) {
                 unsigned char c = 0;
                 std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
                 
                 if(std::cin) {
-                    stream <<  static_cast<unsigned int>(c) << ",";
+                    std::cout <<  static_cast<unsigned int>(c) << ",";
                 }
             }
-            stream << "0 ]\n";
+            std::cout << "0 ]\n";
         }
-        std::cout << stream.str().c_str();
     }
     catch(cmd::ArgExcep<std::string> &e) {
         std::cerr << e.what() << "\n";
