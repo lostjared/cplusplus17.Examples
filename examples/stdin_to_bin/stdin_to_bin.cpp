@@ -26,10 +26,9 @@ int main(int argc, char **argv) {
         bool type_;
         type_=argz.extract("--type", type);
         
-        bool language_;
         std::string lang;
         int lang_type = 0;
-        language_=argz.extract("--lang",lang);
+        argz.extract("--lang",lang);
         if(lang == "python")
             lang_type = 1;
         else
