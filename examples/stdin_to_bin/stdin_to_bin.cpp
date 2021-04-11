@@ -3,7 +3,8 @@
 // for stream
 // example
 // $ cat text.txt | ./stdin_to_bin
-
+// or
+// $ cat text.txt | ./stdin_to_bin --lang=python
 // Argument Types
 // --name [variable name ]
 // --type [ variable type ]
@@ -44,12 +45,16 @@ int main(int argc, char **argv) {
                 unsigned char c = 0;
                 std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
                 
+                int p = std::cin.peek();
+                
                 if(std::cin) {
-                    std::cout << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c)) << ",";
+                    std::cout << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c));;
+                    if(p != EOF)
+                        std::cout << ", ";
                     ++count;
                 }
             }
-            std::cout << "\n0 };\n";
+            std::cout << ",0};\n";
             std::cout << "unsigned long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
         }
         else {
@@ -58,11 +63,15 @@ int main(int argc, char **argv) {
                 unsigned char c = 0;
                 std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
                 
+                int p = std::cin.peek();
+                
                 if(std::cin) {
-                    std::cout << "0x" << std::hex << static_cast<unsigned int>(c) << ",";
+                    std::cout << "0x" << std::hex << static_cast<unsigned int>(c);
+                    if(p != EOF)
+                        std::cout << ",";
                 }
             }
-            std::cout << "0 ]\n";
+            std::cout << "]\n";
         }
     }
     catch(cmd::ArgExcep<std::string> &e) {
