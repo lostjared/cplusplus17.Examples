@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
                 std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
                 
                 if(std::cin) {
-                    std::cout <<  static_cast<unsigned int>(c) << ",";
+                    std::cout << "0x" << std::hex << static_cast<unsigned int>(c) << ",";
                 }
             }
             std::cout << "0 ]\n";
