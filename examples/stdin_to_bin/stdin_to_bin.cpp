@@ -20,9 +20,10 @@ int main(int argc, char **argv) {
         
         cmd::ArgumentList<std::string> argz(argc, argv);
         std::string cmd_name;
+        std::ostringstream stream;
         bool name=argz.extract("--name", cmd_name);
         if(!name)
-            cmd_name="array_name";
+            cmd_name="array_value";
         std::string type;
         bool type_;
         type_=argz.extract("--type", type);
@@ -50,17 +51,17 @@ int main(int argc, char **argv) {
                 int p = std::cin.peek();
                 
                 if(std::cin) {
-                    std::cout << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c));;
+                    stream << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c));;
                     if(p != EOF)
-                        std::cout << ", ";
+                        stream << ", ";
                     ++count;
                 }
             }
-            std::cout << ", 0 };\n";
-            std::cout << "unsigned long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
+            stream << ", 0 };\n";
+            stream << "unsigned long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
         }
         else if(lang_type == 2) {
-            std::cout << "$" << cmd_name << " = array(";
+            stream << "$" << cmd_name << " = array(";
                 while(!std::cin.eof()) {
                     unsigned char c = 0;
                     std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
@@ -68,12 +69,12 @@ int main(int argc, char **argv) {
                     int p = std::cin.peek();
                     
                     if(std::cin) {
-                        std::cout << static_cast<unsigned int>(c);
+                        stream << static_cast<unsigned int>(c);
                         if(p != EOF)
-                            std::cout << ",";
+                            stream << ",";
                     }
                 }
-                std::cout << ");\n";
+                stream << ");\n";
         }
         else {
             std::cout << cmd_name << " = [";
@@ -84,13 +85,14 @@ int main(int argc, char **argv) {
                 int p = std::cin.peek();
                 
                 if(std::cin) {
-                    std::cout << "0x" << std::hex << static_cast<unsigned int>(c);
+                    stream << "0x" << std::hex << static_cast<unsigned int>(c);
                     if(p != EOF)
-                        std::cout << ",";
+                        stream << ",";
                 }
             }
-            std::cout << "]\n";
+            stream << "]\n";
         }
+        std::cout << stream.str() << "\n";
     }
     catch(cmd::ArgExcep<std::string> &e) {
         std::cerr << e.what() << "\n";
