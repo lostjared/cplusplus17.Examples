@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
         std::string cmd_name;
         bool name=argz.extract("--name", cmd_name);
         if(!name)
-            cmd_name="array";
+            cmd_name="array_name";
         std::string type;
         bool type_;
         type_=argz.extract("--type", type);
@@ -32,10 +32,12 @@ int main(int argc, char **argv) {
         argz.extract("--lang",lang);
         if(lang == "python")
             lang_type = 1;
+        else if(lang == "php")
+            lang_type = 2;
         else
             lang_type = 0;
         
-            if(lang_type == 0) {
+        if(lang_type == 0) {
             if(!type_)
                 type = "unsigned char";
             
@@ -54,8 +56,24 @@ int main(int argc, char **argv) {
                     ++count;
                 }
             }
-            std::cout << ",0};\n";
+            std::cout << ", 0 };\n";
             std::cout << "unsigned long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
+        }
+        else if(lang_type == 2) {
+            std::cout << "$" << cmd_name << " = array(";
+                while(!std::cin.eof()) {
+                    unsigned char c = 0;
+                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+                    
+                    int p = std::cin.peek();
+                    
+                    if(std::cin) {
+                        std::cout << static_cast<unsigned int>(c);
+                        if(p != EOF)
+                            std::cout << ",";
+                    }
+                }
+                std::cout << ");\n";
         }
         else {
             std::cout << cmd_name << " = [";
