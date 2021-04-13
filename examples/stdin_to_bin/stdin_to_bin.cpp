@@ -37,6 +37,8 @@ int main(int argc, char **argv) {
             lang_type = 2;
         else if(lang == "js")
             lang_type = 3;
+        else if(lang == "perl")
+            lang_type = 4;
         else
             lang_type = 0;
         
@@ -98,6 +100,23 @@ int main(int argc, char **argv) {
                 stream << "]\n";
         }
                 break;
+            case 4: {
+                stream << "my @" << cmd_name << " := ";
+                while(!std::cin.eof()) {
+                    unsigned char c = 0;
+                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+                    
+                    int p = std::cin.peek();
+                    
+                    if(std::cin) {
+                        stream << static_cast<unsigned int>(c);
+                        if(p != EOF)
+                            stream << ",";
+                    }
+                }
+                stream << ";\n";
+            }
+                break;
                 
         case 2: {
             stream << cmd_name << " = [";
@@ -115,7 +134,9 @@ int main(int argc, char **argv) {
             }
             stream << "]\n";
         }
-        }
+        break;
+                
+    }
         std::cout << stream.str() << "\n";
     }
     catch(cmd::ArgExcep<std::string> &e) {
