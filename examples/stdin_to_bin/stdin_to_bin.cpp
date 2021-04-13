@@ -40,11 +40,12 @@ int main(int argc, char **argv) {
         else
             lang_type = 0;
         
-        if(lang_type == 0) {
+        switch(lang_type) {
+            case 0: {
             if(!type_)
                 type = "unsigned char";
             
-            std::cout << type << " " << cmd_name << " [] = {\n";
+            stream << type << " " << cmd_name << " [] = {\n";
             unsigned long count = 0;
             while(!std::cin.eof()) {
                 unsigned char c = 0;
@@ -62,7 +63,8 @@ int main(int argc, char **argv) {
             stream << ", 0 };\n";
             stream << "unsigned long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
         }
-        else if(lang_type == 2) {
+                break;
+        case 1: {
             stream << "$" << cmd_name << " = array(";
                 while(!std::cin.eof()) {
                     unsigned char c = 0;
@@ -78,7 +80,8 @@ int main(int argc, char **argv) {
                 }
                 stream << ");\n";
         }
-        else if(lang_type == 3) {
+                break;
+        case 3: {
             stream <<"let " << cmd_name << " = [";
                 while(!std::cin.eof()) {
                     unsigned char c = 0;
@@ -94,8 +97,10 @@ int main(int argc, char **argv) {
                 }
                 stream << "]\n";
         }
-        else {
-            std::cout << cmd_name << " = [";
+                break;
+                
+        case 2: {
+            stream << cmd_name << " = [";
             while(!std::cin.eof()) {
                 unsigned char c = 0;
                 std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
@@ -109,6 +114,7 @@ int main(int argc, char **argv) {
                 }
             }
             stream << "]\n";
+        }
         }
         std::cout << stream.str() << "\n";
     }
