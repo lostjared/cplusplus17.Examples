@@ -41,6 +41,8 @@ int main(int argc, char **argv) {
             lang_type = 4;
         else if(lang == "swift")
             lang_type = 5;
+        else if(lang == "ruby")
+            lang_type = 6;
         else
             lang_type = 0;
         
@@ -153,7 +155,23 @@ int main(int argc, char **argv) {
             stream << "]\n";
         }
         break;
-                
+        case 6: {
+                stream << cmd_name << " = Array[";
+                while(!std::cin.eof()) {
+                    unsigned char c = 0;
+                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+                    
+                    int p = std::cin.peek();
+                    
+                    if(std::cin) {
+                        stream << static_cast<unsigned int>(c);
+                        if(p != EOF)
+                            stream << ",";
+                    }
+                }
+                stream << "]\n";
+        }
+        break;
     }
         std::cout << stream.str() << "\n";
     }
