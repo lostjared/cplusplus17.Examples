@@ -45,6 +45,8 @@ int main(int argc, char **argv) {
             lang_type = 6;
         else if(lang == "java")
             lang_type = 7;
+        else if(lang == "rust")
+            lang_type = 8;
         else
             lang_type = 0;
         
@@ -190,6 +192,24 @@ int main(int argc, char **argv) {
                 }
                 stream << ", 0 };\n";
                 stream << "long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
+            }
+                break;
+            case 8: {
+                stream << "let " << cmd_name << " = [";
+                while(!std::cin.eof()) {
+                    unsigned char c = 0;
+                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+                    
+                    int p = std::cin.peek();
+                    
+                    if(std::cin) {
+                        stream << static_cast<unsigned int>(c);
+                        if(p != EOF)
+                            stream << ",";
+                    }
+                }
+                stream << "];";
+
             }
                 break;
         }
