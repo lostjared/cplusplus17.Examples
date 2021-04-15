@@ -10,6 +10,8 @@
 // --type [ variable type ]
 // --lang [ python/cpp ]
 
+// Suports Python, PHP, JavaScript, Perl, Swift, Ruby, Java, Rust, C/C++
+
 #include"cmd-switch.hpp"
 #include<iostream>
 #include<sstream>
