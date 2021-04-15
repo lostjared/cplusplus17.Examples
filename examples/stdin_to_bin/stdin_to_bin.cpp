@@ -9,7 +9,6 @@
 // --name [variable name ]
 // --type [ variable type ]
 // --lang [ python/cpp ]
-
 // Suports Python, PHP, JavaScript, Perl, Swift, Ruby, Java, Rust, C/C++
 
 #include"cmd-switch.hpp"
@@ -17,9 +16,7 @@
 #include<sstream>
 
 int main(int argc, char **argv) {
-    
     try {
-        
         cmd::ArgumentList<std::string> argz(argc, argv);
         std::string cmd_name;
         std::ostringstream stream;
@@ -29,10 +26,10 @@ int main(int argc, char **argv) {
         std::string type;
         bool type_;
         type_=argz.extract("--type", type);
-        
         std::string lang;
         int lang_type = 0;
         argz.extract("--lang",lang);
+        lang = cmd::_tolower(lang);
         if(lang == "python")
             lang_type = 2;
         else if(lang == "php")
@@ -49,6 +46,8 @@ int main(int argc, char **argv) {
             lang_type = 7;
         else if(lang == "rust")
             lang_type = 8;
+        else if(lang == "golang")
+            lang_type = 9;
         else
             lang_type = 0;
         
@@ -212,6 +211,21 @@ int main(int argc, char **argv) {
                 }
                 stream << "];";
 
+            }
+                break;
+            case 9: {
+                stream << cmd_name << " := []uint8 {";
+                while(!std::cin.eof()) {
+                    unsigned char c = 0;
+                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+                    int p = std::cin.peek();
+                    if(std::cin) {
+                        stream << "0x" << std::hex << static_cast<unsigned int>(c);
+                        if(p != EOF)
+                            stream << ",";
+                    }
+                }
+                stream << "};";
             }
                 break;
         }
