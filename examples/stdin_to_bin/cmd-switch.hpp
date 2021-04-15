@@ -9,6 +9,8 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<ctype.h>
+
 namespace cmd {
 
     template<typename T>
@@ -50,6 +52,14 @@ namespace cmd {
     };
 
     bool Argument_FindInList(std::vector<std::string> &lst, ArgumentStringList &alst);
+
+    std::string _tolower(const std::string &str) {
+        std::string temp;
+        for(int i = 0; i < str.length(); ++i) {
+            temp += tolower(str[i]);
+        }
+        return temp;
+    }
 
     template<typename T>
     ArgumentList<T>::ArgumentList(int argc, char **argv) {

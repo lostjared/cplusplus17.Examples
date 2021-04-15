@@ -34,9 +34,9 @@ int main(int argc, char **argv) {
         int lang_type = 0;
         argz.extract("--lang",lang);
         if(lang == "python")
-            lang_type = 1;
-        else if(lang == "php")
             lang_type = 2;
+        else if(lang == "php")
+            lang_type = 1;
         else if(lang == "js")
             lang_type = 3;
         else if(lang == "perl")
