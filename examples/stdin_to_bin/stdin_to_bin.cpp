@@ -43,6 +43,8 @@ int main(int argc, char **argv) {
             lang_type = 5;
         else if(lang == "ruby")
             lang_type = 6;
+        else if(lang == "java")
+            lang_type = 7;
         else
             lang_type = 0;
         
@@ -172,7 +174,25 @@ int main(int argc, char **argv) {
                 stream << "]\n";
         }
         break;
-    }
+        case 7: {
+                stream << "byte[] " << cmd_name << " = { ";
+                unsigned long count = 0;
+                while(!std::cin.eof()) {
+                    unsigned char c = 0;
+                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+                    int p = std::cin.peek();
+                    if(std::cin) {
+                        stream << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c));;
+                        if(p != EOF)
+                            stream << ", ";
+                        ++count;
+                    }
+                }
+                stream << ", 0 };\n";
+                stream << "long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
+            }
+                break;
+        }
         std::cout << stream.str() << "\n";
     }
     catch(cmd::ArgExcep<std::string> &e) {
