@@ -28,4 +28,19 @@ namespace cmd {
         return false;
     }
 
+    std::string _tolower(const std::string &str) {
+        std::string temp;
+        for(int i = 0; i < str.length(); ++i) {
+            temp += tolower(str[i]);
+        }
+        return temp;
+    }
+    
+    std::string _toupper(const std::string &str) {
+        std::string temp;
+        for(int i = 0; i < str.length(); ++i) {
+            temp += toupper(str[i]);
+        }
+        return temp;
+    }
 }
