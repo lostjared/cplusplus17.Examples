@@ -15,6 +15,17 @@
 #include<iostream>
 #include<sstream>
 
+void outputCPP(std::string type, std::string cmd_name);
+void outputPython(std::string cmd_name);
+void outputPHP(std::string cmd_name);
+void outputJS(std::string cmd_name);
+void outputPerl(std::string cmd_name);
+void outputSwift(std::string cmd_name);
+void outputRuby(std::string name);
+void outputJava(std::string cmd_name);
+void outputRust(std::string cmd_name);
+void outputGo(std::string cmd_name);
+
 int main(int argc, char **argv) {
     try {
         cmd::ArgumentList<std::string> argz(argc, argv);
@@ -55,184 +66,223 @@ int main(int argc, char **argv) {
             case 0: {
             if(!type_)
                 type = "unsigned char";
+                outputCPP(type,cmd_name);
             
-            stream << type << " " << cmd_name << " [] = {\n";
-            unsigned long count = 0;
-            while(!std::cin.eof()) {
-                unsigned char c = 0;
-                std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
-                
-                int p = std::cin.peek();
-                
-                if(std::cin) {
-                    stream << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c));;
-                    if(p != EOF)
-                        stream << ", ";
-                    ++count;
-                }
-            }
-            stream << ", 0 };\n";
-            stream << "unsigned long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
         }
                 break;
         case 1: {
-            stream << "$" << cmd_name << " = array(";
-                while(!std::cin.eof()) {
-                    unsigned char c = 0;
-                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
-                    
-                    int p = std::cin.peek();
-                    
-                    if(std::cin) {
-                        stream << static_cast<unsigned int>(c);
-                        if(p != EOF)
-                            stream << ",";
-                    }
-                }
-                stream << ");\n";
+            outputPHP(cmd_name);
         }
                 break;
         case 3: {
-            stream <<"let " << cmd_name << " = [";
-                while(!std::cin.eof()) {
-                    unsigned char c = 0;
-                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
-                    
-                    int p = std::cin.peek();
-                    
-                    if(std::cin) {
-                        stream << static_cast<unsigned int>(c);
-                        if(p != EOF)
-                            stream << ",";
-                    }
-                }
-                stream << "]\n";
+            outputJS(cmd_name);
         }
                 break;
             case 4: {
-                stream << "my @" << cmd_name << " := ";
-                while(!std::cin.eof()) {
-                    unsigned char c = 0;
-                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
-                    
-                    int p = std::cin.peek();
-                    
-                    if(std::cin) {
-                        stream << static_cast<unsigned int>(c);
-                        if(p != EOF)
-                            stream << ",";
-                    }
-                }
-                stream << ";\n";
+                outputPerl(cmd_name);
             }
                 break;
             case 5: {
-                stream << "var " << cmd_name << " = [";
-                while(!std::cin.eof()) {
-                    unsigned char c = 0;
-                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
-                        int p = std::cin.peek();
-                        if(std::cin) {
-                            stream << static_cast<unsigned int>(c);
-                            if(p != EOF)
-                                stream << ",";
-                        }
-                }
-                stream << "]\n";
-                
+                outputSwift(cmd_name);
             }
                 break;
                 
         case 2: {
-            stream << cmd_name << " = [";
-            while(!std::cin.eof()) {
-                unsigned char c = 0;
-                std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
-                
-                int p = std::cin.peek();
-                
-                if(std::cin) {
-                    stream << "0x" << std::hex << static_cast<unsigned int>(c);
-                    if(p != EOF)
-                        stream << ",";
-                }
-            }
-            stream << "]\n";
+            outputPython(cmd_name);
         }
         break;
         case 6: {
-                stream << cmd_name << " = Array[";
-                while(!std::cin.eof()) {
-                    unsigned char c = 0;
-                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
-                    
-                    int p = std::cin.peek();
-                    
-                    if(std::cin) {
-                        stream << static_cast<unsigned int>(c);
-                        if(p != EOF)
-                            stream << ",";
-                    }
-                }
-                stream << "]\n";
+            outputRuby(cmd_name);
         }
         break;
         case 7: {
-                stream << "byte[] " << cmd_name << " = { ";
-                unsigned long count = 0;
-                while(!std::cin.eof()) {
-                    unsigned char c = 0;
-                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
-                    int p = std::cin.peek();
-                    if(std::cin) {
-                        stream << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c));;
-                        if(p != EOF)
-                            stream << ", ";
-                        ++count;
-                    }
-                }
-                stream << ", 0 };\n";
-                stream << "long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
+                outputJava(cmd_name);
             }
                 break;
             case 8: {
-                stream << "let " << cmd_name << " = [";
-                while(!std::cin.eof()) {
-                    unsigned char c = 0;
-                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
-                    
-                    int p = std::cin.peek();
-                    
-                    if(std::cin) {
-                        stream << static_cast<unsigned int>(c);
-                        if(p != EOF)
-                            stream << ",";
-                    }
-                }
-                stream << "];";
-
+                outputRust(cmd_name);
             }
                 break;
             case 9: {
-                stream << cmd_name << " := []uint8 {";
-                while(!std::cin.eof()) {
-                    unsigned char c = 0;
-                    std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
-                    int p = std::cin.peek();
-                    if(std::cin) {
-                        stream << "0x" << std::hex << static_cast<unsigned int>(c);
-                        if(p != EOF)
-                            stream << ",";
-                    }
-                }
-                stream << "};";
+                outputGo(cmd_name);
             }
                 break;
         }
-        std::cout << stream.str() << "\n";
     }
     catch(cmd::ArgExcep<std::string> &e) {
         std::cerr << e.what() << "\n";
     }
     return 0;
+}
+
+void outputCPP(std::string type,std::string cmd_name) {
+    std::ostringstream stream;
+    stream << type << " " << cmd_name << " [] = {\n";
+    unsigned long count = 0;
+    while(!std::cin.eof()) {
+        unsigned char c = 0;
+        std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+        
+        int p = std::cin.peek();
+        
+        if(std::cin) {
+            stream << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c));;
+            if(p != EOF)
+                stream << ", ";
+            ++count;
+        }
+    }
+    stream << ", 0 };\n";
+    stream << "unsigned long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
+    std::cout << stream.str() << "\n";
+}
+void outputPython(std::string cmd_name) {
+    std::ostringstream stream;
+    stream << cmd_name << " = [";
+    while(!std::cin.eof()) {
+        unsigned char c = 0;
+        std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+        int p = std::cin.peek();
+        if(std::cin) {
+            stream << "0x" << std::hex << static_cast<unsigned int>(c);
+            if(p != EOF)
+                stream << ",";
+        }
+    }
+    stream << "]\n";
+    std::cout << stream.str() << "\n";
+}
+void outputPHP(std::string cmd_name) {
+    std::ostringstream stream;
+    stream << "$" << cmd_name << " = array(";
+    while(!std::cin.eof()) {
+        unsigned char c = 0;
+        std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+        int p = std::cin.peek();
+        if(std::cin) {
+            stream << static_cast<unsigned int>(c);
+            if(p != EOF)
+                stream << ",";
+            }
+    }
+    stream << ");\n";
+    std::cout << stream.str() << "\n";
+}
+void outputRust(std::string cmd_name) {
+    std::ostringstream stream;
+    stream << "let " << cmd_name << " = [";
+    while(!std::cin.eof()) {
+        unsigned char c = 0;
+        std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+        int p = std::cin.peek();
+        if(std::cin) {
+            stream << static_cast<unsigned int>(c);
+            if(p != EOF)
+                stream << ",";
+        }
+    }
+    stream << "];";
+    std::cout << stream.str() << "\n";
+}
+void outputPerl(std::string cmd_name) {
+    std::ostringstream stream;
+    stream << "my @" << cmd_name << " := ";
+    while(!std::cin.eof()) {
+        unsigned char c = 0;
+        std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+        int p = std::cin.peek();
+        if(std::cin) {
+            stream << static_cast<unsigned int>(c);
+            if(p != EOF)
+                stream << ",";
+        }
+    }
+    stream << ";\n";
+    std::cout << stream.str() << "\n";
+}
+void outputSwift(std::string cmd_name) {
+    std::ostringstream stream;
+    stream << "var " << cmd_name << " = [";
+    while(!std::cin.eof()) {
+        unsigned char c = 0;
+        std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+            int p = std::cin.peek();
+            if(std::cin) {
+                stream << static_cast<unsigned int>(c);
+                if(p != EOF)
+                    stream << ",";
+            }
+    }
+    stream << "]\n";
+    std::cout << stream.str() << "\n";
+}
+
+void outputRuby(std::string cmd_name) {
+    std::ostringstream stream;
+    stream << cmd_name << " = Array[";
+    while(!std::cin.eof()) {
+        unsigned char c = 0;
+        std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+        int p = std::cin.peek();
+        if(std::cin) {
+            stream << static_cast<unsigned int>(c);
+            if(p != EOF)
+                stream << ",";
+        }
+    }
+    stream << "]\n";
+    std::cout << stream.str() << "\n";
+}
+void outputJava(std::string cmd_name) {
+    std::ostringstream stream;
+    stream << "byte[] " << cmd_name << " = { ";
+     unsigned long count = 0;
+     while(!std::cin.eof()) {
+         unsigned char c = 0;
+         std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+         int p = std::cin.peek();
+         if(std::cin) {
+             stream << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c));;
+             if(p != EOF)
+                 stream << ", ";
+             ++count;
+         }
+     }
+    stream << ", 0 };\n";
+    stream << "long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
+    std::cout << stream.str() << "\n";
+}
+void outputJS(std::string cmd_name) {
+    std::ostringstream stream;
+    stream <<"let " << cmd_name << " = [";
+    while(!std::cin.eof()) {
+        unsigned char c = 0;
+        std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+        int p = std::cin.peek();
+        if(std::cin) {
+            stream << static_cast<unsigned int>(c);
+            if(p != EOF)
+                stream << ",";
+        }
+    }
+    stream << "]\n";
+    std::cout << stream.str() << "\n";
+}
+
+void outputGo(std::string cmd_name) {
+    std::ostringstream stream;
+    stream << cmd_name << " := []uint8 {";
+    while(!std::cin.eof()) {
+        unsigned char c = 0;
+        std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
+        int p = std::cin.peek();
+        if(std::cin) {
+            stream << "0x" << std::hex << static_cast<unsigned int>(c);
+            if(p != EOF)
+                stream << ",";
+        }
+    }
+    stream << "};";
+    std::cout << stream.str() << "\n";
+
 }
