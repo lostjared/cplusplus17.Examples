@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
             lang_type = 0;
         
         switch(lang_type) {
-            case 0: {
+        case 0: {
             if(!type_)
                 type = "unsigned char";
                 outputCPP(type,cmd_name);
@@ -122,9 +122,7 @@ void outputCPP(std::string type,std::string cmd_name) {
     while(!std::cin.eof()) {
         unsigned char c = 0;
         std::cin.read(reinterpret_cast<char*>(&c),sizeof(c));
-        
         int p = std::cin.peek();
-        
         if(std::cin) {
             stream << "0x" << std::hex << static_cast<unsigned int>(static_cast<unsigned char>(c));;
             if(p != EOF)
@@ -284,5 +282,4 @@ void outputGo(std::string cmd_name) {
     }
     stream << "};";
     std::cout << stream.str() << "\n";
-
 }
