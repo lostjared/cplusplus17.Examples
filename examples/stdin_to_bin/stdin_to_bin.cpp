@@ -1,6 +1,6 @@
 // pipe data to standard output stream
-// to produce C++ array of characters
-// for stream
+// to produce array
+// from stream
 // example
 // $ cat text.txt | ./stdin_to_bin
 // or
