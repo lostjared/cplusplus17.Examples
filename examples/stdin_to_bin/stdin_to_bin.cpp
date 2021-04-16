@@ -11,6 +11,8 @@
 // --lang [ python/cpp/php/js/perl/swift/ruby/rust ]
 // Suports Python, PHP, JavaScript, Perl, Swift, Ruby, Java, Rust, C/C++
 
+// Tony the tiger
+
 #include"cmd-switch.hpp"
 #include<iostream>
 #include<sstream>
@@ -67,46 +69,44 @@ int main(int argc, char **argv) {
             if(!type_)
                 type = "unsigned char";
                 outputCPP(type,cmd_name);
-            
         }
-                break;
+            break;
         case 1: {
             outputPHP(cmd_name);
         }
-                break;
+            break;
         case 3: {
             outputJS(cmd_name);
         }
-                break;
-            case 4: {
-                outputPerl(cmd_name);
-            }
-                break;
-            case 5: {
-                outputSwift(cmd_name);
-            }
-                break;
-                
+            break;
+        case 4: {
+            outputPerl(cmd_name);
+        }
+            break;
+        case 5: {
+            outputSwift(cmd_name);
+        }
+            break;
         case 2: {
             outputPython(cmd_name);
         }
-        break;
+            break;
         case 6: {
             outputRuby(cmd_name);
         }
-        break;
+            break;
         case 7: {
-                outputJava(cmd_name);
-            }
-                break;
-            case 8: {
-                outputRust(cmd_name);
-            }
-                break;
-            case 9: {
-                outputGo(cmd_name);
-            }
-                break;
+            outputJava(cmd_name);
+        }
+            break;
+        case 8: {
+            outputRust(cmd_name);
+        }
+            break;
+        case 9: {
+            outputGo(cmd_name);
+        }
+            break;
         }
     }
     catch(cmd::ArgExcep<std::string> &e) {
