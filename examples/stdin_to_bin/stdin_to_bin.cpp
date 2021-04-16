@@ -8,7 +8,7 @@
 // Argument Types
 // --name [variable name ]
 // --type [ variable type ]
-// --lang [ python/cpp ]
+// --lang [ python/cpp/php/js/perl/swift/ruby/rust ]
 // Suports Python, PHP, JavaScript, Perl, Swift, Ruby, Java, Rust, C/C++
 
 #include"cmd-switch.hpp"
