@@ -82,7 +82,7 @@ namespace cmd {
     bool ArgumentList<T>::check(T key) {
         for(int i = 0; i < items.size(); ++i) {
             if(items[i].key == "$") {
-                if(items[i].value == key) {
+                if(_tolower(items[i].value) == _tolower(key)) {
                     return true;
                 }
             }
@@ -94,7 +94,7 @@ namespace cmd {
     bool ArgumentList<T>::check_require(T key) {
         for(int i = 0; i < items.size(); ++i) {
             if(items[i].key == "$") {
-                if(items[i].value == key) {
+                if(_tolower(items[i].value) == _tolower(key)) {
                     return true;
                 }
             }
