@@ -6,8 +6,8 @@
 // or
 // $ cat text.txt | ./stdin_to_bin --lang=python
 // Argument Types
-// --term
-// add --term to null terminate c++ array
+// --noterm
+// add --noterm to not null terminate c++ array
 // --name [variable name ]
 // --type [ variable type ]
 // --lang [ python/cpp/php/js/perl/swift/ruby/rust ]
@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
         std::string cmd_name;
         std::ostringstream stream;
         bool name=argz.extract("--name", cmd_name);
-        bool term=argz.check("--term");
+        bool term=argz.check("--noterm");
         if(!name)
             cmd_name="array_value";
         std::string type;
@@ -134,7 +134,7 @@ void outputCPP(std::string type,std::string cmd_name,bool term) {
             ++count;
         }
     }
-    if(term)
+    if(!term)
         stream << ", 0 };\n";
     else
         stream <<"};\n";
