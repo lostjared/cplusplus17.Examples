@@ -52,8 +52,24 @@ namespace cmd {
     };
 
     bool Argument_FindInList(std::vector<std::string> &lst, ArgumentStringList &alst);
-    std::string _tolower(const std::string &str);
-    std::string _toupper(const std::string &str);
+    
+    template<typename T>
+    T _tolower(const T &str) {
+        T temp;
+        for(int i = 0; i < str.length(); ++i) {
+            temp += tolower(str[i]);
+        }
+        return temp;
+    }
+    
+    template<typename T>
+    T _toupper(const T &str) {
+        T temp;
+        for(int i = 0; i < str.length(); ++i) {
+            temp += toupper(str[i]);
+        }
+        return temp;
+    }
 
     template<typename T>
     ArgumentList<T>::ArgumentList(int argc, char **argv) {
