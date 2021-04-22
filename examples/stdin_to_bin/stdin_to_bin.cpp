@@ -8,9 +8,9 @@
 // Argument Types
 // --noterm
 // add --noterm to not null terminate c++ array
-// --name [variable name ]
-// --type [ variable type ]
-// --lang [ python/cpp/php/js/perl/swift/ruby/rust ]
+// --name [variable name]
+// --type [variable type]
+// --lang [python/cpp/php/js/perl/swift/ruby/rust]
 // Suports Python, PHP, JavaScript, Perl, Swift, Ruby, Java, Rust, C/C++
 
 // Tony the tiger
@@ -135,7 +135,7 @@ void outputCPP(std::string type,std::string cmd_name,bool term) {
         }
     }
     if(!term)
-        stream << ", 0 };\n";
+        stream << ",0};\n";
     else
         stream <<"};\n";
     
