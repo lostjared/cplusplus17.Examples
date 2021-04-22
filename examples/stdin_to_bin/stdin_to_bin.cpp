@@ -6,18 +6,21 @@
 // or
 // $ cat text.txt | ./stdin_to_bin --lang=python
 // Argument Types
+// --term
+// add --term to null terminate c++ array
 // --name [variable name ]
 // --type [ variable type ]
 // --lang [ python/cpp/php/js/perl/swift/ruby/rust ]
 // Suports Python, PHP, JavaScript, Perl, Swift, Ruby, Java, Rust, C/C++
 
 // Tony the tiger
+// getting better at this
 
 #include"cmd-switch.hpp"
 #include<iostream>
 #include<sstream>
 
-void outputCPP(std::string type, std::string cmd_name);
+void outputCPP(std::string type, std::string cmd_name, bool term);
 void outputPython(std::string cmd_name);
 void outputPHP(std::string cmd_name);
 void outputJS(std::string cmd_name);
@@ -34,6 +37,7 @@ int main(int argc, char **argv) {
         std::string cmd_name;
         std::ostringstream stream;
         bool name=argz.extract("--name", cmd_name);
+        bool term=argz.check("--term");
         if(!name)
             cmd_name="array_value";
         std::string type;
@@ -68,7 +72,7 @@ int main(int argc, char **argv) {
         case 0: {
             if(!type_)
                 type = "unsigned char";
-                outputCPP(type,cmd_name);
+                outputCPP(type,cmd_name,term);
         }
             break;
         case 1: {
@@ -115,7 +119,7 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-void outputCPP(std::string type,std::string cmd_name) {
+void outputCPP(std::string type,std::string cmd_name,bool term) {
     std::ostringstream stream;
     stream << type << " " << cmd_name << " [] = {\n";
     unsigned long count = 0;
@@ -130,7 +134,11 @@ void outputCPP(std::string type,std::string cmd_name) {
             ++count;
         }
     }
-    stream << ", 0 };\n";
+    if(term)
+        stream << ", 0 };\n";
+    else
+        stream <<"};\n";
+    
     stream << "unsigned long " << cmd_name << "_count = 0x" << std::hex << count << ";\n";
     std::cout << stream.str() << "\n";
 }
