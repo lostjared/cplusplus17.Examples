@@ -47,9 +47,9 @@ void Stack<T>::push(const T &t) {
 template<typename T>
 
 T Stack<T>::pop() {
-    if(index-1 > 0) {
+    if(index-1 >= 0) {
     T t;
-    t = type[index--];
+    t = type[--index];
     return t;
     }
     else {
