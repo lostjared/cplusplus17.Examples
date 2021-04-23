@@ -10,12 +10,17 @@ int main(int argc, char **argv) {
         std::cout << "off top: " << val << "\n";
         val = stack1.pop();
         std::cout << "off top: " << val << "\n";
+        stack1.push(500);
+        std::cout << "head: " << stack1.head() << "\n";
         stack1.printItems();
     } catch (ErrorUnder &eu) {
         std::cout << "underflow\n";
     } catch (ErrorOver &eo) {
         std::cout << "overflow\n";
-    } catch(...) {
+    } catch (ErrorEmpty &ee) {
+        std::cout << "Error Empty..\n";
+    }
+    catch(...) {
         std::cout << "...\n";
     }
     return 0;

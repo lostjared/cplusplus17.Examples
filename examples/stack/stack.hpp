@@ -7,6 +7,7 @@
 
 class ErrorUnder{};
 class ErrorOver{};
+class ErrorEmpty{};
 
 template<typename T>
 class Stack {
@@ -15,6 +16,7 @@ public:
     ~Stack();
     void push(const T &type);
     T pop();
+    T head();
     size_t size() const { return size_of; }
     void printItems() const;
 protected:
@@ -45,7 +47,6 @@ void Stack<T>::push(const T &t) {
 }
 
 template<typename T>
-
 T Stack<T>::pop() {
     if(index-1 >= 0) {
     T t;
@@ -55,6 +56,14 @@ T Stack<T>::pop() {
     else {
         throw ErrorUnder();
     }
+}
+
+template<typename T>
+T Stack<T>::head() {
+    if(index > 0)
+    return type[index-1];
+    else
+        throw ErrorEmpty();
 }
 
 template<typename T>
