@@ -16,7 +16,7 @@ public:
     ~Stack();
     void push(const T &type);
     T pop();
-    T head();
+    T top();
     size_t size() const { return size_of; }
     void printItems() const;
 protected:
@@ -59,7 +59,7 @@ T Stack<T>::pop() {
 }
 
 template<typename T>
-T Stack<T>::head() {
+T Stack<T>::top() {
     if(index > 0)
     return type[index-1];
     else

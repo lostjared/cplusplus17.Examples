@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
         val = stack1.pop();
         std::cout << "off top: " << val << "\n";
         stack1.push(500);
-        std::cout << "head: " << stack1.head() << "\n";
+        std::cout << "top: " << stack1.top() << "\n";
         stack1.printItems();
     } catch (ErrorUnder &eu) {
         std::cout << "underflow\n";
