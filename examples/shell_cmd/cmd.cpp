@@ -4,6 +4,8 @@
  Use
  
  ./shell-cmd path "command %f" .file_extension
+ ex:
+ ./shell-cmd . "cat %f" .txt
  
  to execute command for each file type within directory
  just written to practice
@@ -34,8 +36,6 @@ std::string replace_string(std::string orig, std::string with, std::string rep) 
     f = left+rep+right;
     return replace_string(f,with,rep);
 }
-
-
 
 void add_directory(std::string path, std::vector<std::string> &files, std::string type) {
     DIR *dir = opendir(path.c_str());
@@ -73,7 +73,6 @@ int main(int argc, char **argv) {
         std::cerr << "use: \nshell-cmd: path command %f filetype\n";
         exit(EXIT_FAILURE);
     }
-    
     std::vector<std::string> cur_dir;
     add_directory(argv[1], cur_dir, argv[3]);
     for(unsigned int i = 0; i < cur_dir.size(); ++i) {
