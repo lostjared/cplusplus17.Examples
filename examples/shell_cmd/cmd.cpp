@@ -41,6 +41,7 @@ void add_directory(std::string path, std::vector<std::string> &files, std::strin
     DIR *dir = opendir(path.c_str());
     if(dir == NULL) {
         std::cerr << "Error could not open directory: " << path << "\n";
+        exit(EXIT_FAILURE);
         return;
     }
     dirent *file_info;
