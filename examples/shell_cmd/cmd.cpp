@@ -7,7 +7,7 @@
  ex:
  ./shell-cmd . "cat %f" .txt
  
- to execute command for each file type within directory
+ to execute command for each file type within directory/subdirectory
  just written to practice
   
 */
