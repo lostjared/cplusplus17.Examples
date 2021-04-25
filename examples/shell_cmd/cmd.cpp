@@ -1,9 +1,9 @@
 /*
 
- Practice
+ for Practice
  Use
  
- ./shell-cmd path "command %f" .file_extension
+ ./shell-cmd path "command %f" regex_search_pattern
  ex:
  ./shell-cmd . "cat %f" .txt
  
@@ -21,6 +21,7 @@
 #include<sys/stat.h>
 #include<sstream>
 #include<cstdlib>
+#include<regex>
 
 std::string replace_string(std::string orig, std::string with, std::string rep) {
     auto pos = orig.find(with);
@@ -59,7 +60,8 @@ void add_directory(std::string path, std::vector<std::string> &files, std::strin
             continue;
         }
         if(f_info.length()>0 && f_info[0] != '.') {
-            if(fullpath.find(type) != std::string::npos) {
+            std::regex ex(type);
+            if(std::regex_search(fullpath, ex)) {
                 files.push_back(fullpath);
             }
         }
@@ -68,19 +70,16 @@ void add_directory(std::string path, std::vector<std::string> &files, std::strin
 }
 
 int main(int argc, char **argv) {
-    
     if(argc != 4) {
         std::cerr << "Error: requires three arguments..\n";
         std::cerr << "use: \nshell-cmd: path command %f filetype\n";
         exit(EXIT_FAILURE);
     }
-    
     std::string input = argv[2];
     if(input.find("%f") == std::string::npos) {
         std::cerr << "requires %f for filename..\n";
         exit(EXIT_FAILURE);
     }
-    
     std::vector<std::string> cur_dir;
     add_directory(argv[1], cur_dir, argv[3]);
     for(unsigned int i = 0; i < cur_dir.size(); ++i) {
