@@ -3,7 +3,7 @@
 int main(int argc, char **argv) {
     
     if(argc != 2) {
-        std::cerr << "Error requires two arguments..\n";
+        std::cerr << "Error requires one argument capture device index..\n";
         exit(EXIT_FAILURE);
         return 0;
     }
