@@ -144,7 +144,7 @@ int main(int argc, char **argv) {
         std::string cmd = argv[2];
         std::string r = replace_string(cmd, "%f", text);
         std::cout << r << "\n";
-        System(r.c_str());
+        System(r);
     }
     return 0;
 }
