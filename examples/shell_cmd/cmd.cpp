@@ -129,7 +129,7 @@ int System(const std::string &command) {
 int main(int argc, char **argv) {
     if(argc != 4) {
         std::cerr << "Error: requires three arguments..\n";
-        std::cerr << "use: \nshell-cmd: path \"command %f\" regex_search\n";
+        std::cerr << "use: \n" << argv[0] << " path \"command %f\" regex_search\n";
         exit(EXIT_FAILURE);
     }
     std::string input = argv[2];
