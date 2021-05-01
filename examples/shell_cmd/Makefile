@@ -9,8 +9,12 @@ LDFLAGS=
 $(PROGRAM): $(OBJ)
 	$(CXX) -o $(PROGRAM) $(OBJ) $(LDFLAGS)
 
+
+
 all: $(PROGRAM)
 
 .PHONY: clean
 clean:
 	rm -f $(PROGRAM) *.o
+install:
+	cp $(PROGRAM) /usr/local/bin
