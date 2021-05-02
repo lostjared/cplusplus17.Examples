@@ -2,7 +2,9 @@
  Use
  
  ./shell-cmd path "command %f" regex_search_pattern
+
  ex:
+
  ./shell-cmd . "cat %f" .txt
  
  actual example extract all archives:
