@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
         std::string s;
         std::getline(std::cin, s);
         std::regex r(argv[1]);
-        if(std::cin && regex_search(s, r)) {
+        if(std::cin && std::regex_search(s, r)) {
             std::cout << argv[0] << ": match!\n";
         }
     }
