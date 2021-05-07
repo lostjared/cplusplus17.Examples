@@ -1,3 +1,6 @@
+// Just practicing some different ideas and concepts
+// chained hash table
+
 #include<iostream>
 #include<string>
 #include<list>
@@ -63,7 +66,6 @@ protected:
 int main(int argc, char **argv) {
     
     Table<100, std::string> table;
-    
     table.enter("apple", "tree");
     table.enter("bear", "animal");
     
