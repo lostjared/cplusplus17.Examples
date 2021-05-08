@@ -26,6 +26,22 @@ class Table {
   
 public:
     Table() = default;
+
+    T &operator[](const std::string &key) {
+        int k = hash(key, Size);
+        for(auto it = buckets[k].begin(); it != buckets[k].end(); it++) {
+            if(it->first == key)
+                return it->second;
+        }
+        buckets[k].push_back(std::make_pair(key, T()));
+        auto it = buckets[k].begin();
+        for(; it != buckets[k].end(); it++) {
+            if(it->first == key)
+                break;
+        }
+        return it->second;
+    }
+    
     void enter(std::string key, const T &type) {
         unsigned int k = hash(key, Size);
         for(auto it = buckets[k].begin(); it != buckets[k].end(); ++it) {
@@ -77,6 +93,9 @@ int main(int argc, char **argv) {
     if(table.lookup("apple", apple)) {
         std::cout << apple << "\n";
     }
+    
+    table["order"] = "pie";
+    std::cout << table["order"] << "\n";
     
     return 0;
 }
