@@ -21,7 +21,7 @@ unsigned int hash(const std::string &key, unsigned int size) {
     return val%size;
 }
 
-template<int Size, typename T>
+template<typename T, unsigned int Size>
 class Table {
   
 public:
@@ -81,7 +81,7 @@ protected:
 
 int main(int argc, char **argv) {
     
-    Table<100, std::string> table;
+    Table<std::string, 1024> table;
     table.enter("apple", "tree");
     table.enter("bear", "animal");
     
