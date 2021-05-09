@@ -73,7 +73,10 @@ public:
             }
         }
     }
-
+    
+    const int size() const { return Size; }
+    std::list<std::pair<std::string, T>> &at(unsigned int pos) { return buckets[pos]; }
+    
 protected:
     std::list<std::pair<std::string, T>> buckets[Size];
     
@@ -97,5 +100,14 @@ int main(int argc, char **argv) {
     table["order"] = "pie";
     std::cout << table["order"] << "\n";
     
+    // print table
+    std::cout << "**\tprint table\n";
+    for(unsigned int i = 0; i < table.size(); ++i) {
+        if(table.at(i).size() > 0) {
+            for(auto it = table.at(i).begin(); it != table.at(i).end(); ++it) {
+                std::cout << it->first << ":" << it->second << "\n";
+            }
+        }
+    }
     return 0;
 }
