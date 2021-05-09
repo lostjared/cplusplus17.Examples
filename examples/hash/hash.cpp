@@ -1,5 +1,6 @@
 // Just practicing some different ideas and concepts
 // chained hash table
+// mixing different stuff
 
 #include<iostream>
 #include<string>
@@ -83,11 +84,9 @@ protected:
 };
 
 int main(int argc, char **argv) {
-    
     Table<std::string, 1024> table;
     table.enter("apple", "tree");
     table.enter("bear", "animal");
-    
     std::string apple;
     if(table.lookup("apple", apple)) {
         std::cout << apple << "\n";
@@ -96,12 +95,10 @@ int main(int argc, char **argv) {
     if(table.lookup("apple", apple)) {
         std::cout << apple << "\n";
     }
-    
     table["order"] = "pie";
     std::cout << table["order"] << "\n";
-    
     // print table
-    std::cout << "**\tprint table\n";
+    std::cout << "*****\tprint table\n";
     for(unsigned int i = 0; i < table.size(); ++i) {
         if(table.at(i).size() > 0) {
             for(auto it = table.at(i).begin(); it != table.at(i).end(); ++it) {
