@@ -101,7 +101,7 @@ int main(int argc, char **argv) {
         for(unsigned int i = 0; i < table.size(); ++i) {
             if(table.at(i).size() > 0) {
                 for(auto it = table.at(i).begin(); it != table.at(i).end(); ++it) {
-                    std::cout << it->first << ":" << it->second << "\n";
+                    std::cout << "hash:" << i << " -> " << it->first << ":" << it->second << "\n";
                 }
             }
         }
