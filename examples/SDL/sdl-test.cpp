@@ -16,14 +16,14 @@ int main(int argc, char **argv) {
     const int width=1280, height=720;
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cout << SDL_GetError() << "\n";
-        exit(EXIT_FAILURE);
+        return EXIT_FAILURE;
     }
     
     SDL_Window *window = SDL_CreateWindow("Hello World Random Pixels", 0, 0, width, height, SDL_WINDOW_SHOWN);
     if(!window) {
         std::cerr << "Error creating window..\n";
         SDL_Quit();
-        exit(EXIT_FAILURE);
+        return EXIT_FAILURE;
     }
     
     SDL_Renderer *ren = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
     if(ren == 0) {
         std::cout << SDL_GetError() << "\n";
         SDL_Quit();
-        return -1;
+        return EXIT_FAILURE;
     }
     
     SDL_Texture *tex = SDL_CreateTexture(ren, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, width, height);
@@ -39,6 +39,7 @@ int main(int argc, char **argv) {
     if(!tex) {
         std::cerr << "Error creating texture..\n";
         SDL_Quit();
+        return EXIT_FAILURE;
     }
     
     SDL_Surface *surface = SDL_CreateRGBSurfaceFrom(NULL, width, height, 32, 0, 0x00FF0000, 0x0000FF00,0x000000FF,0xFF000000);
@@ -46,6 +47,7 @@ int main(int argc, char **argv) {
     if(!surface) {
         std::cerr << "Error creating surface\n";
         SDL_Quit();
+        return EXIT_FAILURE;
     }
     
     bool active = true;
