@@ -1,5 +1,6 @@
 #include"SDL.h"
 #include<iostream>
+#include "cmd-switch.hpp"
 
 void rand_pixels(SDL_Texture *tex, SDL_Surface *surface) {
     SDL_LockTexture(tex, 0, &surface->pixels, &surface->pitch);
@@ -13,7 +14,19 @@ void rand_pixels(SDL_Texture *tex, SDL_Surface *surface) {
 }
 
 int main(int argc, char **argv) {
-    const int width=1280, height=720;
+    int width=1280, height=720;
+    try {
+        cmd::ArgumentList<std::string> argz(argc, argv);
+        std::string w,h;
+        argz.require("--width", w, "window width");
+        argz.require("--height", h, "Window height");
+        width = atoi(w.c_str());
+        height = atoi(h.c_str());
+    } catch(cmd::ArgExcep<std::string> &e) {
+        std::cerr << e.what() << "\n";
+        return EXIT_FAILURE;
+    }
+    
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cout << SDL_GetError() << "\n";
         return EXIT_FAILURE;
