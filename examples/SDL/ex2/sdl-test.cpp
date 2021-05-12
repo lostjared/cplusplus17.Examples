@@ -50,6 +50,12 @@ int main(int argc, char **argv) {
     }
     SDL_Texture *tex_card = SDL_CreateTextureFromSurface(ren,card);
     
+    if(!tex_card) {
+        std::cerr << "Error creating tex_card\n";
+        SDL_Quit();
+        return EXIT_FAILURE;
+    }
+    
     bool active = true;
     SDL_Event e;
     
