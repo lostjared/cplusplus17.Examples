@@ -4,6 +4,7 @@
 #include<iostream>
 #include<string>
 #include<list>
+#include<utility>
 
 namespace htable {
     // from Compilers PT&T
@@ -27,7 +28,21 @@ namespace htable {
       
     public:
         Table() = default;
+        ~Table() = default;
+        
+        Table(const Table &t) : buckets{t.buckets} {}
+        Table(Table &&t) : buckets{std::move(t.buckets)} {}
 
+        Table<T, Size> &operator=(Table<T, Size> &t) {
+            buckets = t.buckets;
+            return *this;
+        }
+        
+        Table<T, Size> &operator=(Table<T, Size> &&t) {
+            buckets = std::move(t.buckets);
+            return *this;
+        }
+        
         T &operator[](const std::string &key) {
             int k = hash(key, Size);
             for(auto & [first,second] : buckets[k]) {

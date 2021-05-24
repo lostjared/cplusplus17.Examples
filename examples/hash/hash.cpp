@@ -1,6 +1,9 @@
 // Just practicing some different ideas and concepts
 // chained hash table
 // mixing different stuff
+// in reality it would be better to use
+// a map or unordered map but this is to practice
+// writing my own chained hash table
 
 #include<iostream>
 #include<string>
