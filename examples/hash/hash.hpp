@@ -30,9 +30,9 @@ namespace htable {
 
         T &operator[](const std::string &key) {
             int k = hash(key, Size);
-            for(auto it = buckets[k].begin(); it != buckets[k].end(); it++) {
-                if(it->first == key)
-                    return it->second;
+            for(auto & [first,second] : buckets[k]) {
+                if(first == key)
+                    return second;
             }
             buckets[k].push_back(std::make_pair(key, T()));
             auto it = buckets[k].begin();
@@ -45,9 +45,9 @@ namespace htable {
         
         void enter(std::string key, const T &type) {
             unsigned int k = hash(key, Size);
-            for(auto it = buckets[k].begin(); it != buckets[k].end(); ++it) {
-                if(it->first == key) {
-                    it->second = type;
+            for(auto & [first, second] : buckets[k]) {
+                if(first == key) {
+                    second = type;
                     return;
                 }
             }
@@ -56,9 +56,9 @@ namespace htable {
         
         bool lookup(std::string key, T &type) {
             int k = hash(key, Size);
-            for(auto it = buckets[k].begin(); it != buckets[k].end(); ++it) {
-                if(it->first == key) {
-                    type = it->second;
+            for(auto & [first, second] : buckets[k]) {
+                if(first == key) {
+                    type = second;
                     return true;
                 }
             }
