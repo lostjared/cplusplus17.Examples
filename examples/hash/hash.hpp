@@ -30,8 +30,8 @@ namespace htable {
         Table() = default;
         ~Table() = default;
         
-        Table(const Table &t) : buckets{t.buckets} {}
-        Table(Table &&t) : buckets{std::move(t.buckets)} {}
+        Table(const Table<T,Size> &t) : buckets{t.buckets} {}
+        Table(Table<T, Size> &&t) : buckets{std::move(t.buckets)} {}
 
         Table<T, Size> &operator=(Table<T, Size> &t) {
             buckets = t.buckets;
