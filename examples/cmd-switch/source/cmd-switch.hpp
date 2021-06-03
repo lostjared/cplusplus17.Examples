@@ -9,6 +9,8 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<ctype.h>
+
 namespace cmd {
 
     template<typename T>
@@ -50,6 +52,24 @@ namespace cmd {
     };
 
     bool Argument_FindInList(std::vector<std::string> &lst, ArgumentStringList &alst);
+    
+    template<typename T>
+    T _tolower(const T &str) {
+        T temp;
+        for(int i = 0; i < str.length(); ++i) {
+            temp += tolower(str[i]);
+        }
+        return temp;
+    }
+    
+    template<typename T>
+    T _toupper(const T &str) {
+        T temp;
+        for(int i = 0; i < str.length(); ++i) {
+            temp += toupper(str[i]);
+        }
+        return temp;
+    }
 
     template<typename T>
     ArgumentList<T>::ArgumentList(int argc, char **argv) {
@@ -78,7 +98,7 @@ namespace cmd {
     bool ArgumentList<T>::check(T key) {
         for(int i = 0; i < items.size(); ++i) {
             if(items[i].key == "$") {
-                if(items[i].value == key) {
+                if(_tolower(items[i].value) == _tolower(key)) {
                     return true;
                 }
             }
@@ -90,7 +110,7 @@ namespace cmd {
     bool ArgumentList<T>::check_require(T key) {
         for(int i = 0; i < items.size(); ++i) {
             if(items[i].key == "$") {
-                if(items[i].value == key) {
+                if(_tolower(items[i].value) == _tolower(key)) {
                     return true;
                 }
             }
