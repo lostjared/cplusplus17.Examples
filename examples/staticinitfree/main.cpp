@@ -9,7 +9,7 @@ static st::staticIF startup([](){
 });
 
 int main(int argc, char **argv) {
-    
+    std::cout << "seeded random number: " << rand()%255 << "\n";
     return 0;
 }
 
