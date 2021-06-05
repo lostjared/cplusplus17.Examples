@@ -30,6 +30,9 @@
 #include<regex>
 
 void proc_cmd(const std::string &cmd, const std::string &text);
+std::string replace_string(std::string orig, std::string with, std::string rep);
+void add_directory(std::string path, std::string cmd, std::string type);
+int System(const std::string &command);
 
 std::string replace_string(std::string orig, std::string with, std::string rep) {
     auto pos = orig.find(with);
