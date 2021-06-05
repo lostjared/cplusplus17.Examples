@@ -29,6 +29,8 @@
 #include<cstdlib>
 #include<regex>
 
+void proc_cmd(const std::string &cmd, const std::string &text);
+
 std::string replace_string(std::string orig, std::string with, std::string rep) {
     auto pos = orig.find(with);
     if(pos == std::string::npos) {
@@ -44,7 +46,7 @@ std::string replace_string(std::string orig, std::string with, std::string rep) 
     return replace_string(f,with,rep);
 }
 
-void add_directory(std::string path, std::vector<std::string> &files, std::string type) {
+void add_directory(std::string path, std::string cmd, std::string type) {
     DIR *dir = opendir(path.c_str());
     if(dir == NULL) {
         std::cerr << "Error could not open directory: " << path << "\n";
@@ -61,14 +63,14 @@ void add_directory(std::string path, std::vector<std::string> &files, std::strin
         lstat(fullpath.c_str(), &s);
         if(S_ISDIR(s.st_mode)) {
             if(f_info.length()>0 && f_info[0] != '.')
-                add_directory(path+"/"+f_info, files, type);
+                add_directory(path+"/"+f_info, cmd, type);
 
             continue;
         }
         if(f_info.length()>0 && f_info[0] != '.') {
             std::regex ex(type);
             if(std::regex_search(fullpath, ex)) {
-                files.push_back(fullpath);
+                proc_cmd(cmd, fullpath);
             }
         }
     }
@@ -125,6 +127,11 @@ int System(const std::string &command) {
     return status;
 }
 
+void proc_cmd(const std::string &cmd, const std::string &text) {
+    std::string r = replace_string(cmd, "%f", text);
+    std::cout << r << "\n";
+    System(r);
+}
 
 int main(int argc, char **argv) {
     if(argc != 4) {
@@ -137,14 +144,6 @@ int main(int argc, char **argv) {
         std::cerr << "requires %f for filename..\n";
         exit(EXIT_FAILURE);
     }
-    std::vector<std::string> cur_dir;
-    add_directory(argv[1], cur_dir, argv[3]);
-    for(unsigned int i = 0; i < cur_dir.size(); ++i) {
-        std::string text =  cur_dir[i];
-        std::string cmd = argv[2];
-        std::string r = replace_string(cmd, "%f", text);
-        std::cout << r << "\n";
-        System(r);
-    }
+    add_directory(argv[1], argv[2], argv[3]);
     return 0;
 }
