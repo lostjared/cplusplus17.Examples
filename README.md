@@ -10,6 +10,8 @@ on Linux/Mac use in the directory with the code:
 
 	$ make
 
+This also contains random example projects
+
 
 
 
