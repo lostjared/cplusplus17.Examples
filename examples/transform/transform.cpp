@@ -4,7 +4,7 @@
 #include<vector>
 
 std::vector<int> half(std::vector<int> values) {
-  transform(values.begin(), values.end(), values.begin(), [](int v) { return v/2; });
+    std::transform(values.begin(), values.end(), values.begin(), [](int v) { return v/2; });
     return values;
 }
 
