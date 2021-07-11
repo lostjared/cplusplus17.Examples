@@ -7,7 +7,7 @@
 #include<sstream>
 #include"cmd-switch.hpp"
 
-void processFile(std::string inputFile, std::string outputType, int width, int height);
+void processFile(std::string inputFile, std::string outputType,bool res, int width, int height);
 
 int main(int argc, char **argv) {
     try {
@@ -17,16 +17,19 @@ int main(int argc, char **argv) {
         std::string output_type;
         argz.require("--output", output_type, "output type");
         std::string resolution;
-        argz.require("--res", resolution, "output resolution");
-        
-        auto pos = resolution.find("x");
-        if(pos == std::string::npos) {
-            std::cerr << "Invalid resolution string use WidthxHeight\n";
-            return 0;
+        bool res=argz.extract("--res", resolution);
+        if(res) {
+            auto pos = resolution.find("x");
+            if(pos == std::string::npos) {
+                std::cerr << "Invalid resolution string use WidthxHeight\n";
+                return 0;
+            }
+            std::string left=resolution.substr(0, pos);
+            std::string right=resolution.substr(pos+1, resolution.length());
+            processFile(input_file, output_type, res, atoi(left.c_str()), atoi(right.c_str()));
+        } else {
+            processFile(input_file, output_type, false, 0, 0);
         }
-        std::string left=resolution.substr(0, pos);
-        std::string right=resolution.substr(pos+1, resolution.length());
-        processFile(input_file, output_type, atoi(left.c_str()), atoi(right.c_str()));
     }
     catch(cmd::ArgExcep<std::string> &e) {
         std::cerr << e.what() << "\n";
@@ -35,7 +38,7 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-void processFile(std::string inputFile, std::string outputType, int width, int height) {
+void processFile(std::string inputFile, std::string outputType,bool res, int width, int height) {
     std::fstream file;
     file.open(inputFile, std::ios::in);
     if(!file.is_open()) {
@@ -49,14 +52,22 @@ void processFile(std::string inputFile, std::string outputType, int width, int h
             auto pos = in_file.rfind(".");
             if(pos == std::string::npos) continue;
             std::string left = in_file.substr(0, pos);
-            std::ostringstream stream;
-            stream << left << "_" << width << "x" << height << "." << outputType;
             cv::Mat img = cv::imread(in_file);
+            std::ostringstream stream;
             if(!img.empty()) {
-                cv::Mat copy;
-                cv::resize(img, copy, cv::Size(width, height));
-                cv::imwrite(stream.str(), copy);
-                std::cout << "wrote: " << stream.str() << "\n";
+                if(res == true) {
+                    cv::Mat copy;
+                    stream << left << "_" << width << "x" << height << "." << outputType;
+                    cv::resize(img, copy, cv::Size(width, height));
+                    cv::imwrite(stream.str(), copy);
+                    std::cout << "wrote: " << stream.str() << "\n";
+                } else {
+                    std::ostringstream stream;
+                    stream << left << "." << outputType;
+                    cv::imwrite(stream.str(), img);
+                    std::cout << "wrote: " << stream.str() << "\n";
+                }
+                
             } else {
                 std::cerr << "Error reading image: " << in_file << "\n";
             }
