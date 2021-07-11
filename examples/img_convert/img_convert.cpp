@@ -53,9 +53,9 @@ void processFile(std::string inputFile, std::string outputType,bool res, int wid
             if(pos == std::string::npos) continue;
             std::string left = in_file.substr(0, pos);
             cv::Mat img = cv::imread(in_file);
-            std::ostringstream stream;
-            if(!img.empty()) {
+             if(!img.empty()) {
                 if(res == true) {
+                    std::ostringstream stream;
                     cv::Mat copy;
                     stream << left << "_" << width << "x" << height << "." << outputType;
                     cv::resize(img, copy, cv::Size(width, height));

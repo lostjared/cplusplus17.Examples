@@ -14,5 +14,5 @@ all: $(PROGRAM)
 .PHONY: clean
 clean:
 	rm -f $(PROGRAM) *.o
-install:
+install: $(PROGRAM)
 	cp $(PROGRAM) /usr/local/bin
