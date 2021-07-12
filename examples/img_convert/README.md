@@ -18,4 +18,7 @@ or don't change the res
 
 $ img_convert --input=list.txt --output=png 
 
+or output to certain path
+
+$ img_convert --input=list.txt --output=jpg --path=/Users/jared
 

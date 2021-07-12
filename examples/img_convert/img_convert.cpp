@@ -7,7 +7,7 @@
 #include<sstream>
 #include"cmd-switch.hpp"
 
-void processFile(std::string inputFile, std::string outputType,bool res, int width, int height);
+void processFile(std::string inputFile, std::string outputType,bool res, int width, int height, std::string output_path);
 
 int main(int argc, char **argv) {
     try {
@@ -18,6 +18,8 @@ int main(int argc, char **argv) {
         argz.require("--output", output_type, "output type");
         std::string resolution;
         bool res=argz.extract("--res", resolution);
+        std::string path;
+        argz.extract("--path", path);
         if(res) {
             auto pos = resolution.find("x");
             if(pos == std::string::npos) {
@@ -26,9 +28,9 @@ int main(int argc, char **argv) {
             }
             std::string left=resolution.substr(0, pos);
             std::string right=resolution.substr(pos+1, resolution.length());
-            processFile(input_file, output_type, res, atoi(left.c_str()), atoi(right.c_str()));
+            processFile(input_file, output_type, res, atoi(left.c_str()), atoi(right.c_str()), path);
         } else {
-            processFile(input_file, output_type, false, 0, 0);
+            processFile(input_file, output_type, false, 0, 0, path);
         }
     }
     catch(cmd::ArgExcep<std::string> &e) {
@@ -38,13 +40,17 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-void processFile(std::string inputFile, std::string outputType,bool res, int width, int height) {
+void processFile(std::string inputFile, std::string outputType,bool res, int width, int height, std::string output_path) {
     std::fstream file;
     file.open(inputFile, std::ios::in);
     if(!file.is_open()) {
         std::cerr << "Error could not open input file..\n";
         exit(EXIT_FAILURE);
     }
+    
+    if(output_path != "")
+        output_path += "/";
+      
     while(!file.eof()) {
         std::string in_file;
         std::getline(file, in_file);
@@ -52,20 +58,30 @@ void processFile(std::string inputFile, std::string outputType,bool res, int wid
             auto pos = in_file.rfind(".");
             if(pos == std::string::npos) continue;
             std::string left = in_file.substr(0, pos);
+            
+            auto pos_fname = left.rfind("/");
+            if(pos_fname != std::string::npos)
+                left = left.substr(pos_fname+1, left.length());
+
             cv::Mat img = cv::imread(in_file);
              if(!img.empty()) {
                 if(res == true) {
                     std::ostringstream stream;
                     cv::Mat copy;
-                    stream << left << "_" << width << "x" << height << "." << outputType;
+
+                    stream << output_path << left << "_" << width << "x" << height << "." << outputType;
                     cv::resize(img, copy, cv::Size(width, height));
-                    cv::imwrite(stream.str(), copy);
-                    std::cout << "wrote: " << stream.str() << "\n";
+                    if(!cv::imwrite(stream.str(), copy))
+                        std::cerr << "error could not write: " << stream.str() << "\n";
+                    else
+                        std::cout << "wrote: " << stream.str() << "\n";
                 } else {
                     std::ostringstream stream;
-                    stream << left << "." << outputType;
-                    cv::imwrite(stream.str(), img);
-                    std::cout << "wrote: " << stream.str() << "\n";
+                    stream << output_path << left << "." << outputType;
+                    if(!cv::imwrite(stream.str(), img))
+                        std::cerr << "error could not write: " << stream.str() << "\n";
+                    else
+                        std::cout << "wrote: " << stream.str() << "\n";
                 }
                 
             } else {
@@ -74,4 +90,3 @@ void processFile(std::string inputFile, std::string outputType,bool res, int wid
         }
     }
 }
-
