@@ -30,6 +30,9 @@ int main(int argc, char **argv) {
             on = false;
         }
     }
+    if(token != "") {
+        words[token]++;
+    }
     sort_and_print(words);
     return 0;
 }
