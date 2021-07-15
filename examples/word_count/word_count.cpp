@@ -1,4 +1,3 @@
-// $ cat text_file | ./word_count
 #include<iostream>
 #include<string>
 #include<cctype>
