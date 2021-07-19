@@ -5,6 +5,8 @@
 #include<fstream>
 #include<algorithm>
 #include<sstream>
+#include<filesystem>
+
 #include"cmd-switch.hpp"
 
 void processFile(std::string inputFile, std::string outputType,bool res, int width, int height, std::string output_path);
@@ -41,6 +43,14 @@ int main(int argc, char **argv) {
 }
 
 void processFile(std::string inputFile, std::string outputType,bool res, int width, int height, std::string output_path) {
+    
+    std::filesystem::path file_path{inputFile};
+    
+    if(is_directory(file_path)) {
+        std::cerr << "Error input file is directory...\n";
+        exit(EXIT_FAILURE);
+    }
+    
     std::fstream file;
     file.open(inputFile, std::ios::in);
     if(!file.is_open()) {
@@ -55,6 +65,11 @@ void processFile(std::string inputFile, std::string outputType,bool res, int wid
         std::string in_file;
         std::getline(file, in_file);
         if(file) {
+            
+            std::filesystem::path file_p{in_file};
+            if(is_directory(file_p))
+                continue;
+            
             auto pos = in_file.rfind(".");
             if(pos == std::string::npos) continue;
             std::string left = in_file.substr(0, pos);
