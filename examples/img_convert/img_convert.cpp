@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
 void processFile(std::string inputFile, std::string outputType,bool res, int width, int height, std::string output_path) {
     
     std::filesystem::path file_path{inputFile};
-    
+       
     if(is_directory(file_path)) {
         std::cerr << "Error input file is directory...\n";
         exit(EXIT_FAILURE);
@@ -61,9 +61,13 @@ void processFile(std::string inputFile, std::string outputType,bool res, int wid
         std::cerr << "Error could not open input file..\n";
         exit(EXIT_FAILURE);
     }
-    
-    if(output_path != "")
+        
+    if(output_path != "") {
+        if(std::filesystem::create_directory(output_path)) {
+            std::cout << "created: " << output_path << "\n";
+        }
         output_path += "/";
+    }
       
     while(!file.eof()) {
         std::string in_file;
@@ -87,7 +91,6 @@ void processFile(std::string inputFile, std::string outputType,bool res, int wid
                 if(res == true) {
                     std::ostringstream stream;
                     cv::Mat copy;
-
                     stream << output_path << left << "_" << width << "x" << height << "." << outputType;
                     cv::resize(img, copy, cv::Size(width, height));
                     if(!cv::imwrite(stream.str(), copy))
