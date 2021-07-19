@@ -16,8 +16,7 @@ void extract_and_fill(std::istream &in, std::unordered_map<std::string, unsigned
     std::string token;
     bool on = true;
     while(!in.eof()) {
-        char c = tolower(in.get());
-        if(c >= 'a' && c <= 'z') {
+        if(char c = tolower(in.get()); c >= 'a' && c <= 'z') {
             if(on == true)
                 token += c;
             else {
