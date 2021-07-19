@@ -50,6 +50,10 @@ void processFile(std::string inputFile, std::string outputType,bool res, int wid
         std::cerr << "Error input file is directory...\n";
         exit(EXIT_FAILURE);
     }
+    if(!exists(file_path)) {
+        std::cerr << "Error input file: " << file_path.string() << " does not exisit..\n";
+        exit(EXIT_FAILURE);
+    }
     
     std::fstream file;
     file.open(inputFile, std::ios::in);
@@ -67,7 +71,7 @@ void processFile(std::string inputFile, std::string outputType,bool res, int wid
         if(file) {
             
             std::filesystem::path file_p{in_file};
-            if(is_directory(file_p))
+            if(is_directory(file_p) || !exists(file_p))
                 continue;
             
             auto pos = in_file.rfind(".");
