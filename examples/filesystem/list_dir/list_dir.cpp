@@ -5,7 +5,7 @@
 int main(int argc, char **argv) {
     if(argc == 1) {
         std::cerr << argv[0] << " directory \n";
-        std::cerr << argv[0] << " direcotyr -r (recursive)\n";
+        std::cerr << argv[0] << " directory -r (recursive)\n";
         return 0;
     }
     if(argc == 3 && std::string(argv[2]) == "-r") {
