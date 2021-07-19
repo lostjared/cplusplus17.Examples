@@ -9,13 +9,23 @@ int main(int argc, char **argv) {
         return 0;
     }
     if(argc == 3 && std::string(argv[2]) == "-r") {
-        for(auto &i : std::filesystem::recursive_directory_iterator(argv[1])) {
-            std::cout << i.path() << "\n";
+        std::filesystem::path p{argv[1]};
+        if(is_directory(p)) {
+            for(auto &i : std::filesystem::recursive_directory_iterator(argv[1])) {
+                std::cout << i.path() << "\n";
+            }
+        } else {
+            std::cerr << "invalid input..\n";
         }
     }
     if(argc == 2) {
-        for(auto &i : std::filesystem::directory_iterator(argv[1])) {
-            std::cout << i.path() << "\n";
+        std::filesystem::path p{argv[1]};
+        if(is_directory(p)) {
+            for(auto &i : std::filesystem::directory_iterator(argv[1])) {
+                std::cout << i.path() << "\n";
+            }
+        } else {
+            std::cerr << "invalid input..\n";
         }
     }
     return 0;

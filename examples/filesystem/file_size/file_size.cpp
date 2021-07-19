@@ -10,11 +10,10 @@ int main(int argc, char **argv) {
     }
     
     std::filesystem::path file_path{argv[1]};
-    if(!is_directory(file_path)) {
+    if(!is_directory(file_path) && exists(file_path)) {
         std::cout << "file: " << file_path.string() << " is " << file_size(file_path) << " bytes.\n";
     } else {
-        std::cout << "is a directory..\n";
-        return 1;
+        std::cerr << "invalid input..\n";
     }
     return 0;
 }
