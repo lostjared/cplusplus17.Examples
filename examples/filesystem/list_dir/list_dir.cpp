@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
         std::filesystem::path p{argv[1]};
         if(is_directory(p)) {
             for(auto &i : std::filesystem::recursive_directory_iterator(argv[1])) {
-                std::cout << i.path() << "\n";
+                std::cout << i.path().string() << "\n";
             }
         } else {
             std::cerr << "invalid input..\n";
@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
         std::filesystem::path p{argv[1]};
         if(is_directory(p)) {
             for(auto &i : std::filesystem::directory_iterator(argv[1])) {
-                std::cout << i.path() << "\n";
+                std::cout << i.path().string() << "\n";
             }
         } else {
             std::cerr << "invalid input..\n";
