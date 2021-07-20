@@ -19,6 +19,7 @@ int main(int argc, char **argv) {
     }
     
     file_path.append("New_Dir");
+    file_path.concat("1");
     std::cout << file_path.string() << "\n";
     
     return EXIT_SUCCESS;
