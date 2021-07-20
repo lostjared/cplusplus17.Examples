@@ -9,17 +9,17 @@ int main(int argc, char **argv) {
         exit(EXIT_SUCCESS);
     }
     std::filesystem::path file_path{argv[1]};
-    //if(!is_directory(file_path) && exists(file_path)) {
-        std::cout << "path components: \n";
-        for(auto &i : file_path) {
-            std::cout << i.string() << "\n";
-        }
-        // or
-        for(auto p = file_path.begin(); p != file_path.end(); ++p) {
-            std::cout << p->string() << "\n";
-        }
-    //} else
-    //    std::cout << "invalid input..\n";
+    std::cout << "path components: \n";
+    for(auto &i : file_path) {
+        std::cout << i.string() << "\n";
+    }
+    // or
+    for(auto p = file_path.begin(); p != file_path.end(); ++p) {
+        std::cout << p->string() << "\n";
+    }
+    
+    file_path.append("New_Dir");
+    std::cout << file_path.string() << "\n";
     
     return EXIT_SUCCESS;
 }
