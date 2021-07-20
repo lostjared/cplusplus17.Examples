@@ -61,14 +61,19 @@ void processFile(std::string inputFile, std::string outputType,bool res, int wid
         std::cerr << "Error could not open input file..\n";
         exit(EXIT_FAILURE);
     }
-        
+    
+    std::filesystem::path output_p;
+    
     if(output_path != "") {
-        if(std::filesystem::create_directory(output_path)) {
+        if(std::filesystem::create_directories(output_path)) {
             std::cout << "created: " << output_path << "\n";
         }
+        output_p = std::filesystem::path(output_path);
         output_path += "/";
+    } else {
+        output_p = std::filesystem::path(".");
     }
-      
+    
     while(!file.eof()) {
         std::string in_file;
         std::getline(file, in_file);
@@ -91,7 +96,7 @@ void processFile(std::string inputFile, std::string outputType,bool res, int wid
                 if(res == true) {
                     std::ostringstream stream;
                     cv::Mat copy;
-                    stream << output_path << left << "_" << width << "x" << height << "." << outputType;
+                    stream << output_p.string() << "/" << left << "_" << width << "x" << height << "." << outputType;
                     cv::resize(img, copy, cv::Size(width, height));
                     if(!cv::imwrite(stream.str(), copy))
                         std::cerr << "error could not write: " << stream.str() << "\n";
@@ -99,7 +104,7 @@ void processFile(std::string inputFile, std::string outputType,bool res, int wid
                         std::cout << "wrote: " << stream.str() << "\n";
                 } else {
                     std::ostringstream stream;
-                    stream << output_path << left << "." << outputType;
+                    stream << output_p.string() << "/" << left << "." << outputType;
                     if(!cv::imwrite(stream.str(), img))
                         std::cerr << "error could not write: " << stream.str() << "\n";
                     else
