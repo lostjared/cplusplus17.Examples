@@ -1,6 +1,7 @@
 #include<iostream>
 #include<filesystem>
 #include<string>
+#include<cstdlib>
 
 std::string build_filename(const std::string &filename, const std::string &output_path,const std::string &ext) {
     std::filesystem::path p{filename};
@@ -13,13 +14,14 @@ std::string build_filename(const std::string &filename, const std::string &outpu
 int main(int argc, char **argv) {
     if(argc == 1) {
         std::cerr << "Error use " << argv[0] << " filename path extension.\n";
-        return 1;
+        return EXIT_SUCCESS;
     }
     if(argc == 4) {
         std::cout << "final path: " << build_filename(argv[1], argv[2], argv[3]) << "\n";
     } else {
         std::cerr << "invalid arguments..\n";
-        return 1;
+        return EXIT_FAILURE;
     }
-    return 0;
+    
+    return EXIT_SUCCESS;
 }
