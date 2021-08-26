@@ -7,6 +7,15 @@ int main(int argc, char **argv) {
     std::string input_file, output_file, filter, level;
     try {
         cmd::ArgumentList<std::string> argz(argc, argv);
+        
+        if(argz.check("--list") == true) {
+            ac::init();
+            for(int i = 0; i < ac::solo_filter.size(); ++i) {
+                std::cout << ac::solo_filter[i] << "\n";
+            }
+            exit(EXIT_SUCCESS);
+        }
+        
         argz.require("--input", input_file, "input file");
         argz.require("--output", output_file, "output file");
         argz.require("--filter", filter, "filter");
@@ -19,6 +28,10 @@ int main(int argc, char **argv) {
     }
     
     ac::init();
+    if(std::find(ac::solo_filter.begin(), ac::solo_filter.end(), filter) == ac::solo_filter.end()) {
+        std::cerr << "ac-tool: Filter not found.\n";
+        exit(EXIT_FAILURE);
+    }
     
     cv::Mat m_in;
     m_in = cv::imread(input_file);
