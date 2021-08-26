@@ -1,4 +1,5 @@
 #include<iostream>
+#include<cstdlib>
 #include"acidcam/ac.h"
 #include"cmd-switch.hpp"
 
@@ -50,5 +51,5 @@ int main(int argc, char **argv) {
         cv::imwrite(output_file, copy);
         std::cout << "ac-tool: Wrote file " << output_file << "\n";
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
