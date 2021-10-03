@@ -54,7 +54,7 @@ namespace cmd {
     bool Argument_FindInList(std::vector<std::string> &lst, ArgumentStringList &alst);
     
     template<typename T>
-    T _tolower(const T &str) {
+    T _tolower_x(const T &str) {
         T temp;
         for(int i = 0; i < str.length(); ++i) {
             temp += tolower(str[i]);
@@ -63,7 +63,7 @@ namespace cmd {
     }
     
     template<typename T>
-    T _toupper(const T &str) {
+    T _toupper_x(const T &str) {
         T temp;
         for(int i = 0; i < str.length(); ++i) {
             temp += toupper(str[i]);
@@ -98,7 +98,7 @@ namespace cmd {
     bool ArgumentList<T>::check(T key) {
         for(int i = 0; i < items.size(); ++i) {
             if(items[i].key == "$") {
-                if(_tolower(items[i].value) == _tolower(key)) {
+                if(_tolower_x(items[i].value) == _tolower_x(key)) {
                     return true;
                 }
             }
@@ -110,7 +110,7 @@ namespace cmd {
     bool ArgumentList<T>::check_require(T key) {
         for(int i = 0; i < items.size(); ++i) {
             if(items[i].key == "$") {
-                if(_tolower(items[i].value) == _tolower(key)) {
+                if(_tolower_x(items[i].value) == _tolower_x(key)) {
                     return true;
                 }
             }
