@@ -32,7 +32,7 @@ namespace cmd {
     template<typename T>
     class ArgumentList {
     public:
-        ArgumentList(int argc, char **argv);
+        ArgumentList(int argc, char **argv, std::string err_msg = "");
         bool check(T key);
         bool check_require(T key);
         bool extract(T key, T &value);
@@ -72,7 +72,11 @@ namespace cmd {
     }
 
     template<typename T>
-    ArgumentList<T>::ArgumentList(int argc, char **argv) {
+    ArgumentList<T>::ArgumentList(int argc, char **argv, std::string err_msg) {
+        if(argc == 1) {
+            std::cout << err_msg << "\n";
+            return;
+        }
         for(int i = 1; i < argc; ++i) {
             T s{argv[i]};
             auto pos = s.find("=");
