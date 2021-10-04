@@ -3,10 +3,10 @@
 #include"acidcam/ac.h"
 #include"cmd-switch.hpp"
 
-
 int main(int argc, char **argv) {
 
     std::string input_file, output_file, filter, level;
+    bool continue_image = false;
     try {
         cmd::ArgumentList<std::string> argz(argc, argv);
         
@@ -22,6 +22,8 @@ int main(int argc, char **argv) {
         argz.require("--output", output_file, "output file");
         argz.require("--filter", filter, "filter");
         argz.require("--level", level, "level");
+        continue_image = argz.check("--continue");
+        
     } catch(cmd::ArgExcep<std::string> &e) {
         std::cerr << e.what() << "\n";
         exit(EXIT_FAILURE);
@@ -43,12 +45,12 @@ int main(int argc, char **argv) {
         std::cerr << "Error could not open file..\n";
         exit(EXIT_FAILURE);
     }
-    cv::Mat copy;
-    
+    cv::Mat copy = m_in.clone();
     int level_in = atoi(level.c_str());
     if(level_in >= 1 && level_in < 128) {
         for(int i = 0; i < level_in; ++i) {
-            copy = m_in.clone();
+            if(continue_image == false)
+                copy = m_in.clone();
             ac::CallFilter(filter, copy);
         }
         cv::imwrite(output_file, copy);
