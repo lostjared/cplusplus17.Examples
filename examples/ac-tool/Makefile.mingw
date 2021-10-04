@@ -1,0 +1,17 @@
+OBJ=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
+CXX=x86_64-w64-mingw32-g++
+MINGW_PATH=/usr/local/mingw64
+CFLAGS= -std=c++17 -I$(MINGW_PATH)/include -I$(MINGW_PATH)/include/acidcam
+LDFLAGS=  $(MINGW_PATH)/lib/libacidcam.a $(MINGW_PATH)/lib/*opencv*a
+
+%.o: %.cpp
+	$(CXX) $(CFLAGS) $< -c -o $@
+
+ac-tool: $(OBJ)
+	$(CXX) -o ac-tool.exe $(OBJ) $(LDFLAGS) -static-libgcc -static-libstdc++
+
+all: ac-tool
+
+.PHONY: clean
+clean:
+	rm -f ac-tool.exe *.o
