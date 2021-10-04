@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
     bool continue_image = false;
     try {
         cmd::ArgumentList<std::string> argz(argc, argv,
-        "ac-tool\n use \n --input=[file input]\n --output=[file output]\n --filter=[filter ]\n --level=[filter depth]\n --continue (chain calls)\n");
+        "ac-tool\n use \n --input=[file input]\n --output=[file output]\n --filter=[filter ]\n --level=[filter depth]\n --continue (chain calls)\n --list (list filters)\n");
         
         if(argz.check("--list") == true) {
             ac::init();
