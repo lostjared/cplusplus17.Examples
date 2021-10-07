@@ -12,6 +12,44 @@ namespace frac {
     int julia(const std::complex<double> &c, std::complex<double> zval);
 }
 
+bool splitDoublePair(const std::string &value, const std::string &sep, double &val1, double &val2) {
+    auto pos = value.find(sep);
+    if(pos == std::string::npos)
+        return false;
+    std::string left = value.substr(0, pos);
+    std::string right = value.substr(pos+1, value.length()-pos);
+    val1 = atof(left.c_str());
+    val2 = atof(right.c_str());
+    return true;
+}
+
+bool splitIntegerPair(const std::string &value, const std::string &sep, int &val1, int &val2) {
+    auto pos = value.find(sep);
+    if(pos == std::string::npos)
+        return false;
+    std::string left = value.substr(0, pos);
+    std::string right = value.substr(pos+1, value.length()-pos);
+    val1 = atoi(left.c_str());
+    val2 = atoi(right.c_str());
+    return true;
+}
+
+bool splitTuple(const std::string &value, const std::string &sep, cv::Vec3b &t) {
+    auto pos = value.find(sep);
+    if(pos == std::string::npos)
+        return false;
+    std::string left = value.substr(0, pos);
+    std::string right = value.substr(pos+1, value.length()-pos);
+    t[0] = atoi(left.c_str());
+    auto pos1 = right.find(",");
+    if(pos == std::string::npos)
+        return false;
+    std::string leftof = right.substr(0, pos1);
+    std::string rightof = right.substr(pos1+1, right.length()-pos1);
+    t[1] = atoi(leftof.c_str());
+    t[2] = atoi(rightof.c_str());
+    return true;
+}
 
 int frac::julia(const std::complex<double> &c, std::complex<double> z) {
     int n = 0;
@@ -64,25 +102,31 @@ void frac::DrawFractal(cv::Mat &frame, int thread_count, cv::Vec3b rgb, double p
 }
 
 int main(int argc, char **argv) {
-    
-    if(argc != 11) {
+    if(argc != 7) {
         std::cerr << "Error invalid arguments..\n";
-        std::cerr << "arguments:\n julia output.png width height iterations paramA paramB red green blue thread_count\n";
+        std::cerr << "arguments:\n julia output.png WidthxHeight iterations paramA,paramB red,green,blue thread_count\n";
         exit(EXIT_FAILURE);
     }
-    
- 
     std::string filename = argv[1];
-    int width = atoi(argv[2]);
-    int height = atoi(argv[3]);
-    int iterations = atoi(argv[4]);
-    double paramA = atof(argv[5]);
-    double paramB = atof(argv[6]);
+    int width = 0;
+    int height = 0;
+    if(!splitIntegerPair(argv[2], "x", width, height)) {
+        std::cerr << "error invalid resolution use WidthxHeight\n";
+        exit(EXIT_FAILURE);
+    }
+    int iterations = atoi(argv[3]);
+    
+    double paramA = 0, paramB = 0;
+    if(!splitDoublePair(argv[4], ",", paramA, paramB)) {
+        std::cerr << "error invalid complex pair: use number, number\n";
+        exit(EXIT_FAILURE);
+    }
     cv::Vec3b rgb;
-    rgb[0] = atoi(argv[7]);
-    rgb[1] = atoi(argv[8]);
-    rgb[2] = atoi(argv[9]);
-    int tc = atoi(argv[10]);
+    if(!splitTuple(argv[5], ",", rgb)) {
+        std::cerr << "invalid color tuple..\n use red,green,blue.\n";
+        exit(EXIT_FAILURE);
+    }
+    int tc = atoi(argv[6]);
     
     if(width <= 32 || height <= 32 || iterations <= 0 || tc < 1) {
         std::cerr << "invalid arguments...\n";
@@ -92,7 +136,7 @@ int main(int argc, char **argv) {
     if(iterations > 0)
         frac::MAX_ITER = iterations;
     
-    std::cout << "creating: " << filename << " " << width << "x" << height << " threads: " << tc << "\n";
+    std::cout << "creating: " << filename << " " << width << "x" << height << " threads: " << tc <<  " RGB(" << int(rgb[0]) << "," << int(rgb[1]) << "," << int(rgb[2]) << ") - " << "(" << paramA << "," << paramB << ")\n";
     
     cv::Mat m;
     m.create(cv::Size(width, height), CV_8UC3);
