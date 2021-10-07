@@ -75,6 +75,11 @@ int main(int argc, char **argv) {
     int iterations = atoi(argv[4]);
     int tc = atoi(argv[5]);
     
+    if(width <= 32 || height <= 32 || iterations <= 0 || tc < 1) {
+        std::cerr << "invalid arguments...\n";
+        exit(EXIT_FAILURE);
+    }
+    
     if(iterations > 0)
         frac::MAX_ITER = iterations;
     
