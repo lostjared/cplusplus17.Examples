@@ -9,6 +9,8 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<ctype.h>
+
 namespace cmd {
 
     template<typename T>
@@ -30,7 +32,7 @@ namespace cmd {
     template<typename T>
     class ArgumentList {
     public:
-        ArgumentList(int argc, char **argv);
+        ArgumentList(int argc, char **argv, std::string err_msg = "");
         bool check(T key);
         bool check_require(T key);
         bool extract(T key, T &value);
@@ -50,9 +52,31 @@ namespace cmd {
     };
 
     bool Argument_FindInList(std::vector<std::string> &lst, ArgumentStringList &alst);
+    
+    template<typename T>
+    T _tolower_x(const T &str) {
+        T temp;
+        for(int i = 0; i < str.length(); ++i) {
+            temp += tolower(str[i]);
+        }
+        return temp;
+    }
+    
+    template<typename T>
+    T _toupper_x(const T &str) {
+        T temp;
+        for(int i = 0; i < str.length(); ++i) {
+            temp += toupper(str[i]);
+        }
+        return temp;
+    }
 
     template<typename T>
-    ArgumentList<T>::ArgumentList(int argc, char **argv) {
+    ArgumentList<T>::ArgumentList(int argc, char **argv, std::string err_msg) {
+        if(argc == 1) {
+            std::cout << err_msg << "\n";
+            return;
+        }
         for(int i = 1; i < argc; ++i) {
             T s{argv[i]};
             auto pos = s.find("=");
@@ -78,7 +102,7 @@ namespace cmd {
     bool ArgumentList<T>::check(T key) {
         for(int i = 0; i < items.size(); ++i) {
             if(items[i].key == "$") {
-                if(items[i].value == key) {
+                if(_tolower_x(items[i].value) == _tolower_x(key)) {
                     return true;
                 }
             }
@@ -90,7 +114,7 @@ namespace cmd {
     bool ArgumentList<T>::check_require(T key) {
         for(int i = 0; i < items.size(); ++i) {
             if(items[i].key == "$") {
-                if(items[i].value == key) {
+                if(_tolower_x(items[i].value) == _tolower_x(key)) {
                     return true;
                 }
             }

@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
         std::string lang;
         int lang_type = 0;
         argz.extract("--lang",lang);
-        lang = cmd::_tolower(lang);
+        lang = cmd::_tolower_x(lang);
         if(lang == "python")
             lang_type = 2;
         else if(lang == "php")

@@ -78,7 +78,6 @@ void processFile(std::string inputFile, std::string outputType,bool res, int wid
         std::string in_file;
         std::getline(file, in_file);
         if(file) {
-            
             std::filesystem::path file_p{in_file};
             if(is_directory(file_p) || !exists(file_p))
                 continue;
