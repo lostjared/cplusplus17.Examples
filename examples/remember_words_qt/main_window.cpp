@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 void MainWindow::createControls() {
     textView1 = new QTextEdit(tr("You should Paste Text Here to use with the program\n ") + defaultText, this);
     textView1->setGeometry(25, 25, 800-50, 500);
+    textView1->setAcceptRichText(false);
     startButton1 = new QPushButton("Start", this);
     startButton1->setGeometry(25, 550, 100, 25);
     connect(startButton1, SIGNAL(clicked()),this, SLOT(startGame()));
