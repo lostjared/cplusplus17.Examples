@@ -19,7 +19,7 @@ private:
     int mode;
     QStringList stored_list;
     
-    QString defaultText = tr("This is where you can input some text to use with the program. It can contain any plain-text and the program will tokenize the string. Once the string is tokenized it will output a new string for you to read and then input again from memory. As you progress the string will get longer and longer. I wrote this to help with my memory.");
+    QString defaultText = tr("This is where you can input some text to use with the program. It can contain any plain-text and the program will tokenize the string. Once the string is tokenized it will output a new string for you to read and then input again from memory. As you progress the string will get longer and longer. I wrote this to help with my memory. I love programming. This program is written in C++. It is written using the Qt library.");
     
 public slots:
     void startGame();
