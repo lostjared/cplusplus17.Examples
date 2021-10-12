@@ -14,7 +14,7 @@ public:
     void createControls();
 private:
     QTextEdit *textView1;
-    QPushButton *startButton1;
+    QPushButton *startButton1, *giveupButton2;
     int num_words;
     int mode;
     QStringList stored_list;
@@ -23,6 +23,7 @@ private:
     
 public slots:
     void startGame();
+    void giveup();
 };
 
 

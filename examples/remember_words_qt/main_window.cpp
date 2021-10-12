@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setWindowTitle(tr("Remember Words"));
     createControls();
     srand(static_cast<unsigned int>(time(0)));
-    num_words = 5;
+    num_words = 1;
     mode = 0;
 }
 
@@ -20,6 +20,11 @@ void MainWindow::createControls() {
     startButton1 = new QPushButton("Start", this);
     startButton1->setGeometry(25, 550, 100, 25);
     connect(startButton1, SIGNAL(clicked()),this, SLOT(startGame()));
+    giveupButton2 = new QPushButton("Give up", this);
+    giveupButton2->setGeometry(130, 550, 100, 25);
+    connect(giveupButton2, SIGNAL(clicked()), this, SLOT(giveup()));
+    
+    giveupButton2->hide();
 }
 
 void MainWindow::startGame() {
@@ -52,7 +57,8 @@ void MainWindow::startGame() {
         }
         startButton1->setText("Match");
         mode = 1;
-        num_words += 5;
+        num_words ++;
+        giveupButton2->show();
     } else {
         QString text = textView1->toPlainText();
         QStringList new_list = text.split(" ");
@@ -68,8 +74,23 @@ void MainWindow::startGame() {
             textView1->setPlainText(tr("You should Paste Text Here to use with the program\n ") + defaultText);
             startButton1->setText(tr("Start"));
             mode = 0;
+            giveupButton2->hide();
         } else {
             QMessageBox::information(this, tr("You are incorrect"), tr("Incorrect try again"));
         }
     }
+}
+
+void MainWindow::giveup() {
+
+    QString correctGuess;
+    QTextStream stream(&correctGuess);
+    
+    stream << "Game Over:\n The Max Amount of words you guessed is: " << num_words-1 << "\n";
+    
+    QMessageBox::information(this, "Game Over", correctGuess);
+    
+    giveupButton2->hide();
+    mode = 0;
+    num_words = 1;
 }
