@@ -1,7 +1,7 @@
 #include"main_window.h"
 #include<ctime>
 #include<cstdlib>
-
+#include<QClipboard>
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 }
 
 void MainWindow::createControls() {
-    textView1 = new QTextEdit(tr("Paste Text Here"), this);
+    textView1 = new QTextEdit(tr("You should Paste Text Here to use with the program"), this);
     textView1->setGeometry(25, 25, 800-50, 500);
     startButton1 = new QPushButton("Start", this);
     startButton1->setGeometry(25, 550, 100, 25);
@@ -26,14 +26,14 @@ void MainWindow::startGame() {
     if(mode == 0) {
         QString text = textView1->toPlainText();
         QStringList list = text.split(" ");
-        if(list.size() < 100) {
+        if(list.size() < 10) {
             QMessageBox::information(this, tr("Error not enough words"), tr("Text must contain at least 100 words."));
             return;
         }
       
         QStringList lst;
         for(int i = 0; i < num_words; ++i) {
-            lst << list.at(rand()%list.size()-1);
+            lst << list.at(rand()%(list.size()-1));
         }
         stored_list = lst;
         QString textOutput;
@@ -42,9 +42,14 @@ void MainWindow::startGame() {
             textOutput += lst.at(i) + ((i < lst.size()-1) ? " " : "");
         }
         
-        QMessageBox::information(this, tr("Remember this string"), textOutput);
+        QMessageBox::information(this, tr("Remember this"),"Remember this exact string:<br>" +  textOutput);
         
         textView1->setPlainText("");
+        QClipboard *clipboard = QGuiApplication::clipboard();
+        QString otext = clipboard->text();
+        if(textOutput == otext) {
+            clipboard->setText("");
+        }
         startButton1->setText("Match");
         mode = 1;
         num_words += 5;
@@ -61,7 +66,7 @@ void MainWindow::startGame() {
         }
         if(the_same == true) {
             QMessageBox::information(this, tr("Correct you remembered!"), tr("Yes you are correct try again for increased difficulty"));
-            textView1->setPlainText(tr("Paste text here"));
+            textView1->setPlainText(tr("You should Paste Text Here to use with the program."));
             startButton1->setText(tr("Start"));
             mode = 0;
         } else {
