@@ -46,7 +46,6 @@ void MainWindow::startGame() {
         stored_list = lst;
         QString textOutput;
         for(int i = 0; i < lst.size(); ++i) {
-            
             textOutput += lst.at(i) + ((i < lst.size()-1) ? " " : "");
         }
         
@@ -102,7 +101,7 @@ void MainWindow::giveup() {
     QString correctGuess;
     QTextStream stream(&correctGuess);
     
-    stream << "Game Over:\n The Max Amount of words you guessed is: " << num_words-1 << "\n";
+    stream << "Game Over:\n The Max Amount of words you tried to guess is: " << num_words-1 << "\n";
     
     QMessageBox::information(this, "Game Over", correctGuess);
     textView1->setPlainText(tr("You should Paste Text Here to use with the program\n ") + defaultText);
