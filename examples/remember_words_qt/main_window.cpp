@@ -35,7 +35,7 @@ void MainWindow::startGame() {
         QString text = textView1->toPlainText();
         QStringList list = text.split(" ");
         if(list.size() < 10) {
-            QMessageBox::information(this, tr("Error not enough words"), tr("Text must contain at least 100 words."));
+            QMessageBox::information(this, tr("Error not enough words"), tr("Text must contain at least 10 words."));
             return;
         }
       
