@@ -5,8 +5,9 @@
 TEMPLATE = app
 TARGET = remember_words_qt
 INCLUDEPATH += .
-QT += core gui widgets
-
+QT += core gui 
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+CONFIG += c++17
 # You can make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
 # Please consult the documentation of the deprecated API in order to know
