@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 }
 
 void MainWindow::createControls() {
-    textView1 = new QTextEdit(tr("You should Paste Text Here to use with the program"), this);
+    textView1 = new QTextEdit(tr("You should Paste Text Here to use with the program\n ") + defaultText, this);
     textView1->setGeometry(25, 25, 800-50, 500);
     startButton1 = new QPushButton("Start", this);
     startButton1->setGeometry(25, 550, 100, 25);
@@ -22,7 +22,6 @@ void MainWindow::createControls() {
 }
 
 void MainWindow::startGame() {
-    
     if(mode == 0) {
         QString text = textView1->toPlainText();
         QStringList list = text.split(" ");
@@ -53,7 +52,6 @@ void MainWindow::startGame() {
         startButton1->setText("Match");
         mode = 1;
         num_words += 5;
-        
     } else {
         QString text = textView1->toPlainText();
         QStringList new_list = text.split(" ");
@@ -66,7 +64,7 @@ void MainWindow::startGame() {
         }
         if(the_same == true) {
             QMessageBox::information(this, tr("Correct you remembered!"), tr("Yes you are correct try again for increased difficulty"));
-            textView1->setPlainText(tr("You should Paste Text Here to use with the program."));
+            textView1->setPlainText(tr("You should Paste Text Here to use with the program\n ") + defaultText);
             startButton1->setText(tr("Start"));
             mode = 0;
         } else {
