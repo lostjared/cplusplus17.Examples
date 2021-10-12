@@ -25,6 +25,9 @@ void MainWindow::createControls() {
     connect(giveupButton2, SIGNAL(clicked()), this, SLOT(giveup()));
     
     giveupButton2->hide();
+    reverseCheck1 = new QCheckBox("Enter in Reverse", this);
+    reverseCheck1->setGeometry(240, 550, 200, 25);
+    
 }
 
 void MainWindow::startGame() {
@@ -47,7 +50,11 @@ void MainWindow::startGame() {
             textOutput += lst.at(i) + ((i < lst.size()-1) ? " " : "");
         }
         
-        QMessageBox::information(this, tr("Remember this"),"Remember this exact string:<br>" +  textOutput);
+        QString inReverse;
+        if(reverseCheck1->checkState() == Qt::Checked)
+            inReverse = " in Reverse ";
+        
+        QMessageBox::information(this, tr("Remember this"),"Remember this exact string words " + inReverse + ":<br>" +  textOutput);
         
         textView1->setPlainText("");
         QClipboard *clipboard = QGuiApplication::clipboard();
@@ -63,10 +70,19 @@ void MainWindow::startGame() {
         QString text = textView1->toPlainText();
         QStringList new_list = text.split(" ");
         bool the_same = true;
-        for(int i = 0; i < stored_list.size(); ++i) {
-            if(new_list.at(i) != stored_list.at(i)) {
-                the_same = false;
-                break;
+        if(reverseCheck1->checkState() == Qt::Unchecked) {
+            for(int i = 0; i < stored_list.size(); ++i) {
+                if(new_list.at(i) != stored_list.at(i)) {
+                    the_same = false;
+                    break;
+                }
+            }
+        } else {
+            for(int i = stored_list.size()-1; i >= 0; --i) {
+                if(new_list.at(i) != stored_list.at(stored_list.size()-1-i)) {
+                    the_same = false;
+                    break;
+                }
             }
         }
         if(the_same == true) {
@@ -89,7 +105,8 @@ void MainWindow::giveup() {
     stream << "Game Over:\n The Max Amount of words you guessed is: " << num_words-1 << "\n";
     
     QMessageBox::information(this, "Game Over", correctGuess);
-    
+    textView1->setPlainText(tr("You should Paste Text Here to use with the program\n ") + defaultText);
+    startButton1->setText(tr("Start"));
     giveupButton2->hide();
     mode = 0;
     num_words = 1;

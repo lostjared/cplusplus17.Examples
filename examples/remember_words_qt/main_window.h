@@ -6,6 +6,7 @@
 #include<QTextEdit>
 #include<QPushButton>
 #include<QMessageBox>
+#include<QCheckBox>
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
@@ -15,6 +16,7 @@ public:
 private:
     QTextEdit *textView1;
     QPushButton *startButton1, *giveupButton2;
+    QCheckBox *reverseCheck1;
     int num_words;
     int mode;
     QStringList stored_list;
