@@ -33,6 +33,11 @@ void MainWindow::createControls() {
 void MainWindow::startGame() {
     if(mode == 0) {
         QString text = textView1->toPlainText();
+
+        text.replace("\n", " ");
+        text.replace("\r", " ");
+        text.replace("\t", " ");
+        
         QStringList list = text.split(" ");
         if(list.size() < 10) {
             QMessageBox::information(this, tr("Error not enough words"), tr("Text must contain at least 10 words."));
@@ -67,6 +72,11 @@ void MainWindow::startGame() {
         giveupButton2->show();
     } else {
         QString text = textView1->toPlainText();
+        
+        text.replace("\n", " ");
+        text.replace("\r", " ");
+        text.replace("\t", " ");
+        
         QStringList new_list = text.split(" ");
         bool the_same = true;
         if(reverseCheck1->checkState() == Qt::Unchecked) {
