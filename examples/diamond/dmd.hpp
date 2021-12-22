@@ -8,34 +8,26 @@
 
 class Diamond {
 public:
-    Diamond() = default;
-    Diamond(const Diamond &d) {
-        this->operator=(d);
-    }
+    Diamond() = delete;
+    Diamond(const Diamond &d) = delete;
     Diamond(Diamond &&d) {
-        this->operator=(d);
+        files = std::move(d.files);
+        index = d.index;
+        file = std::move(d.file);
     }
     Diamond(int argc, char **argv) {
-        index = 0;
         if(argc >= 2) {
             for(unsigned int i = 1; i < argc; ++i) {
                 files.push_back(argv[i]);
             }
         }
-        
-        file.open(files[index], std::ios::in);
-        if(!file.is_open()) {
-            std::cerr << "Error could not open file: " << files[index] << "..\n";
-        }
+        reset();
     }
-    Diamond &operator=(const Diamond &d) {
-        files = d.files;
-        index = d.index;
-        return *this;
-    }
+    Diamond &operator=(const Diamond &d) = delete;
     Diamond &operator=(Diamond &&d) {
         files = std::move(d.files);
         index = d.index;
+        file = std::move(d.file);
         return *this;
     }
     bool next(std::string &line) {
@@ -57,6 +49,15 @@ public:
         }
         return false;
     }
+    
+    void reset() {
+        index = 0;
+        file.open(files[index], std::ios::in);
+        if(!file.is_open()) {
+            std::cerr << "Error could not open file: " << files[index] << "..\n";
+        }
+    }
+    
 protected:
     std::vector<std::string> files;
     unsigned int index;
