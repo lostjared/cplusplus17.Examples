@@ -20,6 +20,9 @@ public:
             for(unsigned int i = 1; i < argc; ++i) {
                 files.push_back(argv[i]);
             }
+        } else {
+            index = 0;
+            return;
         }
         reset();
     }
@@ -31,6 +34,15 @@ public:
         return *this;
     }
     bool next(std::string &line) {
+        
+        if(files.size() == 0) {
+            std::getline(std::cin, line);
+            if(std::cin)
+                return true;
+            else
+                return false;
+        }
+        
         std::getline(file, line);
         if(file) {
             return true;
@@ -64,7 +76,6 @@ protected:
     std::vector<std::string> files;
     unsigned int index;
     std::fstream file;
-    
 };
 
 
