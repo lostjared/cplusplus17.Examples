@@ -51,6 +51,8 @@ public:
     }
     
     void reset() {
+        if(file.is_open())
+            file.close();
         index = 0;
         file.open(files[index], std::ios::in);
         if(!file.is_open()) {
