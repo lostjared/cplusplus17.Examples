@@ -8,5 +8,9 @@ int main(int argc, char **argv) {
     while(dmd.next(line)) {
         std::cout << line << "\n";
     }
+    dmd.reset();
+    while(dmd.next(line)) {
+        std::cout << dmd.filename() << ":" << line << "\n";
+    }
     return 0;
 }

@@ -33,6 +33,11 @@ public:
         file = std::move(d.file);
         return *this;
     }
+    
+    std::string filename() const {
+        return files[index];
+    }
+    
     bool next(std::string &line) {
         
         if(files.size() == 0) {
