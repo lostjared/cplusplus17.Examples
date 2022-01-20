@@ -2,8 +2,9 @@
 #include"selfalpha.hpp"
 #include<iostream>
 
+ac::SelfAlpha alpha;
+
 int main(int argc, char **argv) {
-    ac::SelfAlpha alpha;
     if(argc <= 3) {
         for(size_t i = 0; i < ac::filters.size(); ++i) {
             std::cout << i << ": " << ac::filters[i]->get_name() << "\n";
