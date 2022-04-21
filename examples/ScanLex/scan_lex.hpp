@@ -26,11 +26,7 @@ namespace scan {
         void reset();
         void tokenIndex(int index, Token &token);
         void crunch(std::ostream &out);
-        void crunch_binary(std::ostream &out);
-        void uncrunch_binary(std::istream &in);
-
         friend void crunch(Scanner *scan, std::ostream &out);
-
         SymbolTable table;
     protected:
         std::vector<Token> tokens;
