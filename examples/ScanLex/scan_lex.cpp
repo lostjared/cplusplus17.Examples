@@ -219,16 +219,30 @@ namespace scan {
                 out.write(reinterpret_cast<char*>(&index), sizeof(index));
                 index ++;
             }
-            else {
-                //out << token.token <<  " ";
+            else if(token.type == TOKEN_NUMBER) {
+                out.write("&", sizeof('&'));
+                double val = atof(token.token.c_str());
+                out.write(reinterpret_cast<char*>(&val), sizeof(val));
             }
         }
         out.write("!", sizeof('!'));
+        int ts = table.const_strings.size();
+        out.write(reinterpret_cast<char*>(&ts), sizeof(ts));
         for(int i = 0; i < table.const_strings.size(); ++i) {
             std::cout<< i << ": " << "\"" << table.const_strings[i] << "\"" << "\n";
             int length = table.const_strings[i].length();
             out.write(reinterpret_cast<char*>(&length), sizeof(length));
             out.write(table.const_strings[i].c_str(), length);
+        }
+        out.write("^", sizeof('^'));
+        int sz = table.data.size();
+        out.write(reinterpret_cast<char*>(&sz), sizeof(sz));
+        for(auto it = table.data.begin(); it != table.data.end(); it++) {
+            int len = it->first.length();
+            out.write(reinterpret_cast<char*>(&len), sizeof(len));
+            out.write(it->first.c_str(), len);
+            int index = it->second.index;
+            out.write(reinterpret_cast<char*>(&index), sizeof(index));
         }
     }
 
