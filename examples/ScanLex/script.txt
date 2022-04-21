@@ -1,0 +1,11 @@
+
+proc main() {
+	let x = 0;
+	x = x + 1;
+	if (x > 10) {
+		print("yes");
+	} else {
+		print("no");
+	}
+	print(x);
+}
