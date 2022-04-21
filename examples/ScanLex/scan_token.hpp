@@ -30,6 +30,7 @@ namespace scan {
         KEYWORD_TYPES lookupKeyword(const std::string &text);
         OP_TYPES lookupOperator(const std::string &text);
         friend class Scanner;
+        friend void crunch(Scanner *scan, std::ostream &out);
     protected:
         std::string token;
         TOKEN_TYPE type;

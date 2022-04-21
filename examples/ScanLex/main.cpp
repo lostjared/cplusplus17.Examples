@@ -1,4 +1,6 @@
 #include "scan_lex.hpp"
+
+
 #include<fstream>
 
 int main(int argc, char **argv) {
@@ -40,7 +42,7 @@ int main(int argc, char **argv) {
          catch(scan::ScanException &e) {
                 std::cerr << e.error() << "\n";
          }
-    } else if(argc == 3) {
+    } else if(argc == 3 && std::string(argv[2]) != "-u") {
         try {
             char *buf;
             std::fstream file;
@@ -66,12 +68,17 @@ int main(int argc, char **argv) {
                 std::cerr << argv[0] << ": could not open output file.\n";
                 return -1;
             }
-            scanner.crunch_binary(out);
+            crunch(&scanner, out);
             out.close();
         } 
         catch(scan::ScanException &e) {
                 std::cerr << e.error() << "\n";
         }
+    } else if(argc == 3 && std::string(argv[2]) == "-u") {
+            std::fstream file;
+            file.open(argv[1], std::ios::in | std::ios::binary);
+            scan::uncrunch(file);
+            file.close();
     }   
 
     return 0;

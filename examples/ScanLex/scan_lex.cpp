@@ -200,7 +200,7 @@ namespace scan {
         }
     }
 
-    void Scanner::crunch_binary(std::ostream &out) {
+    void Scanner::crunch_binary(std::ostream &out) { /*
         Token token;
         int index = 0;
         while(nextToken(token)) {
@@ -243,7 +243,75 @@ namespace scan {
             out.write(it->first.c_str(), len);
             int index = it->second.index;
             out.write(reinterpret_cast<char*>(&index), sizeof(index));
-        }
+        }*/
     }
 
- }
+    void Scanner::uncrunch_binary(std::istream &in) {
+        /*
+        char c = 0;
+        while(!in.eof()) {
+            in.read(reinterpret_cast<char*>(&c), sizeof(c));
+            switch(c) {
+                case '$': {
+                    KEYWORD_TYPES keyword;
+                    in.read(reinterpret_cast<char*>(&keyword), keyword);
+                    std::cout << keywords[keyword] << " ";
+                }
+                break;
+                case '@': {
+                    OP_TYPES op;
+                    in.read(reinterpret_cast<char*>(&op), sizeof(op));
+                    std::cout << operators[op] << " ";
+                }
+                break;
+                case '~': {
+                    int index;
+                    in.read(reinterpret_cast<char*>(&index), sizeof(index));
+                    std::cout << "~" << index << " ";
+                }
+                break;
+                case '#': {
+                    double d;
+                    in.read(reinterpret_cast<char*>(&d), sizeof(d));
+                    std::cout << "#" << d << " ";
+                }
+                break;
+                case '!': {
+                    int ts = 0;
+                    in.read(reinterpret_cast<char*>(&ts), sizeof(ts));
+                    for(int i = 0; i < ts; ++i) {
+                        int len = 0;
+                        in.read(reinterpret_cast<char*>(&len), sizeof(len));
+                        char *buf = new char [len + 1];
+                        in.read(buf, len);
+                        buf[len] = 0;
+                        std::string text = buf;
+                        delete [] buf;
+                        std::cout << i << ": " << text << "\n";                       
+                    }
+                }
+                break;
+                case '^': {
+                    int sz = 0;
+                    in.read(reinterpret_cast<char*>(&sz), sizeof(sz));
+                    for(int i = 0; i < sz; ++i) {
+                        int len = 0;
+                        in.read(reinterpret_cast<char*>(&len), sizeof(len));
+                        char *buf;
+                        buf = new char [len+1];
+                        in.read(buf, len);
+                        buf[len] = 0;
+                        std::string text = buf;
+                        delete [] buf;
+                        int index;
+                        in.read(reinterpret_cast<char*>(&index), sizeof(index));
+                        std::cout << index << ": " << text << "\n";
+                    }
+                }
+                break;
+            }
+        }
+        done:
+        return; */
+    }
+}

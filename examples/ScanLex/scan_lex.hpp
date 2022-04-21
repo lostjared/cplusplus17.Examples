@@ -9,6 +9,7 @@
 #include"scan_token.hpp"
 #include"scan_exception.hpp"
 #include"scan_symbol.hpp"
+#include"scan_crunch.hpp"
 
 namespace scan {
 
@@ -26,6 +27,11 @@ namespace scan {
         void tokenIndex(int index, Token &token);
         void crunch(std::ostream &out);
         void crunch_binary(std::ostream &out);
+        void uncrunch_binary(std::istream &in);
+
+        friend void crunch(Scanner *scan, std::ostream &out);
+
+        SymbolTable table;
     protected:
         std::vector<Token> tokens;
         std::string text;
@@ -38,7 +44,7 @@ namespace scan {
         void grabNumber();
         void grabSymbol();
         void grabString();
-        SymbolTable table;
+       
     };
 }
 
