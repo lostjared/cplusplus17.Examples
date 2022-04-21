@@ -27,8 +27,8 @@ namespace scan {
         void tokenIndex(int index, Token &token);
         void crunch(std::ostream &out);
         friend void crunch(Scanner *scan, std::ostream &out);
-        SymbolTable table;
     protected:
+        SymbolTable table;
         std::vector<Token> tokens;
         std::string text;
         int lineno;
