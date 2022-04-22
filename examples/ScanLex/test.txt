@@ -9,5 +9,4 @@ proc main(@args)
 begin
 y += test(10, test2(20));
 x = x & y;
-
 end;

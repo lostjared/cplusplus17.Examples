@@ -1,25 +1,13 @@
 
 
-proc add(x, y)
+proc test(x,y) 
 begin
-return x + y;
+x = 1;
+return (x + y);
 end;
 
-proc main(@args) 
+proc main(@args)
 begin
-	let x = 0;
-	print("input: ");
-	x = input();
-	if (x > 10)  {
-		print("yes");
-	}
-	else {
-		print("no");
-	}
-	print(x);
-	let @values = (1, 2, 3);
-	print ("value 1: ", @values[0]);
-	let val = add(@values[0], @values[1]);
-	print(" value add: ", val);
-	return 0;
+y += test(10, test2(20));
+x = x & y;
 end;
