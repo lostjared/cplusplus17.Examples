@@ -68,6 +68,10 @@ namespace parse {
         switch(token.type) {
             case TOKEN_ID: {
                 getToken();
+
+                if(token.oper == OP_BRACE_O)
+                    parseArray();
+
                 if(token.oper == OP_EQUAL || token.oper == OP_MINE || token.oper == OP_PE || token.oper == OP_AE || token.oper == OP_XE || token.oper == OP_ME || token.oper == OP_MINE || token.oper == OP_DE) {
                     getToken();
                     parseExpr();
@@ -169,6 +173,10 @@ namespace parse {
             }
             break;
         }
+
+        if(token.oper == OP_BRACE_O) {
+            parseArray();
+        } 
         if(token.oper ==  OP_PLUS) {
             getToken();
             parseExpr();
@@ -268,6 +276,22 @@ namespace parse {
         parseStatement();
         match(OP_BLOCK_C);
         getToken();
+    }
+
+    void Parser::parseArray() {
+        match(OP_BRACE_O);
+        getToken();
+        parseList();
+        match(OP_BRACE_C);
+        getToken();
+    }
+
+    void Parser::parseList() {
+        parseExpr();
+        if(token.oper == OP_COMMA) {
+            getToken();
+            parseList();
+        }
     }
 
     bool Parser::getToken() {

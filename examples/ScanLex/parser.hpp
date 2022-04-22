@@ -35,6 +35,8 @@ namespace parse {
         void parseMatch();
         void parseBlock();
         void parseElif();
+        void parseArray();
+        void parseList();
 
     };
 }

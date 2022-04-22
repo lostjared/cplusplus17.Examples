@@ -49,7 +49,7 @@ namespace scan {
     }
 
     bool Scanner::scan() {
-        lineno = 0;
+        lineno = 1;
         colno = 0;
         token_index = 0;
         char c;
