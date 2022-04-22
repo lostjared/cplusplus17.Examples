@@ -2,6 +2,24 @@
 #include"scan_lex.hpp"
 
 namespace scan {
+
+    std::string convertToHTML(const std::string &text) {
+        std::string temp;
+        for(int i = 0; i < text.length(); ++i) {
+            if(text[i] == ' ')
+                temp += "&nbsp;";
+            else if(text[i] == '<')
+                temp += "&lt;";
+            else if(text[i] == '>')
+                temp += "&gt;";
+            else if(text[i] == '\t')
+                temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+            else
+                temp += text[i];
+        }
+        return temp;
+    }
+
     void procHTML(std::istream &in, std::ostream &out) {
 
         out << "<!DOCTYPE html>\n<html>\n<head>\n<title>Debug HTML</title>\n</head>\n<body>\n";
@@ -23,7 +41,7 @@ namespace scan {
                 case '@': {
                     OP_TYPES op;
                     in.read(reinterpret_cast<char*>(&op), sizeof(op));
-                    out << "<tr><th>" << index1 << "</th><th>" << operators[op] << "</th><th>Operator</th></tr>\n";
+                    out << "<tr><th>" << index1 << "</th><th>" << convertToHTML(operators[op]) << "</th><th>Operator</th></tr>\n";
                     ++index1;
                 }
                 break; 
@@ -66,7 +84,7 @@ namespace scan {
                         buf[len] = 0;
                         std::string text = buf;
                         delete [] buf;
-                        out << "<tr><th>" << i << "</th><th>" << text << "</th></tr>";
+                        out << "<tr><th>" << i << "</th><th>" << convertToHTML(text) << "</th></tr>";
                     }
                     out << "</table>";
                 }
@@ -74,7 +92,7 @@ namespace scan {
                 case '^': {
                     int sz = 0;
                     out << "<table>";
-                    out << "<tr><th>Idenitifer Table</th></tr>";
+                    out << "<tr><th>Idenitifer Hash Table</th></tr>";
                     out << "<tr><th>Index</th><th>Identiifer</th></tr>";
                     in.read(reinterpret_cast<char*>(&sz), sizeof(sz));
                     for(int i = 0; i < sz; ++i) {
@@ -88,7 +106,7 @@ namespace scan {
                         delete [] buf;
                         int index;
                         in.read(reinterpret_cast<char*>(&index), sizeof(index));
-                        out << "<tr><th>" << index << "</th><th>" << text <<"</th></tr>";
+                        out << "<tr><th>" << index << "</th><th>" << convertToHTML(text) <<"</th></tr>";
                     }
                     out << "</table>";
                     out << "</body>\n</html>";
