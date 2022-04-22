@@ -135,6 +135,9 @@ namespace parse {
             break;
             case TOKEN_SYMBOL:
             break;
+            case TOKEN_STRING:
+            getToken();
+            break;
             default: {
                 std::ostringstream stream;
                 stream << "Expected Idenitifer or Number on Line: " << token.lineno << " instead I found: " << token.token;
