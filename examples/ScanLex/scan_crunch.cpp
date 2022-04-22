@@ -31,7 +31,6 @@ namespace scan {
         int ts = scan->table.const_strings.size();
         out.write(reinterpret_cast<char*>(&ts), sizeof(ts));
         for(int i = 0; i < scan->table.const_strings.size(); ++i) {
-            std::cout<< i << ": " << "\"" << scan->table.const_strings[i] << "\"" << "\n";
             int length = scan->table.const_strings[i].length();
             out.write(reinterpret_cast<char*>(&length), sizeof(length));
             out.write(scan->table.const_strings[i].c_str(), length);

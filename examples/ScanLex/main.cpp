@@ -71,10 +71,14 @@ int main(int argc, char **argv) {
             }
             parse::Parser parser(&scanner);
             if(parser.checkSyntax()) {
-                std::cout << "Parsing passed..\n";
-                //crunch(&scanner, out);
+                std::cout << "Succeded..\n";
+                scanner.reset();
+                crunch(&scanner, out);
+                std::cout <<  argv[0] << ": " << argv[2] << "\n";
             } else {
                 std::cout << "Parsing failed..\n";
+                out.close();
+                return -1;
             }
             out.close();
         } 

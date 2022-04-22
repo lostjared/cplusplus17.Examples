@@ -29,6 +29,12 @@ namespace parse {
         void parseTerm();
         void parsePrim();
         void parseCall();
+        void parseIf();
+        void parseWhile();
+        void parseFor();
+        void parseMatch();
+        void parseBlock();
+        void parseElif();
 
     };
 }

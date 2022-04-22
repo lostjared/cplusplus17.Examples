@@ -93,6 +93,24 @@ namespace parse {
                 break;
                 default:
                 break;
+                case KEY_IF:
+                parseIf();
+                break;
+                case KEY_WHILE:
+                parseWhile();
+                break;
+                case KEY_FOR:
+                parseFor();
+                break;
+                case KEY_MATCH:
+                parseMatch();
+                break;
+                case KEY_PRINT:
+                getToken();
+                parseCall();
+                match(OP_SEMI_COLON);
+                getToken();
+                break;
             }
             break;
             default:
@@ -161,11 +179,12 @@ namespace parse {
             getToken();
             parseExpr();
         }
+
         if(token.oper == OP_AND || token.oper == OP_XOR || token.oper == OP_OR) {
             getToken();
             parseExpr();
         }
-        if(token.oper == OP_AND_AND || token.oper == OP_OR_OR || token.oper == OP_EQ_EQ || token.oper == OP_NE) {
+        if(token.oper == OP_AND_AND || token.oper == OP_OR_OR || token.oper == OP_EQ_EQ || token.oper == OP_NE || token.oper == OP_LESS || token.oper == OP_GREATER || token.oper == OP_LTE || token.oper == OP_GTE) {
             getToken();
             parseExpr();
         }
@@ -180,6 +199,62 @@ namespace parse {
             else
                 parseCall();
         }
+    }
+
+    void Parser::parseIf() {
+        getToken();
+        parseExpr();
+        parseBlock();
+
+        if(token.keyword == KEY_ELSE) {
+            getToken();
+            parseBlock();
+        } else if(token.keyword == KEY_ELIF) {
+            parseElif();
+        }
+        if(token.keyword == KEY_ELSE) {
+            getToken();
+            parseBlock();
+        }
+    }
+
+    void Parser::parseElif() {
+        getToken();
+        parseExpr();
+        parseBlock();
+        if(token.keyword == KEY_ELIF)
+            parseElif();
+    }
+
+
+    void Parser::parseWhile() {
+        getToken();
+        parseExpr();
+        parseBlock();
+    }
+    
+    void Parser::parseFor() {
+        getToken();
+        match(OP_OP);
+        getToken();
+        parseExpr();
+        match(OP_SEMI_COLON);
+        getToken();
+        parseExpr();
+        match(OP_SEMI_COLON);
+        getToken();
+    }
+
+    void Parser::parseMatch() {
+
+    }
+
+    void Parser::parseBlock() {
+        match(OP_BLOCK_O);
+        getToken();
+        parseStatement();
+        match(OP_BLOCK_C);
+        getToken();
     }
 
     bool Parser::getToken() {

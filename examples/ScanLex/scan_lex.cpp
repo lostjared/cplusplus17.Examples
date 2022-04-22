@@ -94,7 +94,7 @@ namespace scan {
     }
 
     void Scanner::reset() {
-        token_index++;
+        token_index = 0;
     }
         
     void Scanner::tokenIndex(int index, Token &token) {
