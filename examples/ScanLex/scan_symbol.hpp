@@ -31,11 +31,11 @@ namespace scan {
         std::string &getString(std::string name);
         int getIndex(std::string name);
         friend class Scanner;
+        friend void crunch(Scanner *scan, std::ostream &out);
+    protected:
         std::unordered_map<std::string, Variable> data;
         std::vector<std::string> const_strings;
         int index;
-
-        friend void crunch(Scanner *scan, std::ostream &out);
     };
 }
 
