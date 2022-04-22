@@ -117,8 +117,6 @@ namespace scan {
                 break; 
             }
         }
-        done:
-        return;
     }
 
 

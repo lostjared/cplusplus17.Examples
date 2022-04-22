@@ -1,6 +1,5 @@
 #include "scan_lex.hpp"
-
-
+#include "scan_html.hpp"
 #include<fstream>
 
 int main(int argc, char **argv) {
@@ -43,7 +42,7 @@ int main(int argc, char **argv) {
          catch(scan::ScanException &e) {
                 std::cerr << e.error() << "\n";
          }
-    } else if(argc == 3 && std::string(argv[2]) != "-u") {
+    } else if(argc == 3 && std::string(argv[2]) != "-u" && std::string(argv[2]) != "-h") {
         try {
             char *buf;
             std::fstream file;
@@ -78,9 +77,23 @@ int main(int argc, char **argv) {
     } else if(argc == 3 && std::string(argv[2]) == "-u") {
             std::fstream file;
             file.open(argv[1], std::ios::in | std::ios::binary);
+            if(!file.is_open()) {
+                std::cerr << argv[0] << "could not open file...\n";
+                return -1;
+            }
             scan::uncrunch(file);
             file.close();
-    }   
+    }  
+    else if(argc == 3 && std::string(argv[2]) == "-h") {
+            std::fstream file;
+            file.open(argv[1], std::ios::in | std::ios::binary);
+            if(!file.is_open()) {
+                std::cerr << argv[0] << "could not open file...\n";
+                return -1;
+            }
+            scan::procHTML(file, std::cout);
+            file.close();
+    } 
 
     return 0;
 }

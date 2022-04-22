@@ -1,5 +1,11 @@
 
-proc main() 
+
+proc add(x, y)
+begin
+return x + y;
+end;
+
+proc main(@args) 
 begin
 	let x = 0;
 	print("input: ");
@@ -11,4 +17,9 @@ begin
 		print("no");
 	}
 	print(x);
+	let @values = (1, 2, 3);
+	print ("value 1: ", @values[0]);
+	let val = add(@values[0], @values[1]);
+	print(" value add: ", val);
+	return 0
 end;
