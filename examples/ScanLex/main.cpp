@@ -8,6 +8,7 @@ int main(int argc, char **argv) {
     if(argc == 1) {
         while(1) {
             try {
+                std::cout << "=)> ";
                 std::string text;
                 std::getline(std::cin, text);
                 scan::Scanner scanner(text);

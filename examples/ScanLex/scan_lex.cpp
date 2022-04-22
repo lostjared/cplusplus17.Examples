@@ -164,7 +164,16 @@ namespace scan {
         std::string token;
         do {
             token += c;
-            if(c == '\\') continue;
+            if(c == '\\') {
+                char ch = getchar();
+                if(ch == -1) {
+                    std::ostringstream stream;
+                    stream << "Error missing closing quote on Line: " << lineno << "\n";
+                    throw ScanException(stream.str());
+                }
+                token += ch;
+                continue;
+            }
         } while( (c = getchar()) != -1 && (char_table[c] != TOKEN_STRING));
 
         if(c == -1) {
