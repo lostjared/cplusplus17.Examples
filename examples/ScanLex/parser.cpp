@@ -90,26 +90,32 @@ namespace parse {
                 parseExpr();
                 match(OP_SEMI_COLON);
                 getToken();
+                parseStatement();
                 break;
                 default:
                 break;
                 case KEY_IF:
                 parseIf();
+                parseStatement();
                 break;
                 case KEY_WHILE:
                 parseWhile();
+                parseStatement();
                 break;
                 case KEY_FOR:
                 parseFor();
+                parseStatement();
                 break;
                 case KEY_MATCH:
                 parseMatch();
+                parseStatement();
                 break;
                 case KEY_PRINT:
                 getToken();
                 parseCall();
                 match(OP_SEMI_COLON);
                 getToken();
+                parseStatement();
                 break;
             }
             break;
@@ -237,12 +243,19 @@ namespace parse {
         getToken();
         match(OP_OP);
         getToken();
-        parseExpr();
-        match(OP_SEMI_COLON);
+        match(TOKEN_ID);
         getToken();
-        parseExpr();
-        match(OP_SEMI_COLON);
+        match(OP_COLON);
         getToken();
+        match(TOKEN_NUMBER);
+        getToken();
+        match(OP_COMMA);
+        getToken();
+        match(TOKEN_NUMBER);
+        getToken();
+        match(OP_CP);
+        getToken();
+        parseBlock();
     }
 
     void Parser::parseMatch() {
