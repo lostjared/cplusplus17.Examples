@@ -1,11 +1,14 @@
 
-proc main() {
+proc main() 
+begin
 	let x = 0;
-	x = x + 1;
-	if (x > 10) {
+	print("input: ");
+	x = input();
+	if (x > 10)  {
 		print("yes");
-	} else {
+	}
+	else {
 		print("no");
 	}
 	print(x);
-}
+end;
