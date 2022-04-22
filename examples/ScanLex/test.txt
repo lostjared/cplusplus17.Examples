@@ -1,0 +1,13 @@
+
+proc test(x,y) 
+begin
+x = 1;
+return (x + y);
+end;
+
+proc main(@args)
+begin
+y += test(10, test2(20));
+x = x & y;
+
+end;

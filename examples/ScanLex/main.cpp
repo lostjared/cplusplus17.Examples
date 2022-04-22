@@ -1,5 +1,6 @@
 #include "scan_lex.hpp"
 #include "scan_html.hpp"
+#include "parser.hpp"
 #include<fstream>
 
 int main(int argc, char **argv) {
@@ -61,14 +62,20 @@ int main(int argc, char **argv) {
             delete [] buf;
             scan::Scanner scanner(text);
             scanner.scan();
-            scanner.print();
+        //    scanner.print();
             std::fstream out;
             out.open(argv[2], std::ios::out | std::ios::binary);
             if(!out.is_open()) {
                 std::cerr << argv[0] << ": could not open output file.\n";
                 return -1;
             }
-            crunch(&scanner, out);
+            parse::Parser parser(&scanner);
+            if(parser.checkSyntax()) {
+                std::cout << "Parsing passed..\n";
+                //crunch(&scanner, out);
+            } else {
+                std::cout << "Parsing failed..\n";
+            }
             out.close();
         } 
         catch(scan::ScanException &e) {
