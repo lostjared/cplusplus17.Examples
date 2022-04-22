@@ -16,7 +16,7 @@ namespace scan {
             double fval;
             long lval;
         } val;
-        int index = 0;
+        int index = -1;
     };
 
     class SymbolTable {

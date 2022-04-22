@@ -9,18 +9,21 @@ namespace scan {
     void SymbolTable::enter(std::string name, std::string value) {
         data[name].name = name;
         data[name].value = value;
-        data[name].index = ++index;
+        if(data[name].index == -1)
+            data[name].index = index++;
     }
     void SymbolTable::enter(std::string name, double value) {
         data[name].name = name;
         data[name].val.fval = value;
-        data[name].index = ++index;
+        if(data[name].index == -1)
+            data[name].index = index++;
 
     }
     void SymbolTable::enter(std::string name, long value) {
         data[name].name = name;
         data[name].val.lval = value;
-        data[name].index = ++index;
+        if(data[name].index == -1)
+            data[name].index = index++;
     }
 
     void SymbolTable::enter_const(std::string text) {
