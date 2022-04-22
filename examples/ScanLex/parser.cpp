@@ -217,10 +217,10 @@ namespace parse {
             parseBlock();
         } else if(token.keyword == KEY_ELIF) {
             parseElif();
-        }
-        if(token.keyword == KEY_ELSE) {
-            getToken();
-            parseBlock();
+            if(token.keyword == KEY_ELSE) {
+                getToken();
+                parseBlock();
+            }
         }
     }
 
