@@ -38,7 +38,7 @@ namespace parse {
         void copy(const Item &i);
     };
 
-    enum EXPR_TYPE { EXPR_LITERAL, EXPR_ID, EXPR_SYMBOL, EXPR_FUNC, EXPR_EMPTY };
+    enum EXPR_TYPE { EXPR_LITERAL, EXPR_ID, EXPR_SYMBOL, EXPR_FUNC, EXPR_RETURN, EXPR_EMPTY };
 
     struct Expr {
         OP_TYPES oper;
@@ -49,6 +49,7 @@ namespace parse {
 
     struct Statement {
         Expr *expression;
+
     };
 
     struct Body {
@@ -95,6 +96,8 @@ namespace parse {
         Expr *parseTerm();
         Expr *parseFactor();
         Expr *parsePrim();
+        Expr *parseReturn();
+        Expr *parseLet();
         bool match(const std::initializer_list<OP_TYPES> &lst);
         bool match(KEYWORD_TYPES key);
         bool consume(KEYWORD_TYPES key);

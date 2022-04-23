@@ -1,14 +1,7 @@
 
-proc test(x,y) 
+proc main() 
 begin
-return (x+y);
-end;
 
-let value;
+let x = 0;
 
-proc main(@args) 
-begin
-    let x = test();
-    x = test(100,200);
-    print(x);
 end;

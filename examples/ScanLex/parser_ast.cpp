@@ -191,15 +191,39 @@ namespace parse {
    }
 
   void AST::parseStatement(Body &body) {
-      
       while(token.keyword != KEY_END) {
+          if(match(KEY_RETURN)) {
+              Statement s;
+              s.expression = parseReturn();
+              body.statements.push_back(s);
+          } else if (match(KEY_LET)) {
+              Statement s;
+              s.expression = parseLet();
+              body.statements.push_back(s);
+          } 
+          else {
             Statement s;
             s.expression = parseExpr();
             body.statements.push_back(s);
             consume(OP_SEMI_COLON);
+          }
       }
       // test
   }
+
+  Expr *AST::parseReturn() {
+      consume(KEY_RETURN);
+      Expr *e = parseExpr();
+      return e;
+  }
+
+Expr *AST::parseLet() {
+    consume(KEY_LET);
+    Expr *e = parseExpr();
+    return e;
+}
+
+
 
    void AST::parseBody(Body &body) {
        if(consume(KEY_BEGIN)) {
@@ -216,8 +240,10 @@ namespace parse {
 
     void AST::parseArgs(ArgList &args) {
         consume(OP_OP);
-        if(match({OP_CP})) 
+        if(match({OP_CP})) { 
+            consume(OP_CP);
             return;
+        }
 
         while(token.type == TOKEN_ID) {
             args.args.push_back(identifiers[token.index]);
