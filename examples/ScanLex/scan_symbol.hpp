@@ -23,6 +23,7 @@ namespace scan {
     public:
         SymbolTable();
         void enter(std::string name, std::string value);
+        void enter(std::string name, std::string value, int index);
         void enter(std::string name, double value);
         void enter(std::string name, long value);
         void enter_const(std::string text);

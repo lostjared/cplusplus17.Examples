@@ -1,6 +1,7 @@
 #include "scan_lex.hpp"
 #include "scan_html.hpp"
 #include "parser.hpp"
+#include "parser_ast.hpp"
 #include<fstream>
 
 int main(int argc, char **argv) {
@@ -92,7 +93,9 @@ int main(int argc, char **argv) {
                 std::cerr << argv[0] << "could not open file...\n";
                 return -1;
             }
-            scan::uncrunch(file);
+            parse::AST ast(&file);
+            ast.scan();
+            ast.print(std::cout);
             file.close();
     }  
     else if(argc == 3 && std::string(argv[2]) == "-h") {

@@ -12,6 +12,15 @@ namespace scan {
         if(data[name].index == -1)
             data[name].index = index++;
     }
+
+    void SymbolTable::enter(std::string name, std::string value, int i) {
+        data[name].name = name;
+        data[name].value = value;
+        if(data[name].index == -1)
+            data[name].index = i;
+    }
+
+
     void SymbolTable::enter(std::string name, double value) {
         data[name].name = name;
         data[name].val.fval = value;
