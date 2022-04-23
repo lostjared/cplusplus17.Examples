@@ -42,6 +42,8 @@ namespace scan {
         OP_TYPES oper;
         int lineno;
     };
+
+    std::ostream &operator<<(std::ostream &out, TOKEN_TYPE type);
 }
 
 #endif

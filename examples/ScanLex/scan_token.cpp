@@ -71,4 +71,35 @@ namespace scan {
        out << "Token Line[" << ty.lineno << "] -> : " << ty.token << " Type: " << ty.type;
        return out;
    }
+
+   std::ostream &operator<<(std::ostream &out, TOKEN_TYPE type) {
+       switch(type) {
+           case TOKEN_CHAR:
+                out << "Character";
+           break;
+           case TOKEN_ID:
+                out << "Identifier";
+           break;
+           case TOKEN_STRING:
+                out << "String";
+           break;
+           case TOKEN_KEYWORD:
+                out << "Keyword";
+           break;
+           case TOKEN_NUMBER:
+                out << "Number";
+           break;
+           case TOKEN_NULL:
+                out << "NULL";
+           break;
+           case TOKEN_SYMBOL:
+                out << "Operator";
+           break;
+           case TOKEN_WHITESPACE:
+           case TOKEN_COMMENT:
+           break;
+       }
+       return out;
+   }
+
 }
