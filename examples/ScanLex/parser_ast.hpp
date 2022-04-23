@@ -84,6 +84,9 @@ namespace parse {
         bool buildTree();
         bool getToken();
         void parseProc();
+        void parseArgs(ArgList &args);
+        void parseStatement(Body &body);
+        void parseBody(Body &body);
         void parseCode();
         TreeNode *rootNode();
         Expr *parseExpr();
@@ -93,6 +96,8 @@ namespace parse {
         Expr *parseFactor();
         Expr *parsePrim();
         bool match(const std::initializer_list<OP_TYPES> &lst);
+        bool match(KEYWORD_TYPES key);
+        bool consume(KEYWORD_TYPES key);
         bool consume(TOKEN_TYPE type);
         bool consume(OP_TYPES type);
     protected:

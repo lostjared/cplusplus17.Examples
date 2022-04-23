@@ -190,13 +190,60 @@ namespace parse {
        }
    }
 
+  void AST::parseStatement(Body &body) {
+      
+      while(token.keyword != KEY_END) {
+            Statement s;
+            s.expression = parseExpr();
+            body.statements.push_back(s);
+            consume(OP_SEMI_COLON);
+      }
+      // test
+  }
+
+   void AST::parseBody(Body &body) {
+       if(consume(KEY_BEGIN)) {
+           parseStatement(body);
+            if(match(KEY_END)) {
+               consume(KEY_END);
+               consume(OP_SEMI_COLON);
+           } else {
+               
+           }
+       }
+
+   }
+
+    void AST::parseArgs(ArgList &args) {
+        consume(OP_OP);
+        if(match({OP_CP})) 
+            return;
+
+        while(token.type == TOKEN_ID) {
+            args.args.push_back(identifiers[token.index]);
+            getToken();
+            if(match({OP_CP})) {
+                consume(OP_CP);
+                return;
+            }
+            if(match({OP_COMMA}))
+            {
+                consume(OP_COMMA);
+            }
+        }
+    }
+
+
+
    void AST::parseProc() {
        std::string name;
        name = identifiers[token.index];
        TreeNode *n = new TreeNode();
        n->proc.name = name;
        n->type = NODE_PROC;
-
+       getToken();
+       parseArgs(n->proc.param);
+       parseBody(n->proc.body);
        root.children.push_back(n);
      
    }
@@ -210,12 +257,10 @@ namespace parse {
     }
         
     Expr *AST::parseEqual() {
-
         return 0;
     }
     
     Expr *AST::parseTerm() {
-
         return 0;
     }
         
@@ -235,6 +280,13 @@ namespace parse {
         return true;
     }
 
+    bool AST::match(KEYWORD_TYPES key) {
+        if(token.keyword == key)
+            return true;
+        return false;
+    }
+
+
    bool AST::consume(TOKEN_TYPE type) {
        if(token.type == type) {
            getToken();
@@ -251,12 +303,47 @@ namespace parse {
            return true;
        }
        std::ostringstream stream;
-       stream << "Expected: " << operators[type] << " found: " << operators[token.oper];
+       stream << "Expected: " << operators[type] << " found: " << token.type;
+       switch(token.type) {
+           case TOKEN_SYMBOL:
+           stream << " " << operators[token.oper];
+           break;
+           case TOKEN_ID:
+           stream << " " << identifiers[token.index];
+           break;
+           case TOKEN_KEYWORD:
+           stream << " " << keywords[token.keyword];
+           break;
+           default:
+           break;
+       }
        throw ParserException(stream.str());
        return false;
    }
-
-
+   
+   bool AST::consume(KEYWORD_TYPES key) {
+       if(token.keyword == key) {
+           getToken();
+           return true;
+       }
+       std::ostringstream stream;
+       stream << "Expected: " << keywords[key] << " found: " << token.type;
+       switch(token.type) {
+           case TOKEN_SYMBOL:
+           stream << " " << operators[token.oper];
+           break;
+           case TOKEN_ID:
+           stream << " " << identifiers[token.index];
+           break;
+           case TOKEN_KEYWORD:
+           stream << " " << keywords[token.keyword];
+           break;
+           default:
+           break;
+       }
+       throw ParserException(stream.str());
+       return false;
+   }
 
    void AST::printTree(std::ostream &out, TreeNode *n) {
        switch(n->type) {
