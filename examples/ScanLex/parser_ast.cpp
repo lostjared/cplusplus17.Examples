@@ -160,9 +160,25 @@ namespace parse {
     }
 
    bool AST::buildTree() {
-
-
+       getToken();
+       switch(token.type) {
+           case TOKEN_KEYWORD:
+           switch(token.keyword) {
+               case KEY_PROC:
+               parseProc();
+               break;
+               default:
+               break;
+           }
+           break;
+           default:
+           break;
+       }
        return true;
+   }
+
+   void AST::parseProc() {
+
    }
        
     bool AST::getToken() {

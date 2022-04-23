@@ -66,6 +66,7 @@ namespace parse {
         void print(std::ostream &out);
         bool buildTree();
         bool getToken();
+        void parseProc();
     protected:
         std::istream *in;
         std::vector<Item> tokens;
