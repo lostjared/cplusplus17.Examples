@@ -13,6 +13,9 @@ namespace parse {
                         case KEY_PROC:
                             parseProcedure();
                         break;
+                        case KEY_LET:
+                            parseLet();
+                            break;
                         default:
                             break;
                     }        
@@ -95,32 +98,36 @@ namespace parse {
                 match(OP_SEMI_COLON);
                 getToken();
                 parseStatement();
-                break;
+                    break;
                 default:
-                break;
+                    break;
                 case KEY_IF:
                 parseIf();
                 parseStatement();
-                break;
+                    break;
                 case KEY_WHILE:
                 parseWhile();
                 parseStatement();
-                break;
+                    break;
                 case KEY_FOR:
                 parseFor();
                 parseStatement();
-                break;
+                    break;
                 case KEY_MATCH:
                 parseMatch();
                 parseStatement();
-                break;
+                    break;
                 case KEY_PRINT:
                 getToken();
                 parseCall();
                 match(OP_SEMI_COLON);
                 getToken();
                 parseStatement();
-                break;
+                    break;
+                case KEY_LET:
+                    parseLet();
+                    parseStatement();
+                    break;
             }
             break;
             default:
@@ -294,6 +301,19 @@ namespace parse {
             getToken();
             parseList();
         }
+    }
+
+    void Parser::parseLet() {
+        match(KEY_LET);
+        getToken();
+        match(TOKEN_ID);
+        getToken();
+        if(token.oper == OP_EQUAL) {
+            getToken();
+            parseExpr();
+        }
+        match(OP_SEMI_COLON);
+        getToken();
     }
 
     bool Parser::getToken() {

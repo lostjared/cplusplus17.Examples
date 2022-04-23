@@ -37,6 +37,7 @@ namespace parse {
         void parseElif();
         void parseArray();
         void parseList();
+        void parseLet();
 
     };
 }
