@@ -289,10 +289,11 @@ namespace parse {
     Expr *AST::parseComp() {
         Expr *e = parseTerm();
         while(match({OP_GREATER, OP_LESS, OP_GTE, OP_LTE})) {
+            OP_TYPES oper = token.oper;
             getToken();
             Expr *ne = new Expr();
             ne->left = e;
-            ne->oper = prev()->oper;
+            ne->oper = oper;
             ne->right = parseTerm();
             ne->type = EXPR_BINARY;
             e = ne;
@@ -303,10 +304,11 @@ namespace parse {
     Expr *AST::parseEqual() {
         Expr *e = parseComp();
         while(match({OP_EQ_EQ, OP_NE})) {
+            OP_TYPES oper = token.oper;
             getToken();
             Expr *ne = new Expr();
             ne->left = e;
-            ne->oper = prev()->oper;
+            ne->oper = oper;
             ne->right = parseComp();
             ne->type = EXPR_BINARY;
             e = ne;
@@ -317,8 +319,8 @@ namespace parse {
     Expr *AST::parseTerm() {
         Expr *e = parseFactor();
         while(match({OP_PLUS, OP_MINUS})) {
+            OP_TYPES oper = token.oper;
             getToken();
-            OP_TYPES oper = prev()->oper;
             Expr *right = parseFactor();
             Expr *ne = new Expr();
             ne->left = e;
@@ -333,8 +335,8 @@ namespace parse {
     Expr *AST::parseFactor() {
         Expr *e = parseUnary();
         while(match({OP_DIV, OP_MUL})) {
+            OP_TYPES oper = token.oper;
             getToken();
-            OP_TYPES oper = prev()->oper;
             Expr *ne = new Expr();
             ne->left = e;
             ne->oper = oper;
@@ -350,6 +352,7 @@ namespace parse {
             Expr *e = new Expr();
             e->left = 0;
             e->right = 0;
+            e->oper = OP_EMPTY;
             e->type = EXPR_LITERAL;
             e->token = token;
             getToken();
@@ -370,8 +373,8 @@ namespace parse {
 
     Expr *AST::parseUnary() {
         if(match({OP_MINUS, OP_NOT})) {
+            OP_TYPES oper = token.oper;
             getToken();
-            OP_TYPES oper = prev()->oper;
             Expr *right = parseUnary();
             Expr *ne = new Expr();
             ne->left = 0;
@@ -494,7 +497,24 @@ namespace parse {
    }
 
    void AST::printExpr(Expr *e) {
-    
+
+        if(e != 0) {
+            switch(e->type) {
+                case EXPR_BINARY:
+                std::cout << operators[e->oper] << " ";
+                if(e->left != 0)
+                    printExpr(e->left);
+                if(e->right != 0)
+                    printExpr(e->right);
+                break;
+                case EXPR_LITERAL:
+                std::cout << e->token.type << " ";
+                break;
+                default:
+                break;
+            }
+        }
+
    }
 
 
