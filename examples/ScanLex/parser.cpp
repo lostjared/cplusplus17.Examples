@@ -176,6 +176,8 @@ namespace parse {
 
         if(token.oper == OP_BRACE_O) {
             parseArray();
+            parseExpr();
+            return;
         } 
         if(token.oper ==  OP_PLUS) {
             getToken();
