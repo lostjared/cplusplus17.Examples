@@ -195,15 +195,18 @@ namespace parse {
           if(match(KEY_RETURN)) {
               Statement s;
               s.expression = parseReturn();
+              s.type = STATE_RETURN;
               body.statements.push_back(s);
           } else if (match(KEY_LET)) {
               Statement s;
               s.expression = parseLet();
+              s.type = STATE_LET;
               body.statements.push_back(s);
           } 
           else {
             Statement s;
             s.expression = parseExpr();
+            s.type = STATE_EXPR;
             body.statements.push_back(s);
             consume(OP_SEMI_COLON);
           }
@@ -211,21 +214,27 @@ namespace parse {
       // test
   }
 
-  Expr *AST::parseReturn() {
+    Expr *AST::parseReturn() {
       consume(KEY_RETURN);
       Expr *e = parseExpr();
       return e;
-  }
+    }
 
-Expr *AST::parseLet() {
-    consume(KEY_LET);
-    Expr *e = parseExpr();
-    return e;
-}
+    Expr *AST::parseLet() {
+        consume(KEY_LET);
+        if(match(TOKEN_ID)) {
+            std::cout << identifiers[token.index] << " = ";
+            getToken();
+            if(match({OP_EQUAL})) {
+                consume(OP_EQUAL);
+                Expr *e = parseExpr();
+                return e;
+            }
+        }
+        return 0;
+    }
 
-
-
-   void AST::parseBody(Body &body) {
+    void AST::parseBody(Body &body) {
        if(consume(KEY_BEGIN)) {
            parseStatement(body);
             if(match(KEY_END)) {
@@ -271,40 +280,136 @@ Expr *AST::parseLet() {
        parseArgs(n->proc.param);
        parseBody(n->proc.body);
        root.children.push_back(n);
-     
    }
 
    Expr *AST::parseExpr() {
-       return 0;
+       return parseEqual();
    }
         
     Expr *AST::parseComp() {
-        return 0;
+        Expr *e = parseTerm();
+        while(match({OP_GREATER, OP_LESS, OP_GTE, OP_LTE})) {
+            getToken();
+            Expr *ne = new Expr();
+            ne->left = e;
+            ne->oper = prev()->oper;
+            ne->right = parseTerm();
+            ne->type = EXPR_BINARY;
+            e = ne;
+        }
+        return e;
     }
         
     Expr *AST::parseEqual() {
-        return 0;
+        Expr *e = parseComp();
+        while(match({OP_EQ_EQ, OP_NE})) {
+            getToken();
+            Expr *ne = new Expr();
+            ne->left = e;
+            ne->oper = prev()->oper;
+            ne->right = parseComp();
+            ne->type = EXPR_BINARY;
+            e = ne;
+        }
+        return e;
     }
     
     Expr *AST::parseTerm() {
-        return 0;
+        Expr *e = parseFactor();
+        while(match({OP_PLUS, OP_MINUS})) {
+            getToken();
+            OP_TYPES oper = prev()->oper;
+            Expr *right = parseFactor();
+            Expr *ne = new Expr();
+            ne->left = e;
+            ne->oper = oper;
+            ne->right = right;
+            ne->type = EXPR_BINARY;
+            e = ne;
+        }
+        return e;
     }
         
     Expr *AST::parseFactor() {
-        return 0;
+        Expr *e = parseUnary();
+        while(match({OP_DIV, OP_MUL})) {
+            getToken();
+            OP_TYPES oper = prev()->oper;
+            Expr *ne = new Expr();
+            ne->left = e;
+            ne->oper = oper;
+            ne->right = parseUnary();
+            ne->type = EXPR_BINARY;
+            e = ne;
+        }
+        return e;
     }
         
     Expr *AST::parsePrim() {
+        if(match(TOKEN_ID)||match(TOKEN_NUMBER)||match(TOKEN_STRING)) {
+            Expr *e = new Expr();
+            e->left = 0;
+            e->right = 0;
+            e->type = EXPR_LITERAL;
+            e->token = token;
+            getToken();
+            return e;
+        }
+
+        if(match({OP_OP})) {
+            getToken();
+            Expr *e = parseExpr();
+            consume(OP_CP);
+            Expr *ne = new Expr();
+            ne->group = e;
+            ne->type = EXPR_GROUP;
+            return ne;
+        }
         return 0;
     }
 
+    Expr *AST::parseUnary() {
+        if(match({OP_MINUS, OP_NOT})) {
+            getToken();
+            OP_TYPES oper = prev()->oper;
+            Expr *right = parseUnary();
+            Expr *ne = new Expr();
+            ne->left = 0;
+            ne->oper = oper;
+            ne->right = right;
+            ne->type = EXPR_UNARY;
+            return ne;
+        }
+        return parsePrim();
+    }
+
+
     bool AST::match(const std::initializer_list<OP_TYPES> &lst) {
         for(auto &i : lst) {
-            if(token.oper != i)
-                return false;
+            if(i == token.oper)
+                return true;
         }
-        return true;
+        return false;
     }
+
+    bool AST::match(TOKEN_TYPE type) {
+        if(token.type == type)
+            return true;
+        return false;
+    }
+
+
+    Item *AST::prev() {
+        if(sindex-1 >= 0)
+            return &tokens[sindex-1];
+        else {
+            std::ostringstream stream;
+            stream << "Exception: index of token out of range.\n";
+            throw ParserException(stream.str());
+        }
+        return nullptr;
+    }
+
 
     bool AST::match(KEYWORD_TYPES key) {
         if(token.keyword == key)
@@ -375,6 +480,10 @@ Expr *AST::parseLet() {
        switch(n->type) {
            case NODE_PROC:
            out << "proc: " << n->proc.name << "\n";
+           for(auto &i : n->proc.body.statements) {
+               if(i.expression != 0)
+                printExpr(i.expression);
+           }
            break;
            default:
            break;
@@ -383,6 +492,11 @@ Expr *AST::parseLet() {
         for(int i = 0; i < n->children.size(); ++i)
            printTree(out, n->children[i]);
    }
+
+   void AST::printExpr(Expr *e) {
+    
+   }
+
 
    TreeNode *AST::rootNode() {
        return &root;

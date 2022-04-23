@@ -38,18 +38,21 @@ namespace parse {
         void copy(const Item &i);
     };
 
-    enum EXPR_TYPE { EXPR_LITERAL, EXPR_ID, EXPR_SYMBOL, EXPR_FUNC, EXPR_RETURN, EXPR_EMPTY };
+    enum EXPR_TYPE { EXPR_LITERAL, EXPR_ID, EXPR_SYMBOL, EXPR_FUNC, EXPR_BINARY, EXPR_RETURN, EXPR_UNARY,EXPR_GROUP,EXPR_EMPTY };
 
     struct Expr {
         OP_TYPES oper;
         Expr *left, *right;
+        Expr *group;
         Item token;
         EXPR_TYPE type;
     };
 
-    struct Statement {
-        Expr *expression;
+    enum STATEMENT_TYPE { STATE_LET, STATE_ASSIGN, STATE_FUNC, STATE_RETURN, STATE_EXPR, STATE_EMPTY };
 
+    struct Statement {
+        Expr *expression = nullptr;
+        STATEMENT_TYPE type = STATE_EMPTY;
     };
 
     struct Body {
@@ -98,11 +101,15 @@ namespace parse {
         Expr *parsePrim();
         Expr *parseReturn();
         Expr *parseLet();
+        Expr *parseUnary();
         bool match(const std::initializer_list<OP_TYPES> &lst);
         bool match(KEYWORD_TYPES key);
+        bool match(TOKEN_TYPE type);
         bool consume(KEYWORD_TYPES key);
         bool consume(TOKEN_TYPE type);
         bool consume(OP_TYPES type);
+        Item *prev();
+        void printExpr(Expr *e);
     protected:
         std::istream *in;
         std::vector<Item> tokens;
