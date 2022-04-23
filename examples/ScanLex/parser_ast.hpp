@@ -5,7 +5,9 @@
 #include<string>
 #include<vector>
 #include<unordered_map>
+#include<initializer_list>
 #include"scan_lex.hpp"
+#include"parser_exception.hpp"
 
 namespace parse {
 
@@ -36,7 +38,17 @@ namespace parse {
         void copy(const Item &i);
     };
 
+    enum EXPR_TYPE { EXPR_LITERAL, EXPR_ID, EXPR_SYMBOL, EXPR_FUNC, EXPR_EMPTY };
+
+    struct Expr {
+        OP_TYPES oper;
+        Expr *left, *right;
+        Item token;
+        EXPR_TYPE type;
+    };
+
     struct Statement {
+        Expr *expression;
     };
 
     struct Body {
@@ -53,9 +65,13 @@ namespace parse {
         ArgList param;
 
     };
+
+    enum NODE_TYPE { NODE_ROOT, NODE_PROC, NODE_LET };
+
     struct TreeNode {
         /// items
         Procedure proc;
+        NODE_TYPE type;
         std::vector<TreeNode *> children;
     };
 
@@ -64,9 +80,21 @@ namespace parse {
         explicit AST(std::istream *i);
         void scan();
         void print(std::ostream &out);
+        void printTree(std::ostream &out, TreeNode *n);
         bool buildTree();
         bool getToken();
         void parseProc();
+        void parseCode();
+        TreeNode *rootNode();
+        Expr *parseExpr();
+        Expr *parseComp();
+        Expr *parseEqual();
+        Expr *parseTerm();
+        Expr *parseFactor();
+        Expr *parsePrim();
+        bool match(const std::initializer_list<OP_TYPES> &lst);
+        bool consume(TOKEN_TYPE type);
+        bool consume(OP_TYPES type);
     protected:
         std::istream *in;
         std::vector<Item> tokens;

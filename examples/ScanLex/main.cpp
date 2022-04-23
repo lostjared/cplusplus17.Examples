@@ -96,6 +96,8 @@ int main(int argc, char **argv) {
             parse::AST ast(&file);
             ast.scan();
             ast.print(std::cout);
+            ast.buildTree();
+            ast.printTree(std::cout, ast.rootNode());
             file.close();
     }  
     else if(argc == 3 && std::string(argv[2]) == "-h") {

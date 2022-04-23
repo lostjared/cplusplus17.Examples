@@ -160,12 +160,26 @@ namespace parse {
     }
 
    bool AST::buildTree() {
+       token = tokens[0];
+       sindex = 0;
+       try {
+           parseCode();
+       } catch(ParserException &e) {
+           std::cerr << e.error() << "\n";
+           return false;
+       }
+       return true;
+   }
+
+   void AST::parseCode() {
        getToken();
        switch(token.type) {
            case TOKEN_KEYWORD:
            switch(token.keyword) {
                case KEY_PROC:
+               getToken();
                parseProc();
+               parseCode();
                break;
                default:
                break;
@@ -174,13 +188,94 @@ namespace parse {
            default:
            break;
        }
-       return true;
    }
 
    void AST::parseProc() {
+       std::string name;
+       name = identifiers[token.index];
+       TreeNode *n = new TreeNode();
+       n->proc.name = name;
+       n->type = NODE_PROC;
 
+       root.children.push_back(n);
+     
    }
-       
+
+   Expr *AST::parseExpr() {
+       return 0;
+   }
+        
+    Expr *AST::parseComp() {
+        return 0;
+    }
+        
+    Expr *AST::parseEqual() {
+
+        return 0;
+    }
+    
+    Expr *AST::parseTerm() {
+
+        return 0;
+    }
+        
+    Expr *AST::parseFactor() {
+        return 0;
+    }
+        
+    Expr *AST::parsePrim() {
+        return 0;
+    }
+
+    bool AST::match(const std::initializer_list<OP_TYPES> &lst) {
+        for(auto &i : lst) {
+            if(token.oper != i)
+                return false;
+        }
+        return true;
+    }
+
+   bool AST::consume(TOKEN_TYPE type) {
+       if(token.type == type) {
+           getToken();
+           return true;
+       }
+       std::ostringstream stream;
+       stream << "Expected: " << type << " found: " << type;
+       throw ParserException(stream.str());
+       return false;
+   }
+   bool AST::consume(OP_TYPES type) {
+       if(token.oper == type) {
+           getToken();
+           return true;
+       }
+       std::ostringstream stream;
+       stream << "Expected: " << operators[type] << " found: " << operators[token.oper];
+       throw ParserException(stream.str());
+       return false;
+   }
+
+
+
+   void AST::printTree(std::ostream &out, TreeNode *n) {
+       switch(n->type) {
+           case NODE_PROC:
+           out << "proc: " << n->proc.name << "\n";
+           break;
+           default:
+           break;
+       }
+        
+        for(int i = 0; i < n->children.size(); ++i)
+           printTree(out, n->children[i]);
+   }
+
+   TreeNode *AST::rootNode() {
+       return &root;
+   }
+
+
     bool AST::getToken() {
         if(sindex < tokens.size()) {
             token = tokens[sindex++];
