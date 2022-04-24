@@ -57,6 +57,36 @@ namespace parse {
         id = i.id;
     }
 
+    Expr::Expr() {
+        left = nullptr;
+        right = nullptr;
+        group = nullptr;
+    }
+
+     Expr::~Expr() {
+         if(left != nullptr)
+            delete left;
+        left = nullptr;
+        if(right != nullptr)
+            delete right;
+        right = nullptr;
+        if(group != nullptr)
+            delete group;
+        group = nullptr;
+     }
+
+    Statement::Statement() {
+        expression = nullptr;
+    }
+
+     Statement::~Statement() {
+        if(expression != nullptr)
+            delete expression;
+        expression = nullptr;
+     }
+
+     Body::~Body() {}
+
     AST::AST(std::istream *i) : in{i} {}
 
     void AST::scan() {
@@ -171,6 +201,10 @@ namespace parse {
        return true;
    }
 
+    AST::~AST() {
+        eraseTree(&root);
+    }
+
    void AST::parseCode() {
        getToken();
        switch(token.type) {
@@ -193,22 +227,23 @@ namespace parse {
   void AST::parseStatement(Body &body) {
       while(token.keyword != KEY_END) {
           if(match(KEY_RETURN)) {
-              Statement s;
-              s.expression = parseReturn();
-              s.type = STATE_RETURN;
+              Statement *s = new Statement();
+              s->expression = parseReturn();
+              s->type = STATE_RETURN;
               body.statements.push_back(s);
           } else if (match(KEY_LET)) {
-              Statement s;
-              s.expression = parseLet();
-              s.type = STATE_LET;
+              Statement *s = new Statement();
+              s->expression = parseLet();
+              s->type = STATE_LET;
               body.statements.push_back(s);
+              consume(OP_SEMI_COLON);
           } 
-          else {
+          else {/*
             Statement s;
             s.expression = parseExpr();
             s.type = STATE_EXPR;
             body.statements.push_back(s);
-            consume(OP_SEMI_COLON);
+            consume(OP_SEMI_COLON);*/
           }
       }
       // test
@@ -244,7 +279,6 @@ namespace parse {
                
            }
        }
-
    }
 
     void AST::parseArgs(ArgList &args) {
@@ -482,10 +516,11 @@ namespace parse {
    void AST::printTree(std::ostream &out, TreeNode *n) {
        switch(n->type) {
            case NODE_PROC:
-           out << "proc: " << n->proc.name << "\n";
+           out << "proc: " << n->proc.name << ": " << n->proc.body.statements.size() << " statements\n";
            for(auto &i : n->proc.body.statements) {
-               if(i.expression != 0)
-                printExpr(i.expression);
+               if(i->expression != 0)
+                printExpr(i->expression);
+                std::cout << "\n";
            }
            break;
            default:
@@ -496,18 +531,54 @@ namespace parse {
            printTree(out, n->children[i]);
    }
 
+   void AST::eraseTree(TreeNode *n) {
+       switch(n->type) {
+           case NODE_PROC:
+           for(auto &i : n->proc.body.statements) {
+               delete i;
+           }
+           break;
+           default:
+           break;
+       }
+        for(int i = 0; i < n->children.size(); ++i)
+           eraseTree(n->children[i]);
+       
+   }
+
    void AST::printExpr(Expr *e) {
-        if(e != 0) {
+        if(e != nullptr) {
             switch(e->type) {
                 case EXPR_BINARY:
-                 if(e->left != 0)
+                 if(e->left != nullptr)
                     printExpr(e->left);
                  std::cout << operators[e->oper] << " ";
-                if(e->right != 0)
+                if(e->right != nullptr )
                     printExpr(e->right);
                 break;
                 case EXPR_LITERAL:
                 std::cout << e->token.type << " ";
+                std::cout << "(";
+                switch(e->token.type) {
+                    case TOKEN_NUMBER:
+                        std::cout << e->token.val;
+                    break;
+                    case TOKEN_ID:
+                        std::cout << identifiers[e->token.index];
+                    break;
+                    case TOKEN_STRING:
+                        std::cout << const_strings[e->token.index_const];
+                    break;
+                    default:
+                    break;
+                }
+                std::cout <<") ";
+                break;
+                case EXPR_GROUP:
+                std::cout << "( ";
+                    if(e->group != nullptr)
+                        printExpr(e->group);
+                std::cout << ") ";
                 break;
                 default:
                 break;

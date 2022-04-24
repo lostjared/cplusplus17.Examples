@@ -6,6 +6,7 @@
 #include<vector>
 #include<unordered_map>
 #include<initializer_list>
+#include<memory>
 #include"scan_lex.hpp"
 #include"parser_exception.hpp"
 
@@ -42,10 +43,12 @@ namespace parse {
 
     struct Expr {
         OP_TYPES oper;
-        Expr *left, *right;
-        Expr *group;
+        Expr *left = nullptr, *right = nullptr;
+        Expr *group = nullptr;
         Item token;
         EXPR_TYPE type;
+        ~Expr();
+        Expr();
     };
 
     enum STATEMENT_TYPE { STATE_LET, STATE_ASSIGN, STATE_FUNC, STATE_RETURN, STATE_EXPR, STATE_EMPTY };
@@ -53,10 +56,13 @@ namespace parse {
     struct Statement {
         Expr *expression = nullptr;
         STATEMENT_TYPE type = STATE_EMPTY;
+        ~Statement();
+        Statement();
     };
 
     struct Body {
-        std::vector<Statement> statements;
+        std::vector<Statement *> statements;
+        ~Body();
     };
 
     struct ArgList {
@@ -82,6 +88,7 @@ namespace parse {
     class AST {
     public:
         explicit AST(std::istream *i);
+        ~AST();
         void scan();
         void print(std::ostream &out);
         void printTree(std::ostream &out, TreeNode *n);
@@ -110,6 +117,7 @@ namespace parse {
         bool consume(OP_TYPES type);
         Item *prev();
         void printExpr(Expr *e);
+        void eraseTree(TreeNode *n);
     protected:
         std::istream *in;
         std::vector<Item> tokens;
