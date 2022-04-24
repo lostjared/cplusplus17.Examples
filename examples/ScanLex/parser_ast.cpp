@@ -276,7 +276,10 @@ namespace parse {
         consume(KEY_LET);
         if(match(TOKEN_ID)) {
             proc->id.enter(identifiers[token.index], "");
-            return parseAssignment();
+            if(match_lookahead(OP_EQUAL))
+                return parseAssignment();
+            else 
+                getToken();
         }
         return 0;
     }
