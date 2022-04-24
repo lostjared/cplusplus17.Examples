@@ -497,13 +497,12 @@ namespace parse {
    }
 
    void AST::printExpr(Expr *e) {
-
         if(e != 0) {
             switch(e->type) {
                 case EXPR_BINARY:
-                std::cout << operators[e->oper] << " ";
-                if(e->left != 0)
+                 if(e->left != 0)
                     printExpr(e->left);
+                 std::cout << operators[e->oper] << " ";
                 if(e->right != 0)
                     printExpr(e->right);
                 break;
