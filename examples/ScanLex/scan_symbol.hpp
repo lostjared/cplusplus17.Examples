@@ -28,6 +28,7 @@ namespace scan {
         void enter(std::string name, std::string value, int index);
         void enter(std::string name, double value);
         void enter(std::string name, long value);
+        bool valid(std::string name);
         void enter_const(std::string text);
         long &getInteger(std::string name);
         double &getDouble(std::string name);

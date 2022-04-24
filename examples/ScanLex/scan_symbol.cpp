@@ -76,6 +76,15 @@ namespace scan {
             parent->print();       
     }
 
+    bool SymbolTable::valid(std::string name) {
+        auto it = data.find(name);
+        if(it != data.end() && it->second.id == false)
+            return true;
+        if(parent != nullptr)
+            return parent->valid(name);
+        return false;
+    }
+
     
 
 }

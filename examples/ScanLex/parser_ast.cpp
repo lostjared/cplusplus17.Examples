@@ -226,7 +226,11 @@ namespace parse {
 
   Expr *AST::parseAssignment() {
         std::cout << identifiers[token.index] << " = ";
-        proc->id.enter(identifiers[token.index], "");
+        if(!proc->id.valid(identifiers[token.index])) {
+            std::ostringstream stream;
+            stream << "Variable " << identifiers[token.index] << " not declared!\n";
+            throw ParserException(stream.str());
+        }
         getToken();
         if(match({OP_EQUAL})) {
             consume(OP_EQUAL);
@@ -271,6 +275,7 @@ namespace parse {
     Expr *AST::parseLet() {
         consume(KEY_LET);
         if(match(TOKEN_ID)) {
+            proc->id.enter(identifiers[token.index], "");
             return parseAssignment();
         }
         return 0;
