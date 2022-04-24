@@ -73,7 +73,7 @@ namespace parse {
         std::string name;
         Body body;
         ArgList param;
-
+        scan::SymbolTable id;
     };
 
     enum NODE_TYPE { NODE_ROOT, NODE_PROC, NODE_LET };
@@ -131,6 +131,7 @@ namespace parse {
         int sindex;
         TreeNode root;
         std::vector<double> stack;
+        Procedure *proc = nullptr;
     };
 }
 

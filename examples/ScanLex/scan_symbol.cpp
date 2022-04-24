@@ -6,6 +6,7 @@ namespace scan {
 
     }
 
+    
     void SymbolTable::enter(std::string name, std::string value) {
         data[name].name = name;
         data[name].value = value;
@@ -18,6 +19,7 @@ namespace scan {
         data[name].value = value;
         if(data[name].index == -1)
             data[name].index = i;
+        data[name].id = true;
     }
 
 
@@ -40,17 +42,40 @@ namespace scan {
     }
 
     long &SymbolTable::getInteger(std::string name) {
+
+       if(data.find(name) == data.end() && parent != nullptr)
+            return parent->getInteger(name);
+
         return data[name].val.lval;
     }
+  
     double &SymbolTable::getDouble(std::string name) {
+        if(data.find(name) == data.end() && parent != nullptr)
+            return parent->getDouble(name);
+
         return data[name].val.fval;
     }
     std::string &SymbolTable::getString(std::string name) {
+
+        if(data.find(name) == data.end() && parent != nullptr)
+            return parent->getString(name);
+
         return data[name].value;
     }
 
     int SymbolTable::getIndex(std::string name) {
         return data[name].index;
     }
+
+    void SymbolTable::print() {
+        std::cout << "Symobl Table: " << name << ":\n";
+        for(auto &i : data) {
+            std::cout << ((i.second.id == true) ? "global identiifer: " : "variable: ") << i.first << " = " << i.second.val.fval << ":" << i.second.value << "\n";
+        }
+        if(parent != nullptr)
+            parent->print();       
+    }
+
+    
 
 }

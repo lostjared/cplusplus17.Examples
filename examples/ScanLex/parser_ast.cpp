@@ -226,6 +226,7 @@ namespace parse {
 
   Expr *AST::parseAssignment() {
         std::cout << identifiers[token.index] << " = ";
+        proc->id.enter(identifiers[token.index], "");
         getToken();
         if(match({OP_EQUAL})) {
             consume(OP_EQUAL);
@@ -315,6 +316,9 @@ namespace parse {
        TreeNode *n = new TreeNode();
        n->proc.name = name;
        n->type = NODE_PROC;
+       n->proc.id.parent = &id;
+       n->proc.id.name = name;
+       proc = &n->proc;
        getToken();
        parseArgs(n->proc.param);
        parseBody(n->proc.body);
@@ -535,6 +539,7 @@ namespace parse {
                 }
                 std::cout << "\n";
            }
+           n->proc.id.print();
            break;
            default:
            break;

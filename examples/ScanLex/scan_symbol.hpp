@@ -17,11 +17,13 @@ namespace scan {
             long lval;
         } val;
         int index = -1;
+        bool id = false;
     };
 
     class SymbolTable {
     public:
         SymbolTable();
+        void enter_id(std::string name);
         void enter(std::string name, std::string value);
         void enter(std::string name, std::string value, int index);
         void enter(std::string name, double value);
@@ -33,10 +35,14 @@ namespace scan {
         int getIndex(std::string name);
         friend class Scanner;
         friend void crunch(Scanner *scan, std::ostream &out);
+        SymbolTable *parent = nullptr;
+        std::string name = "global";
+        void print();
     protected:
         std::unordered_map<std::string, Variable> data;
         std::vector<std::string> const_strings;
         int index;
+
     };
 }
 
