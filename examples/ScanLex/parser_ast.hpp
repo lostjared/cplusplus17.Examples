@@ -97,6 +97,7 @@ namespace parse {
         void parseProc();
         void parseArgs(ArgList &args);
         void parseStatement(Body &body);
+        Expr *parseAssignment();
         void parseBody(Body &body);
         void parseCode();
         TreeNode *rootNode();
@@ -118,6 +119,8 @@ namespace parse {
         Item *prev();
         void printExpr(Expr *e);
         void eraseTree(TreeNode *n);
+        void parExpr(OP_TYPES oper, Expr *left, Expr *right);
+        void eval(Expr *e);
     protected:
         std::istream *in;
         std::vector<Item> tokens;
@@ -127,6 +130,7 @@ namespace parse {
         Item token;
         int sindex;
         TreeNode root;
+        std::vector<double> stack;
     };
 }
 

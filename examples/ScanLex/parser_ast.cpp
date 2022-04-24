@@ -224,6 +224,17 @@ namespace parse {
        }
    }
 
+  Expr *AST::parseAssignment() {
+        std::cout << identifiers[token.index] << " = ";
+        getToken();
+        if(match({OP_EQUAL})) {
+            consume(OP_EQUAL);
+            Expr *e = parseExpr();
+            return e;
+         }
+        return nullptr;
+  }
+
   void AST::parseStatement(Body &body) {
       while(token.keyword != KEY_END) {
           if(match(KEY_RETURN)) {
@@ -258,13 +269,7 @@ namespace parse {
     Expr *AST::parseLet() {
         consume(KEY_LET);
         if(match(TOKEN_ID)) {
-            std::cout << identifiers[token.index] << " = ";
-            getToken();
-            if(match({OP_EQUAL})) {
-                consume(OP_EQUAL);
-                Expr *e = parseExpr();
-                return e;
-            }
+            return parseAssignment();
         }
         return 0;
     }
@@ -519,7 +524,15 @@ namespace parse {
            out << "proc: " << n->proc.name << ": " << n->proc.body.statements.size() << " statements\n";
            for(auto &i : n->proc.body.statements) {
                if(i->expression != 0)
-                printExpr(i->expression);
+                eval(i->expression);
+               
+                if(!stack.empty()) {
+                    double val = stack.back();
+                    stack.pop_back();
+                    std::cout << "Value is: " << val << "\n";
+                } else {
+                    stack.erase(stack.begin(), stack.end());
+                }
                 std::cout << "\n";
            }
            break;
@@ -546,45 +559,108 @@ namespace parse {
        
    }
 
-   void AST::printExpr(Expr *e) {
+
+    void AST::parExpr(OP_TYPES oper, Expr *left, Expr *right) {
+     
+    }
+        
+
+    void AST::printExpr(Expr *e) {
+
         if(e != nullptr) {
             switch(e->type) {
                 case EXPR_BINARY:
-                 if(e->left != nullptr)
+                if(e->left != nullptr)
                     printExpr(e->left);
-                 std::cout << operators[e->oper] << " ";
-                if(e->right != nullptr )
+                if(e->right != nullptr)
                     printExpr(e->right);
+
+                std::cout << "POP " << operators[e->oper] << "\n";
+                
                 break;
                 case EXPR_LITERAL:
-                std::cout << e->token.type << " ";
-                std::cout << "(";
                 switch(e->token.type) {
-                    case TOKEN_NUMBER:
-                        std::cout << e->token.val;
-                    break;
                     case TOKEN_ID:
-                        std::cout << identifiers[e->token.index];
+                    std::cout << identifiers[e->token.index] << "\n";
                     break;
                     case TOKEN_STRING:
-                        std::cout << const_strings[e->token.index_const];
+                    std::cout << const_strings[e->token.index_const] << "\n";
+                    break;
+                    case TOKEN_NUMBER:
+                    std::cout << "PUSH(" << e->token.val << ")\n";
                     break;
                     default:
                     break;
                 }
-                std::cout <<") ";
-                break;
-                case EXPR_GROUP:
-                std::cout << "( ";
-                    if(e->group != nullptr)
-                        printExpr(e->group);
-                std::cout << ") ";
                 break;
                 default:
+                case EXPR_GROUP:
+                std::cout << "(\n";
+                if(e->group != nullptr)
+                    printExpr(e->group);
+                std::cout << ")";
+                break;
                 break;
             }
         }
+   }
 
+   void AST::eval(Expr *e) {
+        if(e != nullptr) {
+            switch(e->type) {
+                case EXPR_BINARY: {
+
+                    if(e->left != nullptr)
+                        eval(e->left);
+                    if(e->right != nullptr)
+                        eval(e->right);
+
+                    double op1 = stack.back();
+                    stack.pop_back();
+                    double op2 = stack.back();
+                    stack.pop_back();
+                    switch(e->oper) {
+                    case OP_PLUS:
+                        stack.push_back(op1+op2);
+                    break;
+                    case OP_MINUS:
+                        stack.push_back(op1-op2);
+                    break;
+                    case OP_MUL:
+                        stack.push_back(op1*op2);
+                    break;
+                    case OP_DIV:
+                        stack.push_back(op1/op2);
+                    break;
+                    default:
+                    break;
+                }                
+
+            }
+            break;
+            case EXPR_LITERAL:
+                switch(e->token.type) {
+                    case TOKEN_ID:
+                    std::cout << identifiers[e->token.index] << "\n";
+                    break;
+                    case TOKEN_STRING:
+                    std::cout << const_strings[e->token.index_const] << "\n";
+                    break;
+                    case TOKEN_NUMBER:
+                    stack.push_back(e->token.val);
+                    break;
+                    default:
+                    break;
+                }
+                break;
+                default:
+                case EXPR_GROUP:
+                if(e->group != nullptr)
+                    eval(e->group);
+                break;
+                break;
+            }
+        }
    }
 
 
