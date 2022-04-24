@@ -250,12 +250,13 @@ namespace parse {
               body.statements.push_back(s);
               consume(OP_SEMI_COLON);
           } 
-          else {/*
-            Statement s;
-            s.expression = parseExpr();
-            s.type = STATE_EXPR;
-            body.statements.push_back(s);
-            consume(OP_SEMI_COLON);*/
+          else if(match(TOKEN_ID) && match_lookahead(OP_EQUAL)) {
+             Statement *s = new Statement();
+             s->expression = parseAssignment();
+             s->type = STATE_ASSIGN;
+             body.statements.push_back(s);
+          } else {
+              getToken();
           }
       }
       // test
@@ -444,6 +445,11 @@ namespace parse {
         return false;
     }
 
+    bool AST::match_lookahead(OP_TYPES type) {
+        if(sindex < tokens.size() && tokens[sindex].oper == type)
+            return true;
+        return false;
+    }
 
     Item *AST::prev() {
         if(sindex-1 >= 0)

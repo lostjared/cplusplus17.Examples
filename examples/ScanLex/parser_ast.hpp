@@ -112,6 +112,7 @@ namespace parse {
         Expr *parseUnary();
         bool match(const std::initializer_list<OP_TYPES> &lst);
         bool match(KEYWORD_TYPES key);
+        bool match_lookahead(OP_TYPES type);
         bool match(TOKEN_TYPE type);
         bool consume(KEYWORD_TYPES key);
         bool consume(TOKEN_TYPE type);
