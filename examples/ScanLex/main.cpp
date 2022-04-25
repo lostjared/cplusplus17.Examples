@@ -100,6 +100,7 @@ int main(int argc, char **argv) {
           //  ast.printTree(std::cout, ast.rootNode());
             ast.buildBackend(ast.rootNode());
             ast.printBackend(std::cout);
+            ast.run();
             file.close();
     }  
     else if(argc == 3 && std::string(argv[2]) == "-h") {

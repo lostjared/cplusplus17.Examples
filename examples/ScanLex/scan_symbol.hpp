@@ -20,6 +20,32 @@ namespace scan {
         int index = -1;
         bool id = false;
 
+        void copy(const Variable &v) {
+            name = v.name;
+            value = v.value;
+            val = v.val;
+            index = v.index;
+            id = v.id;
+        }
+
+        Variable(const Variable &v) {
+            copy(v);
+        }
+
+        Variable(Variable &&v) {
+            copy(v);
+        }
+
+        Variable &operator=(const Variable &v) {
+            copy(v);
+            return *this;
+        }
+
+        Variable &operator=(Variable &&v) {
+            copy(v);
+            return *this;
+        }
+
         Variable(double d) {
             val.fval = d;
         }

@@ -719,7 +719,7 @@ namespace parse {
                         return d + 1;
                     };
                     stack.push_back(f(value));
-                    bend.put(Inc(O_CALL, Variable(), Variable()));
+                    bend.put(Inc(O_CALL, Variable(e->func->name), Variable()));
                  }
              }
             break;
@@ -778,6 +778,9 @@ namespace parse {
        bend.print(out);
    }
 
+   void AST::run() {
+       bend.go();
+   }
 
    TreeNode *AST::rootNode() {
        return &root;

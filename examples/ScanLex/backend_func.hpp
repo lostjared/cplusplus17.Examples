@@ -13,12 +13,10 @@ namespace backend {
 
     class Function {
     public:
-        std::vector<scan::Variable> params;
         Function() = default;
         Function(void (*f)(std::vector<scan::Variable> &param, scan::Variable &result));
         void (*func)(std::vector<scan::Variable> &parameters, scan::Variable &result) = nullptr;
-        scan::Variable result;
-        void call();
+        void call(std::vector<scan::Variable> &param, scan::Variable &result);
     };
 
     class FunctionTable {

@@ -6,9 +6,9 @@ namespace backend {
 
         }
 
-        void Function::call() {
+        void Function::call(std::vector<scan::Variable> &param, scan::Variable &re) {
             if(func != nullptr)
-                func(params, result);
+                func(param, re);
         }
 
         void FunctionTable::add(std::string name, const Function &f) {

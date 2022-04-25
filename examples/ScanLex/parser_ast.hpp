@@ -137,6 +137,7 @@ namespace parse {
         void gen_eval(Expr *e);
         void buildBackend(TreeNode *n);
         void printBackend(std::ostream &out);
+        void run();
     protected:
         std::istream *in;
         std::vector<Item> tokens;
