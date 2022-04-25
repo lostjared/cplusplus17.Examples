@@ -18,8 +18,20 @@ namespace backend {
     }
 
     void printEcho(std::vector<Variable> &param, Variable &result) {
-        if(param.size()==1)
-            std::cout << param[0].val.fval << "\n";
+        if(param.size()==1) {
+            if(param[0].type == VAR_CONST) {
+                switch(param[0].type_info) {
+                    case VAR_DOUBLE:
+                        std::cout << param[0].val.fval << "\n";
+                        break;
+                    case VAR_STRING:
+                        std::cout << param[0].value << "\n";
+                        break;
+                        default:
+                        break;
+                }
+            } 
+        }
     }
 
     Inc::Inc(OPERATION_TYPE o, const scan::Variable &v, const scan::Variable &v2) : opc{o}, value1{v}, value2{v2} {
@@ -87,9 +99,9 @@ namespace backend {
                     break;
                     case O_CALL: {
                         std::string name = instruct[ip].value1.value;
-                        scan::Variable val = stack.back();
+                        double val = popVal();
                         std::vector<scan::Variable> v;
-                        v.push_back(val);
+                        v.push_back(Variable(val));
                         scan::Variable result;
                         func_table.func_table[name].call(v, result);
                         stack.push_back(result);                      

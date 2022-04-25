@@ -3,7 +3,29 @@
 namespace scan {
 
    std::ostream &operator<<(std::ostream &out, const Variable &v) {
-       out << v.name << ": [" << v.val.fval << ", " << v.value << "]";
+       switch(v.type) {
+           case VAR_CONST:
+           switch(v.type_info) {
+               case VAR_DOUBLE:
+               out << v.val.fval;
+               return out;
+               break;
+               case VAR_STRING:
+               out << v.value;
+               return out;
+               break;
+               default:
+               break;
+           }
+           break;
+           case VAR_VAR:
+           out << v.name;
+           return out;
+           break;
+           default:
+           break;
+       }
+       out << "(unused)";
        return out;
    }
 
@@ -14,6 +36,7 @@ namespace scan {
         index = v.index;
         id = v.id;
         type = v.type;
+        type_info = v.type_info;
    }
 
     Variable::Variable(const Variable &v) {
@@ -37,11 +60,13 @@ namespace scan {
     Variable::Variable(double d) {
         val.fval = d;
         type = VAR_CONST;
+        type_info = VAR_DOUBLE;
     }
 
     Variable::Variable(const std::string &s) : value{s} {
         val.fval = 0;
         type = VAR_CONST;
+        type_info = VAR_STRING;
     }
 
     Variable::Variable(const std::string &n, const std::string &v) : name{n}, value{v} {

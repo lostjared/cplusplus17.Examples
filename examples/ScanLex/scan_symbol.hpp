@@ -12,7 +12,7 @@ namespace scan {
 
 
     enum VAR_TYPE { VAR_CONST, VAR_VAR, VAR_EMPTY };
-
+    enum VAR_TYPE_INFO { VAR_DOUBLE, VAR_STRING, VAR_ID, VAR_ARRAY };
     struct Variable {
         Variable() = default;
         std::string name, value;
@@ -23,6 +23,7 @@ namespace scan {
         int index = -1;
         VAR_TYPE type = VAR_EMPTY;
         bool id = false;
+        VAR_TYPE_INFO type_info;
         void copy(const Variable &v);
         Variable(const Variable &v);
         Variable(Variable &&v);
