@@ -791,6 +791,7 @@ namespace parse {
                    break;
                    case STATE_FUNC:
                    eval(i->expression);
+                   bend.put(Inc(O_POP, Variable(), Variable()));
                    break;
                    default:
                    break;

@@ -88,6 +88,11 @@ namespace backend {
             while(ip < instruct.size()) {
                 OPERATION_TYPE type = instruct[ip].opc;
                 switch(type) {
+                    case O_POP:
+                    if(!stack.empty()) {
+                        stack.pop_back();
+                    }
+                    break;
                     case O_ASSIGN: {
                         double v = popVal();
                         double &d = vars.getDouble(instruct[ip].value1.name);
