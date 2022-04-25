@@ -3,6 +3,7 @@
 namespace parse {
 
     using namespace scan;
+    using namespace backend;
 
     Item::Item() : index{-1}, keyword{KEY_EMPTY}, oper{OP_EMPTY}, type{TOKEN_NULL}{
 
@@ -687,15 +688,19 @@ namespace parse {
                     switch(e->oper) {
                     case OP_PLUS:
                         stack.push_back(op1+op2);
+                        bend.put(Inc(O_ADD, Variable(op1), Variable(op2)));
                     break;
                     case OP_MINUS:
                         stack.push_back(op1-op2);
+                        bend.put(Inc(O_SUB, Variable(op1), Variable(op2)));
                     break;
                     case OP_MUL:
                         stack.push_back(op1*op2);
+                        bend.put(Inc(O_MUL, Variable(op1), Variable(op2)));
                     break;
                     case OP_DIV:
                         stack.push_back(op1/op2);
+                        bend.put(Inc(O_DIV, Variable(op1), Variable(op2)));
                     break;
                     default:
                     break;
@@ -710,11 +715,11 @@ namespace parse {
 
                     double value = stack.back();
                     stack.pop_back();
-
                     auto f = [](double d) {
                         return d + 1;
                     };
                     stack.push_back(f(value));
+                    bend.put(Inc(O_CALL, Variable(), Variable()));
                  }
              }
             break;
@@ -728,6 +733,7 @@ namespace parse {
                     break;
                     case TOKEN_NUMBER:
                     stack.push_back(e->token.val);
+                    bend.put(Inc(O_PUSH, Variable(e->token.val), Variable()));
                     break;
                     default:
                     break;
@@ -741,6 +747,35 @@ namespace parse {
                 break;
             }
         }
+   }
+
+   void AST::buildBackend(TreeNode *n) {
+    switch(n->type) {
+           case NODE_PROC:
+           for(auto &i : n->proc.body.statements) {
+               if(i->expression != 0)
+                eval(i->expression);       
+                if(!stack.empty()) {
+                    double val = stack.back();
+                    stack.pop_back();
+                    std::cout << "Value is: " << val << "\n";
+                } else {
+                    stack.erase(stack.begin(), stack.end());
+                }
+                std::cout << "\n";
+           }
+           n->proc.id.print();
+           break;
+           default:
+           break;
+       }
+        
+        for(int i = 0; i < n->children.size(); ++i)
+        buildBackend(n->children[i]);
+   }
+
+   void AST::printBackend(std::ostream &out) {
+       bend.print(out);
    }
 
 

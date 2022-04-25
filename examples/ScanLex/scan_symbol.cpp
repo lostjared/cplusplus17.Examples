@@ -2,6 +2,12 @@
 
 namespace scan {
 
+   std::ostream &operator<<(std::ostream &out, const Variable &v) {
+       out << v.name << ": [" << v.val.fval << ", " << v.value << "]";
+       return out;
+   }
+
+
     SymbolTable::SymbolTable() : index{0} {
 
     }

@@ -97,7 +97,9 @@ int main(int argc, char **argv) {
             ast.scan();
             ast.print(std::cout);
             ast.buildTree();
-            ast.printTree(std::cout, ast.rootNode());
+          //  ast.printTree(std::cout, ast.rootNode());
+            ast.buildBackend(ast.rootNode());
+            ast.printBackend(std::cout);
             file.close();
     }  
     else if(argc == 3 && std::string(argv[2]) == "-h") {

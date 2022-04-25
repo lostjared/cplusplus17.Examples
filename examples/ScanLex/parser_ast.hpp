@@ -9,6 +9,7 @@
 #include<memory>
 #include"scan_lex.hpp"
 #include"parser_exception.hpp"
+#include"backend_icode.hpp"
 
 namespace parse {
 
@@ -133,6 +134,9 @@ namespace parse {
         void eraseTree(TreeNode *n);
         void parExpr(OP_TYPES oper, Expr *left, Expr *right);
         void eval(Expr *e);
+        void gen_eval(Expr *e);
+        void buildBackend(TreeNode *n);
+        void printBackend(std::ostream &out);
     protected:
         std::istream *in;
         std::vector<Item> tokens;
@@ -145,6 +149,7 @@ namespace parse {
         TreeNode root;
         std::vector<double> stack;
         Procedure *proc = nullptr;
+        backend::BackEnd bend;
     };
 }
 

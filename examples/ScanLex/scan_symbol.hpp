@@ -11,6 +11,7 @@ namespace scan {
     class Scanner;
 
     struct Variable {
+        Variable() = default;
         std::string name, value;
         union {
             double fval;
@@ -18,7 +19,16 @@ namespace scan {
         } val;
         int index = -1;
         bool id = false;
+
+        Variable(double d) {
+            val.fval = d;
+        }
+        Variable(std::string s) : value{s} {
+            val.fval = 0;
+        }
     };
+
+    std::ostream &operator<<(std::ostream &out, const Variable &v);
 
     class SymbolTable {
     public:
