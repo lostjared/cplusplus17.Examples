@@ -271,6 +271,7 @@ namespace parse {
           } 
           else if(match(TOKEN_ID) && match_lookahead(OP_EQUAL)) {
              Statement *s = new Statement();
+             s->var = identifiers[token.index];
              s->expression = parseAssignment();
              s->type = STATE_ASSIGN;
              body.statements.push_back(s);
@@ -777,6 +778,12 @@ namespace parse {
                         eval(i->expression);   
                         bend.put(Inc(O_ASSIGN, Variable(i->var, ""), Variable()));                        
                    }
+                   break;
+                   case STATE_ASSIGN:
+                   bend.decl(i->var, "");
+                   if(i->expression != 0)
+                        eval(i->expression);
+                   bend.put(Inc(O_ASSIGN, Variable(i->var, ""), Variable()));
                    break;
                    default:
                    break;
