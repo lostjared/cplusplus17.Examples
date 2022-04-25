@@ -41,12 +41,22 @@ namespace parse {
 
     enum EXPR_TYPE { EXPR_LITERAL, EXPR_ID, EXPR_SYMBOL, EXPR_FUNC, EXPR_BINARY, EXPR_RETURN, EXPR_UNARY,EXPR_GROUP,EXPR_EMPTY };
 
+
+    class Expr;
+
+    struct Function {
+        std::string name;
+        Expr *expression = nullptr;
+        ~Function();
+    };
+
     struct Expr {
         OP_TYPES oper;
         Expr *left = nullptr, *right = nullptr;
         Expr *group = nullptr;
         Item token;
         EXPR_TYPE type;
+        Function *func = nullptr;
         ~Expr();
         Expr();
     };
@@ -110,6 +120,7 @@ namespace parse {
         Expr *parseReturn();
         Expr *parseLet();
         Expr *parseUnary();
+        Function *parseFunction();
         bool match(const std::initializer_list<OP_TYPES> &lst);
         bool match(KEYWORD_TYPES key);
         bool match_lookahead(OP_TYPES type);

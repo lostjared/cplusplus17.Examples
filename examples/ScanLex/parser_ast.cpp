@@ -57,10 +57,16 @@ namespace parse {
         id = i.id;
     }
 
+    Function::~Function() {
+        if(expression != nullptr)
+            delete expression;
+    }
+
     Expr::Expr() {
         left = nullptr;
         right = nullptr;
         group = nullptr;
+        func = nullptr;
     }
 
      Expr::~Expr() {
@@ -73,6 +79,10 @@ namespace parse {
         if(group != nullptr)
             delete group;
         group = nullptr;
+
+        if(func != nullptr)
+            delete func;
+        func = nullptr;
      }
 
     Statement::Statement() {
@@ -403,14 +413,26 @@ namespace parse {
         
     Expr *AST::parsePrim() {
         if(match(TOKEN_ID)||match(TOKEN_NUMBER)||match(TOKEN_STRING)) {
-            Expr *e = new Expr();
-            e->left = 0;
-            e->right = 0;
-            e->oper = OP_EMPTY;
-            e->type = EXPR_LITERAL;
-            e->token = token;
-            getToken();
-            return e;
+
+            if(match(TOKEN_ID) && match_lookahead(OP_OP)) {
+                Expr *e = new Expr();
+                e->left = nullptr;
+                e->right = nullptr;
+                e->oper = OP_EMPTY;
+                e->type = EXPR_FUNC;
+                e->func = parseFunction();
+                return e;
+            } else {
+
+                Expr *e = new Expr();
+                e->left = 0;
+                e->right = 0;
+                e->oper = OP_EMPTY;
+                e->type = EXPR_LITERAL;
+                e->token = token;
+                getToken();
+                return e;
+            }
         }
 
         if(match({OP_OP})) {
@@ -565,6 +587,25 @@ namespace parse {
            printTree(out, n->children[i]);
    }
 
+   Function *AST::parseFunction() {
+       if(match(TOKEN_ID)) {
+           std::string name = identifiers[token.index];
+           getToken();
+           consume(OP_OP);
+           Expr *e = parseExpr();
+           Function *f = new Function();
+           f->name = name;
+           f->expression = e;
+           consume(OP_CP);
+           return f;
+       } else {
+           std::ostringstream stream;
+           stream << "Exception: expected identifier found: " << token.type;
+           throw ParserException(stream.str());
+       }
+       return nullptr;
+   }
+
    void AST::eraseTree(TreeNode *n) {
        switch(n->type) {
            case NODE_PROC:
@@ -598,6 +639,9 @@ namespace parse {
 
                 std::cout << "POP " << operators[e->oper] << "\n";
                 
+                break;
+                case EXPR_FUNC:
+                std::cout << "call function: " << e->func->name << "\n";
                 break;
                 case EXPR_LITERAL:
                 switch(e->token.type) {
@@ -658,6 +702,21 @@ namespace parse {
                 }                
 
             }
+            break;
+             case EXPR_FUNC: {
+                 if(e->func != nullptr) {
+                     if(e->func->expression != nullptr)
+                        eval(e->func->expression);
+
+                    double value = stack.back();
+                    stack.pop_back();
+
+                    auto f = [](double d) {
+                        return d + 1;
+                    };
+                    stack.push_back(f(value));
+                 }
+             }
             break;
             case EXPR_LITERAL:
                 switch(e->token.type) {

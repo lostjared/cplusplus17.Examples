@@ -139,7 +139,10 @@ namespace parse {
 
         if(token.type == TOKEN_ID) {
             getToken();
-            parseCall();
+            if(token.oper == OP_OP) {
+                getToken();
+                parseCall();
+            }
         }
 
         if(token.oper == OP_OP)
@@ -217,11 +220,8 @@ namespace parse {
         parseExpr();
         if(token.oper == OP_COMMA) {
             getToken();
-            if(token.oper == OP_CP)
-                getToken();
-            else
-                parseCall();
-        }
+            parseCall();
+        } 
     }
 
     void Parser::parseIf() {
