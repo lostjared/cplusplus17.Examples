@@ -95,13 +95,15 @@ int main(int argc, char **argv) {
             }
             parse::AST ast(&file);
             ast.scan();
+            file.close();
             ast.print(std::cout);
             ast.buildTree();
           //  ast.printTree(std::cout, ast.rootNode());
             ast.buildBackend(ast.rootNode());
             ast.printBackend(std::cout);
             ast.run();
-            file.close();
+            return 0;
+            
     }  
     else if(argc == 3 && std::string(argv[2]) == "-h") {
             std::fstream file;

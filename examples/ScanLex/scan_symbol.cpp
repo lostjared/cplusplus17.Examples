@@ -7,6 +7,48 @@ namespace scan {
        return out;
    }
 
+   void Variable::copy(const Variable &v) {
+        name = v.name;
+        value = v.value;
+        val = v.val;
+        index = v.index;
+        id = v.id;
+        type = v.type;
+   }
+
+    Variable::Variable(const Variable &v) {
+        copy(v);
+    }
+
+    Variable::Variable(Variable &&v) {
+        copy(v);
+    }
+
+    Variable &Variable::operator=(const Variable &v) {
+        copy(v);
+        return *this;
+    }
+
+    Variable &Variable::operator=(Variable &&v) {
+        copy(v);
+        return *this;
+    }
+
+    Variable::Variable(double d) {
+        val.fval = d;
+        type = VAR_CONST;
+    }
+
+    Variable::Variable(const std::string &s) : value{s} {
+        val.fval = 0;
+        type = VAR_CONST;
+    }
+
+    Variable::Variable(const std::string &n, const std::string &v) : name{n}, value{v} {
+        val.fval = 0;
+        type = VAR_VAR;
+    }
+
 
     SymbolTable::SymbolTable() : index{0} {
 
@@ -90,6 +132,11 @@ namespace scan {
             return parent->valid(name);
         return false;
     }
+
+    Variable &SymbolTable::getVar(const std::string &name) {
+        return data[name];
+    }
+
 
     
 

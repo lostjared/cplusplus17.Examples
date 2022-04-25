@@ -10,6 +10,9 @@ namespace scan {
 
     class Scanner;
 
+
+    enum VAR_TYPE { VAR_CONST, VAR_VAR, VAR_EMPTY };
+
     struct Variable {
         Variable() = default;
         std::string name, value;
@@ -18,40 +21,16 @@ namespace scan {
             long lval;
         } val;
         int index = -1;
+        VAR_TYPE type = VAR_EMPTY;
         bool id = false;
-
-        void copy(const Variable &v) {
-            name = v.name;
-            value = v.value;
-            val = v.val;
-            index = v.index;
-            id = v.id;
-        }
-
-        Variable(const Variable &v) {
-            copy(v);
-        }
-
-        Variable(Variable &&v) {
-            copy(v);
-        }
-
-        Variable &operator=(const Variable &v) {
-            copy(v);
-            return *this;
-        }
-
-        Variable &operator=(Variable &&v) {
-            copy(v);
-            return *this;
-        }
-
-        Variable(double d) {
-            val.fval = d;
-        }
-        Variable(std::string s) : value{s} {
-            val.fval = 0;
-        }
+        void copy(const Variable &v);
+        Variable(const Variable &v);
+        Variable(Variable &&v);
+        Variable &operator=(const Variable &v);
+        Variable &operator=(Variable &&v);
+        Variable(double d) ;
+        Variable(const std::string &s);
+        Variable(const std::string &n, const std::string &v);
     };
 
     std::ostream &operator<<(std::ostream &out, const Variable &v);
@@ -70,6 +49,7 @@ namespace scan {
         double &getDouble(std::string name);
         std::string &getString(std::string name);
         int getIndex(std::string name);
+        Variable &getVar(const std::string &name);
         friend class Scanner;
         friend void crunch(Scanner *scan, std::ostream &out);
         SymbolTable *parent = nullptr;

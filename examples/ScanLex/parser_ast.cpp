@@ -261,7 +261,7 @@ namespace parse {
               body.statements.push_back(s);
           } else if (match(KEY_LET)) {
               Statement *s = new Statement();
-              s->expression = parseLet();
+              s->expression = parseLet(s);
               s->type = STATE_LET;
               body.statements.push_back(s);
               consume(OP_SEMI_COLON);
@@ -284,10 +284,11 @@ namespace parse {
       return e;
     }
 
-    Expr *AST::parseLet() {
+    Expr *AST::parseLet(Statement *s) {
         consume(KEY_LET);
         if(match(TOKEN_ID)) {
             cur_table->enter(identifiers[token.index], "");
+            s->var = identifiers[token.index];
             if(match_lookahead(OP_EQUAL))
                 return parseAssignment();
             else 
@@ -570,7 +571,7 @@ namespace parse {
                 eval(i->expression);
                
                 if(!stack.empty()) {
-                    double val = stack.back();
+                    Variable val = stack.back();
                     stack.pop_back();
                     std::cout << "Value is: " << val << "\n";
                 } else {
@@ -681,26 +682,22 @@ namespace parse {
                     if(e->right != nullptr)
                         eval(e->right);
 
-                    double op1 = stack.back();
+                    Variable op1 = stack.back();
                     stack.pop_back();
-                    double op2 = stack.back();
+                    Variable op2 = stack.back();
                     stack.pop_back();
                     switch(e->oper) {
                     case OP_PLUS:
-                        stack.push_back(op1+op2);
-                        bend.put(Inc(O_ADD, Variable(op1), Variable(op2)));
+                        bend.put(Inc(O_ADD, op1, op2));
                     break;
                     case OP_MINUS:
-                        stack.push_back(op1-op2);
-                        bend.put(Inc(O_SUB, Variable(op1), Variable(op2)));
+                        bend.put(Inc(O_SUB, op1, op2));
                     break;
                     case OP_MUL:
-                        stack.push_back(op1*op2);
-                        bend.put(Inc(O_MUL, Variable(op1), Variable(op2)));
+                        bend.put(Inc(O_MUL, op1, op2));
                     break;
                     case OP_DIV:
-                        stack.push_back(op1/op2);
-                        bend.put(Inc(O_DIV, Variable(op1), Variable(op2)));
+                        bend.put(Inc(O_DIV,op1, op2));
                     break;
                     default:
                     break;
@@ -713,12 +710,6 @@ namespace parse {
                      if(e->func->expression != nullptr)
                         eval(e->func->expression);
 
-                    double value = stack.back();
-                    stack.pop_back();
-                    auto f = [](double d) {
-                        return d + 1;
-                    };
-                    stack.push_back(f(value));
                     bend.put(Inc(O_CALL, Variable(e->func->name), Variable()));
                  }
              }
@@ -727,12 +718,15 @@ namespace parse {
                 switch(e->token.type) {
                     case TOKEN_ID:
                     std::cout << identifiers[e->token.index] << "\n";
+                    stack.push_back(Variable(identifiers[e->token.index], ""));
+                    bend.put(Inc(O_PUSH, Variable(identifiers[e->token.index], ""), Variable()));
                     break;
                     case TOKEN_STRING:
                     std::cout << const_strings[e->token.index_const] << "\n";
+                    bend.put(Inc(O_PUSH, Variable(const_strings[e->token.index_const]), Variable()));
                     break;
                     case TOKEN_NUMBER:
-                    stack.push_back(e->token.val);
+                    stack.push_back(Variable(e->token.val));
                     bend.put(Inc(O_PUSH, Variable(e->token.val), Variable()));
                     break;
                     default:
@@ -753,16 +747,17 @@ namespace parse {
     switch(n->type) {
            case NODE_PROC:
            for(auto &i : n->proc.body.statements) {
-               if(i->expression != 0)
-                eval(i->expression);       
-                if(!stack.empty()) {
-                    double val = stack.back();
-                    stack.pop_back();
-                    std::cout << "Value is: " << val << "\n";
-                } else {
-                    stack.erase(stack.begin(), stack.end());
-                }
-                std::cout << "\n";
+               switch(i->type) {
+                   case STATE_LET: {
+                       bend.decl(i->var, "");
+                        if(i->expression != 0)
+                        eval(i->expression);   
+                        bend.put(Inc(O_ASSIGN, Variable(i->var, ""), Variable()));                        
+                   }
+                   break;
+                   default:
+                   break;
+               }
            }
            n->proc.id.print();
            break;

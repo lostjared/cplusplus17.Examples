@@ -65,6 +65,7 @@ namespace parse {
     enum STATEMENT_TYPE { STATE_LET, STATE_ASSIGN, STATE_FUNC, STATE_RETURN, STATE_EXPR, STATE_EMPTY };
 
     struct Statement {
+        std::string var;
         Expr *expression = nullptr;
         STATEMENT_TYPE type = STATE_EMPTY;
         ~Statement();
@@ -119,7 +120,7 @@ namespace parse {
         Expr *parseFactor();
         Expr *parsePrim();
         Expr *parseReturn();
-        Expr *parseLet();
+        Expr *parseLet(Statement *s);
         Expr *parseUnary();
         Function *parseFunction();
         bool match(const std::initializer_list<OP_TYPES> &lst);
@@ -148,7 +149,7 @@ namespace parse {
         Item token;
         int sindex;
         TreeNode root;
-        std::vector<double> stack;
+        std::vector<Variable> stack;
         Procedure *proc = nullptr;
         backend::BackEnd bend;
     };
