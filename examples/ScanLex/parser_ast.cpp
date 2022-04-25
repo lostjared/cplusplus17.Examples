@@ -59,8 +59,11 @@ namespace parse {
     }
 
     Function::~Function() {
-        if(expression != nullptr)
-            delete expression;
+        for(int i = 0; i < expressions.size(); ++i) {
+            Expr *expression = expressions[i];
+            if(expression != nullptr)
+               delete expression;
+        }
     }
 
     Expr::Expr() {
@@ -594,12 +597,30 @@ namespace parse {
            std::string name = identifiers[token.index];
            getToken();
            consume(OP_OP);
-           Expr *e = parseExpr();
-           Function *f = new Function();
-           f->name = name;
-           f->expression = e;
-           consume(OP_CP);
-           return f;
+           if(match({OP_CP})) {
+               consume(OP_CP);
+               Function *f = new Function();
+               f->name = name;
+               return f;
+           } else {
+                Function *f = new Function();
+                f->name = name;
+                bool active = true;
+                while(active) {
+                    Expr *e = parseExpr();
+                    f->expressions.push_back(e);
+                    if(match({OP_COMMA})) {
+                        consume(OP_COMMA);
+                        continue;
+                    } else {
+                        active = false;
+                        break;
+                    }
+                } 
+                consume(OP_CP);
+                return f;
+           }
+        
        } else {
            std::ostringstream stream;
            stream << "Exception: expected identifier found: " << token.type;
@@ -707,10 +728,12 @@ namespace parse {
             break;
              case EXPR_FUNC: {
                  if(e->func != nullptr) {
-                     if(e->func->expression != nullptr)
-                        eval(e->func->expression);
-
-                    bend.put(Inc(O_CALL, Variable(e->func->name), Variable()));
+                     for(int i = 0; i < e->func->expressions.size(); ++i) {
+                         Expr *expression = e->func->expressions[i];
+                        if(expression != nullptr)
+                            eval(expression);
+                     }
+                    bend.put(Inc(O_CALL, Variable(e->func->name), Variable(double(e->func->expressions.size()))));
                  }
              }
             break;

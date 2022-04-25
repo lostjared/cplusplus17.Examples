@@ -1,5 +1,6 @@
 #include"backend_icode.hpp"
 #include<sstream>
+#include<algorithm>
 
 namespace backend {
 
@@ -14,8 +15,9 @@ namespace backend {
 
 
     void addOne(std::vector<scan::Variable> &param, scan::Variable &result) {
-        if(param.size()==1)
-            result.val.fval = param[0].val.fval + 1;
+        if(param.size()==1) {
+            result = Variable(param[0].val.fval+1);
+        }
     }
 
     void printEcho(std::vector<Variable> &param, Variable &result) {
@@ -35,6 +37,25 @@ namespace backend {
         }
     }
 
+    void printList(std::vector<Variable> &param, Variable &result) {
+        std::cout << "( ";
+        for(int i = 0; i < param.size(); ++i) {
+            if(param[i].type == VAR_CONST) {
+                switch(param[i].type_info) {
+                    case VAR_DOUBLE:
+                        std::cout << param[i].val.fval << " ";
+                        break;
+                    case VAR_STRING:
+                        std::cout << param[i].value << " ";
+                        break;
+                        default:
+                        break;
+                }
+            }             
+        }
+        std::cout << ")\n";
+    }
+
     Inc::Inc(OPERATION_TYPE o, const scan::Variable &v, const scan::Variable &v2) : opc{o}, value1{v}, value2{v2} {
 
     }
@@ -42,6 +63,7 @@ namespace backend {
     BackEnd::BackEnd() {
         func_table.add("test", Function(addOne));
         func_table.add("echo", Function(printEcho));
+        func_table.add("list", Function(printList));
     }
 
     void BackEnd::put(const Inc &i) {
@@ -103,15 +125,19 @@ namespace backend {
                     break;
                     case O_CALL: {
                         std::string name = instruct[ip].value1.value;
-                        double val = popVal();
                         std::vector<scan::Variable> v;
-                        v.push_back(Variable(val));
+                        int n = static_cast<int>(instruct[ip].value2.val.fval);
+                        for(int i = 0; i < n; ++i) {
+                           double val = popVal();
+                           v.push_back(Variable(val));
+                        }
                         scan::Variable result;
                         if(!func_table.valid(name)) {
                             std::ostringstream stream;
                             stream << "Runtime Exception: " << name << " function not found!";
                             throw RuntimeException(stream.str());
                         }
+                        std::reverse(v.begin(), v.end());
                         func_table.func_table[name].call(v, result);
                         stack.push_back(result);                      
                     }
@@ -125,6 +151,7 @@ namespace backend {
         } catch(RuntimeException &e) {
             std::cerr << e.error() << "\n";
         }
+        std::cout << "stack size: " << stack.size() << "\n";
     }
 
     void BackEnd::print(std::ostream &out) {
@@ -145,6 +172,8 @@ namespace backend {
             if(v.type == VAR_VAR) {
                 return vars.getDouble(v.name); 
             }
+        } else {
+            throw RuntimeException("Runtime Exception: Stack underflow");
         }
         return 0;
     }

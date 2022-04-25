@@ -47,7 +47,7 @@ namespace parse {
 
     struct Function {
         std::string name;
-        Expr *expression = nullptr;
+        std::vector<Expr *> expressions;
         ~Function();
     };
 
