@@ -193,6 +193,7 @@ namespace parse {
        token = tokens[0];
        sindex = 0;
        try {
+           cur_table = &id;
            parseCode();
        } catch(ParserException &e) {
            std::cerr << e.error() << "\n";
@@ -226,7 +227,7 @@ namespace parse {
 
   Expr *AST::parseAssignment() {
         std::cout << identifiers[token.index] << " = ";
-        if(!proc->id.valid(identifiers[token.index])) {
+        if(!cur_table->valid(identifiers[token.index])) {
             std::ostringstream stream;
             stream << "Variable " << identifiers[token.index] << " not declared!\n";
             throw ParserException(stream.str());
@@ -275,7 +276,7 @@ namespace parse {
     Expr *AST::parseLet() {
         consume(KEY_LET);
         if(match(TOKEN_ID)) {
-            proc->id.enter(identifiers[token.index], "");
+            cur_table->enter(identifiers[token.index], "");
             if(match_lookahead(OP_EQUAL))
                 return parseAssignment();
             else 
@@ -327,6 +328,7 @@ namespace parse {
        n->type = NODE_PROC;
        n->proc.id.parent = &id;
        n->proc.id.name = name;
+       cur_table = &n->proc.id;
        proc = &n->proc;
        getToken();
        parseArgs(n->proc.param);

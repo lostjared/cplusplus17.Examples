@@ -128,6 +128,7 @@ namespace parse {
         std::vector<std::string> const_strings;
         std::unordered_map<int, std::string> identifiers;
         scan::SymbolTable id;
+        scan::SymbolTable *cur_table;
         Item token;
         int sindex;
         TreeNode root;
