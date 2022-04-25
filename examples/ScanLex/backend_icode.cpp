@@ -22,21 +22,20 @@ namespace backend {
 
     void printEcho(std::vector<Variable> &param, Variable &result) {
         for(int i =0; i < param.size(); ++i) {
-             if(param.size()==1) {
-                  if(param[i].type == VAR_CONST) {
-                        switch(param[i].type_info) {
-                            case VAR_DOUBLE:
-                            std::cout << param[i].val.fval;
-                            break;
-                        case VAR_STRING:
+           if(param[i].type == VAR_CONST) {
+                    switch(param[i].type_info) {
+                        case VAR_DOUBLE:
+                        std::cout << param[i].val.fval;
+                        break;
+                    case VAR_STRING:
                             std::cout << param[i].value;
-                            break;
-                            default:
-                            break;
-                    }
-                } 
-            }
+                        break;
+                    default:
+                         break;
+                }
+            } 
         }
+        std::cout << "\n";
     }
 
     void printList(std::vector<Variable> &param, Variable &result) {
@@ -53,7 +52,9 @@ namespace backend {
                         default:
                         break;
                 }
-            }             
+            } else {
+                std::cout << "VAR VAR\n";
+            }      
         }
         std::cout << ")\n";
     }
@@ -94,7 +95,7 @@ namespace backend {
                     }
                     break;
                     case O_PUSH: {
-                        stack.push_back(instruct[ip].value1);
+                            stack.push_back(instruct[ip].value1);
                     }
                     break;
                     case O_ADD:{
@@ -129,8 +130,8 @@ namespace backend {
                         std::vector<scan::Variable> v;
                         int n = static_cast<int>(instruct[ip].value2.val.fval);
                         for(int i = 0; i < n; ++i) {
-                           double val = popVal();
-                           v.push_back(Variable(val));
+                           Variable val = popVar();
+                           v.push_back(val);
                         }
                         scan::Variable result;
                         if(!func_table.valid(name)) {
@@ -152,6 +153,13 @@ namespace backend {
         } catch(RuntimeException &e) {
             std::cerr << e.error() << "\n";
         }
+        
+        if(!stack.empty()) {
+            for(int i = 0; i < stack.size(); ++i)
+                std::cout << i << ": " << stack[i] << "\n";
+        }
+        std::cout << "Stack Size: " << stack.size() << "\n";
+
         vars.print();
     }
 
@@ -176,5 +184,19 @@ namespace backend {
             throw RuntimeException("Runtime Exception: Stack underflow");
         }
         return 0;
+    }
+
+    Variable BackEnd::popVar() {
+        if(!stack.empty()) {
+            Variable v = stack.back();
+            if(v.type == VAR_VAR && v.type_info == VAR_DOUBLE) {
+                v = Variable(vars.getDouble(v.name));
+            }
+            stack.pop_back();
+            return v;
+         } else {
+            throw RuntimeException("Runtime Exception: Stack underflow");
+        }
+        return Variable();
     }
 }

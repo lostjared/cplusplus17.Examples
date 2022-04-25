@@ -32,6 +32,7 @@ namespace scan {
         Variable(double d) ;
         Variable(const std::string &s);
         Variable(const std::string &n, const std::string &v);
+        Variable(const std::string &n, VAR_TYPE_INFO t);
     };
 
     std::ostream &operator<<(std::ostream &out, const Variable &v);

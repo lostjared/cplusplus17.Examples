@@ -74,6 +74,12 @@ namespace scan {
         type = VAR_VAR;
     }
 
+    Variable::Variable(const std::string &n, VAR_TYPE_INFO t) : name{n} {
+        val.fval = 0;
+        type = VAR_VAR;
+        type_info = t;
+    }
+
 
     SymbolTable::SymbolTable() : index{0} {
 

@@ -45,6 +45,7 @@ namespace backend {
         FunctionTable func_table;
         SymbolTable vars;
         double popVal();
+        Variable popVar();
     };
 
 }

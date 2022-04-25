@@ -274,6 +274,12 @@ namespace parse {
              s->expression = parseAssignment();
              s->type = STATE_ASSIGN;
              body.statements.push_back(s);
+          } else if(match(TOKEN_ID) && match_lookahead(OP_OP)) {
+              Statement *s = new Statement();
+              s->var = identifiers[token.index];
+              s->expression = parseExpr();
+              s->type = STATE_FUNC;
+              body.statements.push_back(s);
           } else {
               getToken();
           }
@@ -741,7 +747,7 @@ namespace parse {
                     case TOKEN_ID:
                     std::cout << identifiers[e->token.index] << "\n";
                     stack.push_back(Variable(identifiers[e->token.index], ""));
-                    bend.put(Inc(O_PUSH, Variable(identifiers[e->token.index], ""), Variable()));
+                    bend.put(Inc(O_PUSH, Variable(identifiers[e->token.index], VAR_DOUBLE), Variable()));
                     break;
                     case TOKEN_STRING:
                     std::cout << const_strings[e->token.index_const] << "\n";
@@ -782,6 +788,9 @@ namespace parse {
                    if(i->expression != 0)
                         eval(i->expression);
                    bend.put(Inc(O_ASSIGN, Variable(i->var, ""), Variable()));
+                   break;
+                   case STATE_FUNC:
+                   eval(i->expression);
                    break;
                    default:
                    break;
