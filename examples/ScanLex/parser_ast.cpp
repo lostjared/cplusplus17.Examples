@@ -240,10 +240,9 @@ namespace parse {
    }
 
   Expr *AST::parseAssignment() {
-        std::cout << identifiers[token.index] << " = ";
         if(!cur_table->valid(identifiers[token.index])) {
             std::ostringstream stream;
-            stream << "Variable " << identifiers[token.index] << " not declared!\n";
+            stream << "Exception: Variable " << identifiers[token.index] << " not declared!\n";
             throw ParserException(stream.str());
         }
         getToken();
@@ -279,7 +278,6 @@ namespace parse {
               getToken();
           }
       }
-      // test
   }
 
     Expr *AST::parseReturn() {

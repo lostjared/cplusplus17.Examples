@@ -90,8 +90,7 @@ namespace backend {
                     case O_ASSIGN: {
                         double v = popVal();
                         double &d = vars.getDouble(instruct[ip].value1.name);
-                        d = v; 
-                        std::cout << instruct[ip].value1.name << " = " << d << "\n";                       
+                        d = v;                     
                     }
                     break;
                     case O_PUSH: {
@@ -153,14 +152,13 @@ namespace backend {
         } catch(RuntimeException &e) {
             std::cerr << e.error() << "\n";
         }
-        std::cout << "stack size: " << stack.size() << "\n";
+        vars.print();
     }
 
     void BackEnd::print(std::ostream &out) {
         for(int i = 0; i < instruct.size(); ++i) {
             out << op_types[instruct[i].opc] << "  " << instruct[i].value1 << ", " << instruct[i].value2 << "\n";
         }
-        vars.print();
     }
 
     double BackEnd::popVal() {
@@ -179,6 +177,4 @@ namespace backend {
         }
         return 0;
     }
-
-
 }
