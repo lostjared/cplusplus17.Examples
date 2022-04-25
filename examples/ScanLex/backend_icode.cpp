@@ -1,4 +1,5 @@
 #include"backend_icode.hpp"
+#include<sstream>
 
 namespace backend {
 
@@ -94,6 +95,9 @@ namespace backend {
                     case O_DIV: {
                         double value1 = popVal();
                         double value2 = popVal();
+                        if(value2 == 0) {
+                            throw RuntimeException("Runtime Exception: Division by Zero");
+                        }
                         stack.push_back(scan::Variable(value1/value2));
                     }
                     break;
@@ -103,6 +107,11 @@ namespace backend {
                         std::vector<scan::Variable> v;
                         v.push_back(Variable(val));
                         scan::Variable result;
+                        if(!func_table.valid(name)) {
+                            std::ostringstream stream;
+                            stream << "Runtime Exception: " << name << " function not found!";
+                            throw RuntimeException(stream.str());
+                        }
                         func_table.func_table[name].call(v, result);
                         stack.push_back(result);                      
                     }

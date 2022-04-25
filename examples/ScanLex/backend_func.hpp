@@ -22,7 +22,8 @@ namespace backend {
     class FunctionTable {
     public:
         std::unordered_map<std::string, Function> func_table;
-        void add(std::string name, const Function &f);
+        void add(const std::string &name, const Function &f);
+        bool valid(const std::string &n);
     };
 
 }
