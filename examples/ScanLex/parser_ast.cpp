@@ -708,10 +708,18 @@ namespace parse {
                     if(e->right != nullptr)
                         eval(e->right);
 
-                    Variable op1 = stack.back();
-                    stack.pop_back();
-                    Variable op2 = stack.back();
-                    stack.pop_back();
+                    
+                    Variable op1, op2;
+                    if(!stack.empty()) {
+                        op1  = stack.back();
+                        stack.pop_back();
+                    }
+
+                    if(!stack.empty()) {
+                        op2 = stack.back();
+                        stack.pop_back();
+                    }
+                    
                     switch(e->oper) {
                     case OP_PLUS:
                         bend.put(Inc(O_ADD, op1, op2));
@@ -745,11 +753,11 @@ namespace parse {
             case EXPR_LITERAL:
                 switch(e->token.type) {
                     case TOKEN_ID:
-                    stack.push_back(Variable(identifiers[e->token.index], ""));
+                    //stack.push_back(Variable(identifiers[e->token.index], ""));
                     bend.put(Inc(O_PUSH, Variable(identifiers[e->token.index], VAR_DOUBLE), Variable()));
                     break;
                     case TOKEN_STRING:
-                    stack.push_back(Variable(const_strings[e->token.index_const]));
+                    //stack.push_back(Variable(const_strings[e->token.index_const]));
                     bend.put(Inc(O_PUSH, Variable(const_strings[e->token.index_const]), Variable()));
                     break;
                     case TOKEN_NUMBER:
@@ -780,23 +788,35 @@ namespace parse {
                         if(i->expression != 0)
                         eval(i->expression);   
                         bend.put(Inc(O_ASSIGN, Variable(i->var, ""), Variable()));                        
+
+                        if(!stack.empty()) {
+                           stack.pop_back();
+                        }
                    }
                    break;
                    case STATE_ASSIGN:
-                   bend.decl(i->var, "");
-                   if(i->expression != 0)
-                        eval(i->expression);
-                   bend.put(Inc(O_ASSIGN, Variable(i->var, ""), Variable()));
+                        bend.decl(i->var, "");
+                        if(i->expression != 0)
+                            eval(i->expression);
+                            bend.put(Inc(O_ASSIGN, Variable(i->var, ""), Variable()));
+
+                        if(!stack.empty()) {
+                            stack.pop_back();
+                        }
                    break;
                    case STATE_FUNC:
                    eval(i->expression);
                    bend.put(Inc(O_POP, Variable(), Variable()));
+                   if(!stack.empty()) {
+                       stack.pop_back();
+                   }
                    break;
                    default:
                    break;
                }
            }
            n->proc.id.print();
+           std::cout << "BackEnd Stack Size: " << stack.size() << "\n";
            break;
            default:
            break;

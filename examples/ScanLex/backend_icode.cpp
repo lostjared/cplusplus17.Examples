@@ -35,6 +35,7 @@ namespace backend {
                 }
             } 
         }
+        result = Variable(double(param.size()));
         std::cout << "\n";
     }
 
@@ -57,6 +58,7 @@ namespace backend {
             }      
         }
         std::cout << ")\n";
+        result = Variable(param.size());
     }
 
     Inc::Inc(OPERATION_TYPE o, const scan::Variable &v, const scan::Variable &v2) : opc{o}, value1{v}, value2{v2} {
