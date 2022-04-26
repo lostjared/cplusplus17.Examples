@@ -20,6 +20,12 @@ namespace backend {
         }
     }
 
+    void decOne(std::vector<Variable> &param, Variable &result) {
+        if(param.size() == 1) {
+            result = Variable(param[0].val.fval-1);
+        }
+    }
+
     void printEcho(std::vector<Variable> &param, Variable &result) {
         for(int i =0; i < param.size(); ++i) {
            if(param[i].type == VAR_CONST) {
@@ -78,7 +84,8 @@ namespace backend {
     }
 
     BackEnd::BackEnd() {
-        func_table.add("test", Function(addOne));
+        func_table.add("inc", Function(addOne));
+        func_table.add("dec", Function(decOne));
         func_table.add("echo", Function(printEcho));
         func_table.add("list", Function(printList));
         func_table.add("strlen", Function(stringLength));
