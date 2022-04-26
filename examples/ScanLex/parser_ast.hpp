@@ -66,6 +66,7 @@ namespace parse {
 
     struct Statement {
         std::string var;
+        VAR_TYPE_INFO var_type;
         Expr *expression = nullptr;
         STATEMENT_TYPE type = STATE_EMPTY;
         ~Statement();
@@ -110,6 +111,7 @@ namespace parse {
         void parseArgs(ArgList &args);
         void parseStatement(Body &body);
         Expr *parseAssignment();
+        Expr *parseStringAssignment();
         void parseBody(Body &body);
         void parseCode();
         TreeNode *rootNode();

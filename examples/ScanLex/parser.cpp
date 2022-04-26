@@ -75,7 +75,7 @@ namespace parse {
                 if(token.oper == OP_BRACE_O)
                     parseArray();
 
-                if(token.oper == OP_EQUAL || token.oper == OP_MINE || token.oper == OP_PE || token.oper == OP_AE || token.oper == OP_XE || token.oper == OP_ME || token.oper == OP_MINE || token.oper == OP_DE) {
+                if(token.oper == OP_STRING_EQUAL || token.oper == OP_EQUAL || token.oper == OP_MINE || token.oper == OP_PE || token.oper == OP_AE || token.oper == OP_XE || token.oper == OP_ME || token.oper == OP_MINE || token.oper == OP_DE) {
                     getToken();
                     parseExpr();
                     match(OP_SEMI_COLON);
@@ -308,7 +308,7 @@ namespace parse {
         getToken();
         match(TOKEN_ID);
         getToken();
-        if(token.oper == OP_EQUAL) {
+        if(token.oper == OP_EQUAL || token.oper == OP_STRING_EQUAL) {
             getToken();
             parseExpr();
         }

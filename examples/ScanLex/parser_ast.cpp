@@ -250,9 +250,19 @@ namespace parse {
             consume(OP_EQUAL);
             Expr *e = parseExpr();
             return e;
+         } else if(match({OP_STRING_EQUAL})) {
+             consume(OP_STRING_EQUAL);
+             Expr *e = parseExpr();
+             return e;
          }
         return nullptr;
   }
+
+Expr *AST::parseStringAssignment() {
+
+    return nullptr;
+}
+
 
   void AST::parseStatement(Body &body) {
       while(token.keyword != KEY_END) {
@@ -297,9 +307,14 @@ namespace parse {
         if(match(TOKEN_ID)) {
             cur_table->enter(identifiers[token.index], "");
             s->var = identifiers[token.index];
-            if(match_lookahead(OP_EQUAL))
+            if(match_lookahead(OP_EQUAL)) {
+                s->var_type = VAR_DOUBLE;
                 return parseAssignment();
-            else 
+            }
+            else if(match_lookahead(OP_STRING_EQUAL)) {
+                s->var_type = VAR_STRING;
+                return parseAssignment();
+            } else
                 getToken();
         }
         return 0;
@@ -782,10 +797,22 @@ namespace parse {
            for(auto &i : n->proc.body.statements) {
                switch(i->type) {
                    case STATE_LET: {
-                       bend.decl(i->var, "");
-                        if(i->expression != 0)
-                        eval(i->expression);   
-                        bend.put(Inc(O_ASSIGN, Variable(i->var, ""), Variable()));                        
+                       switch(i->var_type) {
+                           case VAR_DOUBLE:
+                                bend.decl(i->var, 0);
+                                if(i->expression != 0)
+                                     eval(i->expression);   
+                                bend.put(Inc(O_ASSIGN, Variable(i->var, VAR_DOUBLE), Variable()));                        
+                           break;
+                           case VAR_STRING:
+                                bend.decl(i->var, "");
+                                if(i->expression != 0)
+                                    eval(i->expression);
+                                bend.put(Inc(O_SASSIGN, Variable(i->var, VAR_STRING), Variable()));
+                           break;
+                           default:
+                           break;
+                       }
 
                         if(!stack.empty()) {
                            stack.pop_back();

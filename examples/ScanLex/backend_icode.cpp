@@ -69,12 +69,8 @@ namespace backend {
 
     void stringLength(std::vector<Variable> &param, Variable &result) {
         if(param.size()==1) {
-            if(param[0].type == VAR_CONST) {
-                if(param[0].type_info == VAR_STRING) {
-                    result = Variable(param[0].value.length());
-                    return;
-                }
-            }
+            result = Variable(param[0].value.length());
+            return;
         }
         result = Variable(0);
     }
@@ -117,8 +113,15 @@ namespace backend {
                     break;
                     case O_ASSIGN: {
                         double v = popVal();
-                        double &d = vars.getDouble(instruct[ip].value1.name);
-                        d = v;                     
+                        Variable &d = vars.getVar(instruct[ip].value1.name);
+                        d.val.fval = v;
+                    }
+                    break;
+                    case O_SASSIGN: {
+                        Variable var = popVar();
+                        Variable &v = vars.getVar(instruct[ip].value1.name);
+                        v.name = instruct[ip].value1.name;
+                        v.value = var.value;
                     }
                     break;
                     case O_PUSH: {
@@ -158,7 +161,10 @@ namespace backend {
                         int n = static_cast<int>(instruct[ip].value2.val.fval);
                         for(int i = 0; i < n; ++i) {
                            Variable val = popVar();
-                           v.push_back(val);
+                           if(val.name != "") {
+                               v.push_back(vars.getVar(val.name));
+                           } else 
+                            v.push_back(val);
                         }
                         scan::Variable result;
                         if(!func_table.valid(name)) {
@@ -215,10 +221,7 @@ namespace backend {
 
     Variable BackEnd::popVar() {
         if(!stack.empty()) {
-            Variable v = stack.back();
-            if(v.type == VAR_VAR && v.type_info == VAR_DOUBLE) {
-                v = Variable(vars.getDouble(v.name));
-            }
+            Variable v = stack.back(); 
             stack.pop_back();
             return v;
          } else {
