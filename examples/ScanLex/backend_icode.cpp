@@ -61,6 +61,18 @@ namespace backend {
         result = Variable(param.size());
     }
 
+    void stringLength(std::vector<Variable> &param, Variable &result) {
+        if(param.size()==1) {
+            if(param[0].type == VAR_CONST) {
+                if(param[0].type_info == VAR_STRING) {
+                    result = Variable(param[0].value.length());
+                    return;
+                }
+            }
+        }
+        result = Variable(0);
+    }
+
     Inc::Inc(OPERATION_TYPE o, const scan::Variable &v, const scan::Variable &v2) : opc{o}, value1{v}, value2{v2} {
 
     }
@@ -69,6 +81,7 @@ namespace backend {
         func_table.add("test", Function(addOne));
         func_table.add("echo", Function(printEcho));
         func_table.add("list", Function(printList));
+        func_table.add("strlen", Function(stringLength));
     }
 
     void BackEnd::put(const Inc &i) {

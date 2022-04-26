@@ -753,11 +753,9 @@ namespace parse {
             case EXPR_LITERAL:
                 switch(e->token.type) {
                     case TOKEN_ID:
-                    //stack.push_back(Variable(identifiers[e->token.index], ""));
                     bend.put(Inc(O_PUSH, Variable(identifiers[e->token.index], VAR_DOUBLE), Variable()));
                     break;
                     case TOKEN_STRING:
-                    //stack.push_back(Variable(const_strings[e->token.index_const]));
                     bend.put(Inc(O_PUSH, Variable(const_strings[e->token.index_const]), Variable()));
                     break;
                     case TOKEN_NUMBER:
