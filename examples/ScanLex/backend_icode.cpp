@@ -65,6 +65,12 @@ namespace backend {
         result = Variable(param.size());
     }
 
+    void inputValue(std::vector<Variable> &param, Variable &result) {
+        double val;
+        std::cin >> val;
+        result = Variable(val);
+    }
+
     void stringLength(std::vector<Variable> &param, Variable &result) {
         if(param.size()==1) {
             result = Variable(param[0].value.length());
@@ -83,6 +89,7 @@ namespace backend {
         func_table.add("echo", Function(printEcho));
         func_table.add("list", Function(printList));
         func_table.add("strlen", Function(stringLength));
+        func_table.add("scan", Function(inputValue));
     }
 
     void BackEnd::put(const Inc &i) {

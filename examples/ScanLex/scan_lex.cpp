@@ -11,10 +11,12 @@ namespace scan {
         for(int i = 'A'; i <= 'Z'; ++i) 
             char_table[i] = TOKEN_CHAR;
 
+        char_table['_'] = TOKEN_CHAR;
+
         for(int i = '0'; i <= '9'; ++i) 
             char_table[i] = TOKEN_NUMBER;
 
-        const char *szOp = "!@$%^&*()_+=-<>{}|/\\.,[];:";
+        const char *szOp = "!@$%^&*()+=-<>{}|/\\.,[];:";
         for(int i = 0; szOp[i] != 0; ++i) 
             char_table[szOp[i]] = TOKEN_SYMBOL;
 
