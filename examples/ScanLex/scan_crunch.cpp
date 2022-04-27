@@ -7,7 +7,7 @@ namespace scan {
         int index = 0;
 
         const char *header = "!MXE";
-        out.write(header, strlen(header));
+        out.write(header, 4);
     
         while(scan->nextToken(token)) {
             if(token.keyword != KEY_EMPTY) {
