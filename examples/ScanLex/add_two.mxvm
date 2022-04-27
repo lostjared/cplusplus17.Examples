@@ -1,0 +1,9 @@
+
+proc main() 
+begin
+echo("input value 1: ");
+let x = scan();
+echo("input value 2: ");
+let y = scan();
+echo(x, "+", y, "=", (x+y));
+end;
