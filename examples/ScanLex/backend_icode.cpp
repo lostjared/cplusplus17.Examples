@@ -275,13 +275,6 @@ namespace backend {
         } catch(RuntimeException &e) {
             std::cerr << e.error() << "\n";
         }
-        
-        if(!stack.empty()) {
-            for(int i = 0; i < stack.size(); ++i)
-                std::cout << i << ": " << stack[i] << "\n";
-        }
-        std::cout << "Stack Size: " << stack.size() << "\n";
-
         vars.print();
     }
 

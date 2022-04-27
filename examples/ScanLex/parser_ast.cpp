@@ -858,8 +858,8 @@ Expr *AST::parseStringAssignment() {
                    break;
                }
            }
-           n->proc.id.print();
-           std::cout << "BackEnd Stack Size: " << stack.size() << "\n";
+           //n->proc.id.print();
+           //std::cout << "BackEnd Stack Size: " << stack.size() << "\n";
            break;
            default:
            break;
