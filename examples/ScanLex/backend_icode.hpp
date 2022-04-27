@@ -9,8 +9,8 @@ namespace backend {
 
     using namespace scan;
 
-    enum OPERATION_TYPE { O_SASSIGN, O_ASSIGN, O_ADD, O_SUB, O_MUL, O_DIV, O_CALL, O_PUSH, O_POP, O_EE, O_NE };
-    static const char *op_types[] = {"SASSIGN", "ASSIGN", "ADD", "SUB", "MUL", "DIV", "CALL", "PUSH","POP","EE","NE", 0};
+    enum OPERATION_TYPE { O_SASSIGN, O_ASSIGN, O_ADD, O_SUB, O_MUL, O_DIV, O_CALL, O_PUSH, O_POP, O_EE, O_NE, O_LT, O_GT, O_LTE, O_GTE };
+    static const char *op_types[] = {"SASSIGN", "ASSIGN", "ADD", "SUB", "MUL", "DIV", "CALL", "PUSH","POP","EE","NE","LT","GT", "LTE", "GTE", 0};
 
     class RuntimeException {
     public:
