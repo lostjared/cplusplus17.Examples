@@ -103,8 +103,15 @@ namespace parse {
 
     AST::AST(std::istream *i) : in{i} {}
 
-    void AST::scan() {
+    bool AST::scan() {
         char c = 0;
+        char header[5];
+        in->read(header, 4);
+        header[4] = 0;
+        if(std::string(header) != "!MXE") {
+            return false;
+        }
+        
         while(!in->eof()) {
             in->read(reinterpret_cast<char*>(&c), sizeof(c));
             switch(c) {
@@ -172,11 +179,12 @@ namespace parse {
                         identifiers[index] = text;
                         
                     }
-                    return;
+                    return true;
                 }
                 break; 
             }
         }
+        return true;
     }
 
     void AST::print(std::ostream &out) {

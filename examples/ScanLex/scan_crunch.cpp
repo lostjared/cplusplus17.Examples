@@ -5,6 +5,10 @@ namespace scan {
     void crunch(Scanner *scan, std::ostream &out) {
         Token token;
         int index = 0;
+
+        const char *header = "!MXE";
+        out.write(header, strlen(header));
+    
         while(scan->nextToken(token)) {
             if(token.keyword != KEY_EMPTY) {
                 out.write("$", sizeof('$'));
@@ -48,6 +52,13 @@ namespace scan {
     }
     void uncrunch(std::istream &in) {
         char c = 0;
+        char header[5];
+        in.read(header, 4);
+        header[4] = 0;
+        if(std::string(header) != "!MXE") {
+            std::cerr << "invalid file format..\n";
+            return;
+        }
         while(!in.eof()) {
             in.read(reinterpret_cast<char*>(&c), sizeof(c));
             switch(c) {

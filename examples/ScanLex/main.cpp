@@ -94,14 +94,18 @@ int main(int argc, char **argv) {
                 return -1;
             }
             parse::AST ast(&file);
-            ast.scan();
-            file.close();
-            //ast.print(std::cout);
-            ast.buildTree();
-          //  ast.printTree(std::cout, ast.rootNode());
-            ast.buildBackend(ast.rootNode());
-            ast.printBackend(std::cout);
-            ast.run();
+            
+            if(ast.scan()) {
+               file.close();
+                //ast.print(std::cout);
+                ast.buildTree();
+                //  ast.printTree(std::cout, ast.rootNode());
+                ast.buildBackend(ast.rootNode());
+                ast.printBackend(std::cout);
+                ast.run();
+            } else {
+                std::cerr << "Invalid file format...\n";
+            }
             return 0;
             
     }  

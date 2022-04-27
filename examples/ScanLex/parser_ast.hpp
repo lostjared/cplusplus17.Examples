@@ -102,7 +102,7 @@ namespace parse {
     public:
         explicit AST(std::istream *i);
         ~AST();
-        void scan();
+        bool scan();
         void print(std::ostream &out);
         void printTree(std::ostream &out, TreeNode *n);
         bool buildTree();
