@@ -113,7 +113,7 @@ namespace scan {
         do {
             token += c;
             c = getchar();
-        } while(c != -1 && char_table[c] == TOKEN_CHAR);
+        } while(c != -1 && (char_table[c] == TOKEN_CHAR || char_table[c] == TOKEN_NUMBER));
 
         if(c != -1)
             index--;
