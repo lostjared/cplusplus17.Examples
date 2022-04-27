@@ -129,26 +129,26 @@ namespace backend {
                     }
                     break;
                     case O_ADD:{
-                        double value1 = popVal();
                         double value2 = popVal();
+                        double value1 = popVal();
                         stack.push_back(scan::Variable(value1+value2));
                     }
                     break;
                     case O_SUB: {
-                        double value1 = popVal();
                         double value2 = popVal();
+                        double value1 = popVal();
                         stack.push_back(scan::Variable(value1-value2));
                     }
                     break;
                     case O_MUL: {
-                        double value1 = popVal();
                         double value2 = popVal();
+                        double value1 = popVal();
                         stack.push_back(scan::Variable(value1*value2));
                     }
                     break;
                     case O_DIV: {
-                        double value1 = popVal();
                         double value2 = popVal();
+                        double value1 = popVal();
                         if(value2 == 0) {
                             throw RuntimeException("Runtime Exception: Division by Zero");
                         }
@@ -156,8 +156,8 @@ namespace backend {
                     }
                     break;
                     case O_EE: {
-                        Variable value1 = popVar();
                         Variable value2 = popVar();
+                        Variable value1 = popVar();
 
                         if(value1.type_info == VAR_DOUBLE) {
                             stack.push_back(Variable(value1.val.fval == value2.val.fval));
@@ -167,8 +167,8 @@ namespace backend {
                     }
                     break;
                     case O_NE: {
-                        Variable value1 = popVar();
                         Variable value2 = popVar();
+                        Variable value1 = popVar();
                         if(value1.type_info == VAR_DOUBLE) {
                             stack.push_back(Variable(value1.val.fval != value2.val.fval));
                         } else {
@@ -178,10 +178,10 @@ namespace backend {
                     break;
                     //TODO: check the types
                     case O_LT: {
-                        Variable value1 = popVar();
                         Variable value2 = popVar();
+                        Variable value1 = popVar();
                         if(value1.type_info == VAR_DOUBLE) {
-                            stack.push_back(Variable(value1.val.fval > value2.val.fval));
+                            stack.push_back(Variable(value1.val.fval < value2.val.fval));
                         } else {
                             stack.push_back(Variable(""));
                             //throw RuntimeException
@@ -189,30 +189,30 @@ namespace backend {
                     }
                     break;
                     case O_GT: {
-                        Variable value1 = popVar();
                         Variable value2 = popVar();
+                        Variable value1 = popVar();
                         if(value1.type_info == VAR_DOUBLE) {
-                            stack.push_back(Variable(value1.val.fval < value2.val.fval));
+                            stack.push_back(Variable(value1.val.fval > value2.val.fval));
                         } else {
                             stack.push_back(Variable(""));
                         }
                     }
                     break;
                     case O_LTE: {
-                        Variable value1 = popVar();
                         Variable value2 = popVar();
+                        Variable value1 = popVar();
                         if(value1.type_info == VAR_DOUBLE) {
-                            stack.push_back(Variable(value1.val.fval >= value2.val.fval));
+                            stack.push_back(Variable(value1.val.fval <= value2.val.fval));
                         } else {
                             stack.push_back(Variable(""));
                         }
                     }
                     break;
                     case O_GTE: {
-                        Variable value1 = popVar();
                         Variable value2 = popVar();
+                        Variable value1 = popVar();
                         if(value1.type_info == VAR_DOUBLE) {
-                            stack.push_back(Variable(value1.val.fval <= value2.val.fval));
+                            stack.push_back(Variable(value1.val.fval >= value2.val.fval));
                         } else {
                             stack.push_back(Variable(""));
                         }
