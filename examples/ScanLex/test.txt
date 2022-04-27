@@ -3,5 +3,5 @@ proc main()
 begin
 let x = 10*10;
 let p := "test 123";
-echo("length of p: (", p, ") ", strlen(p), " value is: ", 10*10);
+echo("length of p: (", p, ") ", strlen(p), " value is: ", 10*10, " x: ", x);
 end;

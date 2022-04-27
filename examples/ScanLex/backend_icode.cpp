@@ -40,7 +40,16 @@ namespace backend {
                          break;
                 }
             }  else {
-                std::cout << param[i].value;
+                switch(param[i].type_info) {
+                    case VAR_DOUBLE:
+                        std::cout << param[i].val.fval;
+                        break;
+                    case VAR_STRING:
+                        std::cout << param[i].value ;
+                        break;
+                        default:
+                        break;
+                }
             }
         }
         result = Variable(double(param.size()));
@@ -117,6 +126,7 @@ namespace backend {
                         double v = popVal();
                         Variable &d = vars.getVar(instruct[ip].value1.name);
                         d.val.fval = v;
+                        d.type_info = VAR_DOUBLE;
                     }
                     break;
                     case O_SASSIGN: {
@@ -124,6 +134,7 @@ namespace backend {
                         Variable &v = vars.getVar(instruct[ip].value1.name);
                         v.name = instruct[ip].value1.name;
                         v.value = var.value;
+                        v.type_info = VAR_STRING;
                     }
                     break;
                     case O_PUSH: {

@@ -748,6 +748,12 @@ Expr *AST::parseStringAssignment() {
                     case OP_DIV:
                         bend.put(Inc(O_DIV,op1, op2));
                     break;
+                    case OP_EQ_EQ:
+                        bend.put(Inc(O_EE,op1,op2));
+                    break;
+                    case OP_NE:
+                        bend.put(Inc(O_NE,op1,op2));
+                    break;
                     default:
                     break;
                 }                
