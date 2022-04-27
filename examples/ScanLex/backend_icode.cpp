@@ -39,7 +39,9 @@ namespace backend {
                     default:
                          break;
                 }
-            } 
+            }  else {
+                std::cout << param[i].value;
+            }
         }
         result = Variable(double(param.size()));
         std::cout << "\n";
@@ -162,7 +164,7 @@ namespace backend {
                         for(int i = 0; i < n; ++i) {
                            Variable val = popVar();
                            if(val.name != "") {
-                               v.push_back(vars.getVar(val.name));
+                              v.push_back(vars.getVar(val.name));
                            } else 
                             v.push_back(val);
                         }
@@ -222,6 +224,7 @@ namespace backend {
     Variable BackEnd::popVar() {
         if(!stack.empty()) {
             Variable v = stack.back(); 
+            
             stack.pop_back();
             return v;
          } else {

@@ -1,13 +1,7 @@
 
 proc main() 
 begin
-let y = 10+10;
-let x = 50+50;
-let y = x+x;
-let z = echo(x);
-let q = test(test(list(1,2,3,4)));
-let w = test(test(10*20));
-w = 100+100;
-#q = echo("hello world: ", w);
-echo("w is: ", w);
+let x = 10*10;
+let p := "test 123";
+echo("length of p: (", p, ") ", strlen(p), " value is: ", 10*10);
 end;
