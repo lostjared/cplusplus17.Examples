@@ -155,6 +155,29 @@ namespace backend {
                         stack.push_back(scan::Variable(value1/value2));
                     }
                     break;
+                    case O_EE: {
+                        Variable value1 = popVar();
+                        Variable value2 = popVar();
+
+                        if(value1.type_info == VAR_DOUBLE) {
+                            stack.push_back(Variable(value1.val.fval == value2.val.fval));
+                        } else {
+                            stack.push_back(Variable(value1.value == value2.value));
+                        }
+                    }
+                    break;
+                    case O_NE: {
+                        Variable value1 = popVar();
+                        Variable value2 = popVar();
+
+                        if(value1.type_info == VAR_DOUBLE) {
+                            stack.push_back(Variable(value1.val.fval != value2.val.fval));
+                        } else {
+                            stack.push_back(Variable(value1.value != value2.value));
+                        }
+
+                    }
+                    break;
                     case O_CALL: {
                         std::string name = instruct[ip].value1.value;
                         std::vector<scan::Variable> v;
@@ -221,9 +244,12 @@ namespace backend {
 
     Variable BackEnd::popVar() {
         if(!stack.empty()) {
-            Variable v = stack.back(); 
-            
+            Variable v = stack.back();            
             stack.pop_back();
+            if(v.name != "") {
+                v.value = vars.getString(v.name);
+                v.val.fval = vars.getDouble(v.name);
+            }
             return v;
          } else {
             throw RuntimeException("Runtime Exception: Stack underflow");
