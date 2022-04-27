@@ -13,6 +13,8 @@ namespace scan {
 
     enum VAR_TYPE { VAR_CONST, VAR_VAR, VAR_EMPTY };
     enum VAR_TYPE_INFO { VAR_DOUBLE, VAR_STRING, VAR_ID, VAR_ARRAY };
+    static const char *vtype_info[] = {"Numeric", "String", "Identifier", "Array", 0 };
+
     struct Variable {
         Variable() = default;
         std::string name, value;
@@ -36,6 +38,7 @@ namespace scan {
     };
 
     std::ostream &operator<<(std::ostream &out, const Variable &v);
+    std::ostream &operator<<(std::ostream &out, const VAR_TYPE_INFO &v);
 
     class SymbolTable {
     public:

@@ -737,34 +737,34 @@ Expr *AST::parseStringAssignment() {
                     
                     switch(e->oper) {
                     case OP_PLUS:
-                        bend.put(Inc(O_ADD, op1, op2));
+                        bend.put(Inc(O_ADD, Variable(), Variable()));
                     break;
                     case OP_MINUS:
-                        bend.put(Inc(O_SUB, op1, op2));
+                        bend.put(Inc(O_SUB, Variable(), Variable()));
                     break;
                     case OP_MUL:
-                        bend.put(Inc(O_MUL, op1, op2));
+                        bend.put(Inc(O_MUL, Variable(), Variable()));
                     break;
                     case OP_DIV:
-                        bend.put(Inc(O_DIV,op1, op2));
+                        bend.put(Inc(O_DIV,Variable(), Variable()));
                     break;
                     case OP_EQ_EQ:
-                        bend.put(Inc(O_EE,op1,op2));
+                        bend.put(Inc(O_EE,Variable(),Variable()));
                     break;
                     case OP_NE:
-                        bend.put(Inc(O_NE,op1,op2));
+                        bend.put(Inc(O_NE,Variable(),Variable()));
                     break;
                     case OP_LTE:
-                        bend.put(Inc(O_LTE,op1,op2));
+                        bend.put(Inc(O_LTE,Variable(),Variable()));
                     break;
                     case OP_LESS:
-                        bend.put(Inc(O_LT,op1,op2));
+                        bend.put(Inc(O_LT,Variable(),Variable()));
                     break;
                     case OP_GREATER:
-                        bend.put(Inc(O_GT,op1,op2));
+                        bend.put(Inc(O_GT,Variable(),Variable()));
                     break;
                     case OP_GTE:
-                        bend.put(Inc(O_GTE,op1,op2));
+                        bend.put(Inc(O_GTE,Variable(),Variable()));
                     break;
                     default:
                     break;

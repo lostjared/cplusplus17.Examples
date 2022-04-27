@@ -39,6 +39,7 @@ namespace backend {
         void print(std::ostream &out);
         void decl(const std::string &var, double d);
         void decl(const std::string &var, const std::string &value);
+        void runtimeTypeCheck(const Variable &v, const VAR_TYPE_INFO &i);
     protected:
         std::vector<Inc> instruct;
         std::vector<Variable> stack;

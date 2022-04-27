@@ -29,6 +29,21 @@ namespace scan {
        return out;
    }
 
+   std::ostream &operator<<(std::ostream &out, const VAR_TYPE_INFO &v) {
+       switch(v) {
+           case VAR_DOUBLE:
+           case VAR_STRING:
+           case VAR_ID:
+           case VAR_ARRAY:
+           out << vtype_info[v];
+           break;
+           default:
+           out << v;
+           break;
+       }
+       return out;
+   }
+
    void Variable::copy(const Variable &v) {
         name = v.name;
         value = v.value;

@@ -167,6 +167,7 @@ namespace backend {
                         Variable value1 = popVar();
 
                         if(value1.type_info == VAR_DOUBLE) {
+                            runtimeTypeCheck(value2, VAR_DOUBLE);
                             stack.push_back(Variable(value1.val.fval == value2.val.fval));
                         } else {
                             stack.push_back(Variable(value1.value == value2.value));
@@ -177,16 +178,21 @@ namespace backend {
                         Variable value2 = popVar();
                         Variable value1 = popVar();
                         if(value1.type_info == VAR_DOUBLE) {
+                            runtimeTypeCheck(value2, VAR_DOUBLE);
                             stack.push_back(Variable(value1.val.fval != value2.val.fval));
                         } else {
                             stack.push_back(Variable(value1.value != value2.value));
                         }
                     }
                     break;
-                    //TODO: check the types
                     case O_LT: {
                         Variable value2 = popVar();
                         Variable value1 = popVar();
+
+                        runtimeTypeCheck(value1, VAR_DOUBLE);
+                        runtimeTypeCheck(value2, VAR_DOUBLE);
+
+
                         if(value1.type_info == VAR_DOUBLE) {
                             stack.push_back(Variable(value1.val.fval < value2.val.fval));
                         } else {
@@ -198,6 +204,10 @@ namespace backend {
                     case O_GT: {
                         Variable value2 = popVar();
                         Variable value1 = popVar();
+
+                        runtimeTypeCheck(value1, VAR_DOUBLE);
+                        runtimeTypeCheck(value2, VAR_DOUBLE);
+
                         if(value1.type_info == VAR_DOUBLE) {
                             stack.push_back(Variable(value1.val.fval > value2.val.fval));
                         } else {
@@ -208,6 +218,10 @@ namespace backend {
                     case O_LTE: {
                         Variable value2 = popVar();
                         Variable value1 = popVar();
+
+                        runtimeTypeCheck(value1, VAR_DOUBLE);
+                        runtimeTypeCheck(value2, VAR_DOUBLE);
+
                         if(value1.type_info == VAR_DOUBLE) {
                             stack.push_back(Variable(value1.val.fval <= value2.val.fval));
                         } else {
@@ -218,6 +232,10 @@ namespace backend {
                     case O_GTE: {
                         Variable value2 = popVar();
                         Variable value1 = popVar();
+
+                        runtimeTypeCheck(value1, VAR_DOUBLE);
+                        runtimeTypeCheck(value2, VAR_DOUBLE);
+
                         if(value1.type_info == VAR_DOUBLE) {
                             stack.push_back(Variable(value1.val.fval >= value2.val.fval));
                         } else {
@@ -277,7 +295,7 @@ namespace backend {
         if(!stack.empty()) {
             Variable v = stack.back();
             stack.pop_back();
-        
+            runtimeTypeCheck(v, VAR_DOUBLE);
             if(v.type == VAR_CONST)
                 return v.val.fval;
         
@@ -304,4 +322,13 @@ namespace backend {
         }
         return Variable();
     }
+
+   void BackEnd::runtimeTypeCheck(const Variable &v, const VAR_TYPE_INFO &i) {
+       if(v.type_info != i) {
+           std::ostringstream stream;
+           stream << "Type mismatch, expected: " << i << " found " << v.type_info;
+           throw RuntimeException(stream.str());
+       }
+   }
+
 }
