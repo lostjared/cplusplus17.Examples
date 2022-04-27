@@ -28,29 +28,16 @@ namespace backend {
 
     void printEcho(std::vector<Variable> &param, Variable &result) {
         for(int i =0; i < param.size(); ++i) {
-           if(param[i].type == VAR_CONST) {
-                    switch(param[i].type_info) {
-                        case VAR_DOUBLE:
-                        std::cout << param[i].val.fval;
-                        break;
-                    case VAR_STRING:
-                            std::cout << param[i].value;
-                        break;
-                    default:
+            switch(param[i].type_info) {
+                case VAR_DOUBLE:
+                    std::cout << param[i].val.fval;
+                    break;
+               case VAR_STRING:
+                    std::cout << param[i].value;
+                    break;
+                default:
                          break;
-                }
-            }  else {
-                switch(param[i].type_info) {
-                    case VAR_DOUBLE:
-                        std::cout << param[i].val.fval;
-                        break;
-                    case VAR_STRING:
-                        std::cout << param[i].value ;
-                        break;
-                        default:
-                        break;
-                }
-            }
+                    }
         }
         result = Variable(double(param.size()));
         std::cout << "\n";
