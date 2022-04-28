@@ -600,14 +600,6 @@ Expr *AST::parseStringAssignment() {
            for(auto &i : n->proc.body.statements) {
                if(i->expression != 0)
                 eval(i->expression);
-               
-                if(!stack.empty()) {
-                    Variable val = stack.back();
-                    stack.pop_back();
-                    std::cout << "Value is: " << val << "\n";
-                } else {
-                    stack.erase(stack.begin(), stack.end());
-                }
                 std::cout << "\n";
            }
            n->proc.id.print();
@@ -730,18 +722,6 @@ Expr *AST::parseStringAssignment() {
                         eval(e->left);
                     if(e->right != nullptr)
                         eval(e->right);
-
-                    
-                    Variable op1, op2;
-                    if(!stack.empty()) {
-                        op1  = stack.back();
-                        stack.pop_back();
-                    }
-
-                    if(!stack.empty()) {
-                        op2 = stack.back();
-                        stack.pop_back();
-                    }
                     
                     switch(e->oper) {
                     case OP_PLUS:
@@ -800,7 +780,6 @@ Expr *AST::parseStringAssignment() {
                     bend.put(Inc(O_PUSH, Variable(const_strings[e->token.index_const]), Variable()));
                     break;
                     case TOKEN_NUMBER:
-                    stack.push_back(Variable(e->token.val));
                     bend.put(Inc(O_PUSH, Variable(e->token.val), Variable()));
                     break;
                     default:
@@ -839,10 +818,6 @@ Expr *AST::parseStringAssignment() {
                            default:
                            break;
                        }
-
-                        if(!stack.empty()) {
-                           stack.pop_back();
-                        }
                    }
                    break;
                    case STATE_ASSIGN:
@@ -851,23 +826,16 @@ Expr *AST::parseStringAssignment() {
                             eval(i->expression);
                             bend.put(Inc(O_ASSIGN, Variable(i->var, ""), Variable()));
 
-                        if(!stack.empty()) {
-                            stack.pop_back();
-                        }
                    break;
                    case STATE_FUNC:
                    eval(i->expression);
                    bend.put(Inc(O_POP, Variable(), Variable()));
-                   if(!stack.empty()) {
-                       stack.pop_back();
-                   }
                    break;
                    default:
                    break;
                }
            }
            //n->proc.id.print();
-           //std::cout << "BackEnd Stack Size: " << stack.size() << "\n";
            break;
            default:
            break;

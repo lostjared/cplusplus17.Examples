@@ -151,7 +151,6 @@ namespace parse {
         Item token;
         int sindex;
         TreeNode root;
-        std::vector<Variable> stack;
         Procedure *proc = nullptr;
         backend::BackEnd bend;
     };
