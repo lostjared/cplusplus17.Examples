@@ -3,6 +3,12 @@
 namespace scan {
 
    std::ostream &operator<<(std::ostream &out, const Variable &v) {
+
+       if(v.name != "") {
+           out << v.name;
+           return out;
+       }
+
        switch(v.type) {
            case VAR_CONST:
            switch(v.type_info) {
@@ -11,7 +17,7 @@ namespace scan {
                return out;
                break;
                case VAR_STRING:
-               out << v.value;
+               out << "\"" << v.value << "\"";
                return out;
                break;
                default:
@@ -93,6 +99,10 @@ namespace scan {
         val.fval = 0;
         type = VAR_VAR;
         type_info = t;
+    }
+    
+    Variable::Variable(const std::string &n, VAR_TYPE t, VAR_TYPE_INFO vt) : name{n}, type{t}, type_info{vt} {
+        val.fval = 0;
     }
 
 

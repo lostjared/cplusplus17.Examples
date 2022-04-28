@@ -767,7 +767,7 @@ Expr *AST::parseStringAssignment() {
                         if(expression != nullptr)
                             eval(expression);
                      }
-                    bend.put(Inc(O_CALL, Variable(e->func->name), Variable(double(e->func->expressions.size()))));
+                    bend.put(Inc(O_CALL, Variable(e->func->name, VAR_FUNC_NAME, VAR_STRING), Variable(double(e->func->expressions.size()))));
                  }
              }
             break;

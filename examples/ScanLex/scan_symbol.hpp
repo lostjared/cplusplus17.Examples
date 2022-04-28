@@ -11,7 +11,7 @@ namespace scan {
     class Scanner;
 
 
-    enum VAR_TYPE { VAR_CONST, VAR_VAR, VAR_EMPTY };
+    enum VAR_TYPE { VAR_CONST, VAR_VAR, VAR_FUNC_NAME, VAR_EMPTY };
     enum VAR_TYPE_INFO { VAR_DOUBLE, VAR_STRING, VAR_ID, VAR_ARRAY };
     static const char *vtype_info[] = {"Numeric", "String", "Identifier", "Array", 0 };
 
@@ -35,6 +35,7 @@ namespace scan {
         Variable(const std::string &s);
         Variable(const std::string &n, const std::string &v);
         Variable(const std::string &n, VAR_TYPE_INFO t);
+        Variable(const std::string &n, VAR_TYPE t, VAR_TYPE_INFO vt);
     };
 
     std::ostream &operator<<(std::ostream &out, const Variable &v);

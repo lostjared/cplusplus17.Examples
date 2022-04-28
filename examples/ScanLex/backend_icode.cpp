@@ -245,7 +245,7 @@ namespace backend {
                     break;
                     // end todo
                     case O_CALL: {
-                        std::string name = instruct[ip].value1.value;
+                        std::string name = instruct[ip].value1.name;
                         std::vector<scan::Variable> v;
                         int n = static_cast<int>(instruct[ip].value2.val.fval);
                         for(int i = 0; i < n; ++i) {
