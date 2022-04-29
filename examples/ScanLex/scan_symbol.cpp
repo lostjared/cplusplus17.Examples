@@ -105,6 +105,10 @@ namespace scan {
         val.fval = 0;
     }
 
+    Variable::Variable(const std::string &n, const double &d) : name{n}, type{VAR_VAR}, type_info{VAR_DOUBLE} {
+        val.fval = d;
+    }
+
 
     SymbolTable::SymbolTable() : index{0} {
 
@@ -192,8 +196,5 @@ namespace scan {
     Variable &SymbolTable::getVar(const std::string &name) {
         return data[name];
     }
-
-
     
-
 }
