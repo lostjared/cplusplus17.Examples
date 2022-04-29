@@ -89,32 +89,14 @@ namespace parse {
         func = nullptr;
      }
 
-   Block::Block() {
-
-   }
-    Block::~Block() {
-        for(int i = 0; i < statements.size(); ++i) {
-            Statement *s = statements[i];
-            if(s != nullptr) {
-                delete s;
-                s = nullptr;
-            }
-        }
-    }
-
     Statement::Statement() {
         expression = nullptr;
-        block = nullptr;
     }
 
      Statement::~Statement() {
         if(expression != nullptr)
             delete expression;
         expression = nullptr;
-
-        if(block != nullptr) 
-            delete block;
-        block = nullptr;
      }
 
     Body::~Body() {
@@ -273,7 +255,7 @@ namespace parse {
        }
    }
 
-  Expr *AST::parseAssignment() {
+    Expr *AST::parseAssignment() {
         if(!cur_table->valid(identifiers[token.index])) {
             std::ostringstream stream;
             stream << "Exception: Variable " << identifiers[token.index] << " not declared!\n";
@@ -290,13 +272,15 @@ namespace parse {
              return e;
          }
         return nullptr;
-  }
+    }
 
-Expr *AST::parseStringAssignment() {
+   
 
-    return nullptr;
-}
 
+    Expr *AST::parseStringAssignment() {
+
+        return nullptr;
+    }
 
   void AST::parseStatement(Body &body) {
       while(token.keyword != KEY_END) {
@@ -311,13 +295,23 @@ Expr *AST::parseStringAssignment() {
               s->type = STATE_LET;
               body.statements.push_back(s);
               consume(OP_SEMI_COLON);
-          } 
+          } else if(match(KEY_IF)) {
+              /*
+              Statement *s = new Statement();
+              s->type = STATE_IF;
+              parseIf(body, s);
+              if(block == nullptr)
+                body.statements.push_back(s);
+             else
+                block->statements.push_back(s);*/
+                getToken();
+          }
           else if(match(TOKEN_ID) && match_lookahead(OP_EQUAL)) {
              Statement *s = new Statement();
              s->var = identifiers[token.index];
              s->expression = parseAssignment();
              s->type = STATE_ASSIGN;
-             body.statements.push_back(s);
+            body.statements.push_back(s);
           } else if(match(TOKEN_ID) && match_lookahead(OP_OP)) {
               Statement *s = new Statement();
               s->var = identifiers[token.index];
@@ -858,6 +852,8 @@ Expr *AST::parseStringAssignment() {
                    bend.put(Inc(O_POP, Variable(), Variable()));
                    break;
                    default:
+                   break;
+                   case STATE_IF:
                    break;
                }
            }
