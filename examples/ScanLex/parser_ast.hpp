@@ -64,14 +64,27 @@ namespace parse {
 
     enum STATEMENT_TYPE { STATE_LET, STATE_ASSIGN, STATE_FUNC, STATE_RETURN, STATE_EXPR, STATE_EMPTY };
 
+    struct Statement;
+    
+    struct Block {
+        Block();
+        ~Block();
+        int level = 0;
+        std::string name;
+        std::vector<Statement *> statements;
+    };
+    
     struct Statement {
         std::string var;
         VAR_TYPE_INFO var_type;
         Expr *expression = nullptr;
+        Block *block = nullptr;
         STATEMENT_TYPE type = STATE_EMPTY;
         ~Statement();
         Statement();
     };
+
+    
 
     struct Body {
         std::vector<Statement *> statements;

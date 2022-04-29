@@ -89,17 +89,43 @@ namespace parse {
         func = nullptr;
      }
 
+   Block::Block() {
+
+   }
+    Block::~Block() {
+        for(int i = 0; i < statements.size(); ++i) {
+            Statement *s = statements[i];
+            if(s != nullptr) {
+                delete s;
+                s = nullptr;
+            }
+        }
+    }
+
     Statement::Statement() {
         expression = nullptr;
+        block = nullptr;
     }
 
      Statement::~Statement() {
         if(expression != nullptr)
             delete expression;
         expression = nullptr;
+
+        if(block != nullptr) 
+            delete block;
+        block = nullptr;
      }
 
-     Body::~Body() {}
+    Body::~Body() {
+        for(int i = 0; i < statements.size(); ++i) {
+            Statement *s = statements[i];
+            if(s != nullptr) {
+                delete s;
+                s = nullptr;
+            }
+        }
+    }
 
     AST::AST(std::istream *i) : in{i} {}
 
