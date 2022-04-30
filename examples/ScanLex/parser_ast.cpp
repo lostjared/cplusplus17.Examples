@@ -109,6 +109,19 @@ namespace parse {
         }
     }
 
+
+   Procedure::Procedure() {
+
+   }
+        
+  Procedure::~Procedure() {
+      for(int i = 0; i < body.size(); ++i) {
+          Body *b = body[i];
+          if(b != nullptr)
+            delete b;
+      }
+  }
+
     AST::AST(std::istream *i) : in{i} {}
 
     bool AST::scan() {
@@ -282,18 +295,18 @@ namespace parse {
         return nullptr;
     }
 
-  void AST::parseStatement(Body &body) {
+  void AST::parseStatement(Body *body) {
       while(token.keyword != KEY_END) {
           if(match(KEY_RETURN)) {
               Statement *s = new Statement();
               s->expression = parseReturn();
               s->type = STATE_RETURN;
-              body.statements.push_back(s);
+              body->statements.push_back(s);
           } else if (match(KEY_LET)) {
               Statement *s = new Statement();
               s->expression = parseLet(s);
               s->type = STATE_LET;
-              body.statements.push_back(s);
+              body->statements.push_back(s);
               consume(OP_SEMI_COLON);
           } else if(match(KEY_IF)) {
               /*
@@ -311,13 +324,13 @@ namespace parse {
              s->var = identifiers[token.index];
              s->expression = parseAssignment();
              s->type = STATE_ASSIGN;
-            body.statements.push_back(s);
+            body->statements.push_back(s);
           } else if(match(TOKEN_ID) && match_lookahead(OP_OP)) {
               Statement *s = new Statement();
               s->var = identifiers[token.index];
               s->expression = parseExpr();
               s->type = STATE_FUNC;
-              body.statements.push_back(s);
+              body->statements.push_back(s);
           } else {
               getToken();
           }
@@ -348,7 +361,7 @@ namespace parse {
         return 0;
     }
 
-    void AST::parseBody(Body &body) {
+    Body *AST::parseBody(Body *body) {
        if(consume(KEY_BEGIN)) {
            parseStatement(body);
             if(match(KEY_END)) {
@@ -358,6 +371,7 @@ namespace parse {
                
            }
        }
+       return body;
    }
 
     void AST::parseArgs(ArgList &args) {
@@ -395,7 +409,10 @@ namespace parse {
        proc = &n->proc;
        getToken();
        parseArgs(n->proc.param);
-       parseBody(n->proc.body);
+       // while(b) body.push_back(b)
+       Body *b = new Body();
+       b = parseBody(b);
+       proc->body.push_back(b);
        root.children.push_back(n);
    }
 
@@ -614,22 +631,6 @@ namespace parse {
    }
 
    void AST::printTree(std::ostream &out, TreeNode *n) {
-       switch(n->type) {
-           case NODE_PROC:
-           out << "proc: " << n->proc.name << ": " << n->proc.body.statements.size() << " statements\n";
-           for(auto &i : n->proc.body.statements) {
-               if(i->expression != 0)
-                eval(i->expression);
-                std::cout << "\n";
-           }
-           n->proc.id.print();
-           break;
-           default:
-           break;
-       }
-        
-        for(int i = 0; i < n->children.size(); ++i)
-           printTree(out, n->children[i]);
    }
 
    Function *AST::parseFunction() {
@@ -670,15 +671,6 @@ namespace parse {
    }
 
    void AST::eraseTree(TreeNode *n) {
-       switch(n->type) {
-           case NODE_PROC:
-           for(auto &i : n->proc.body.statements) {
-               delete i;
-           }
-           break;
-           default:
-           break;
-       }
         for(int i = 0; i < n->children.size(); ++i)
            eraseTree(n->children[i]);
        
@@ -692,45 +684,6 @@ namespace parse {
 
     void AST::printExpr(Expr *e) {
 
-        if(e != nullptr) {
-            switch(e->type) {
-                case EXPR_BINARY:
-                if(e->left != nullptr)
-                    printExpr(e->left);
-                if(e->right != nullptr)
-                    printExpr(e->right);
-
-                std::cout << "POP " << operators[e->oper] << "\n";
-                
-                break;
-                case EXPR_FUNC:
-                std::cout << "call function: " << e->func->name << "\n";
-                break;
-                case EXPR_LITERAL:
-                switch(e->token.type) {
-                    case TOKEN_ID:
-                    std::cout << identifiers[e->token.index] << "\n";
-                    break;
-                    case TOKEN_STRING:
-                    std::cout << const_strings[e->token.index_const] << "\n";
-                    break;
-                    case TOKEN_NUMBER:
-                    std::cout << "PUSH(" << e->token.val << ")\n";
-                    break;
-                    default:
-                    break;
-                }
-                break;
-                default:
-                case EXPR_GROUP:
-                std::cout << "(\n";
-                if(e->group != nullptr)
-                    printExpr(e->group);
-                std::cout << ")";
-                break;
-                break;
-            }
-        }
    }
 
    void AST::eval(Expr *e) {
@@ -818,12 +771,13 @@ namespace parse {
 
    void AST::buildBackend(TreeNode *n) {
     switch(n->type) {
-           case NODE_PROC:
-           for(auto &i : n->proc.body.statements) {
-               switch(i->type) {
-                   case STATE_LET: {
-                       switch(i->var_type) {
-                           case VAR_DOUBLE:
+           case NODE_PROC: {
+                for(auto &b : n->proc.body) {
+                    for(auto &i : b->statements) {
+                        switch(i->type) {
+                        case STATE_LET: {
+                            switch(i->var_type) {
+                            case VAR_DOUBLE:
                                 bend.decl(i->var, 0);
                                 if(i->expression != 0)
                                      eval(i->expression);   
@@ -848,20 +802,23 @@ namespace parse {
 
                    break;
                    case STATE_FUNC:
-                   eval(i->expression);
-                   bend.put(Inc(O_POP, Variable(), Variable()));
-                   break;
+                        eval(i->expression);
+                        bend.put(Inc(O_POP, Variable(), Variable()));
+                        break;
                    default:
                    break;
                    case STATE_IF:
                    break;
                }
            }
+
            //n->proc.id.print();
+           }
            break;
            default:
            break;
-       }
+           }
+        }
         
         for(int i = 0; i < n->children.size(); ++i)
         buildBackend(n->children[i]);

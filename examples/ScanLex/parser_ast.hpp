@@ -86,9 +86,11 @@ namespace parse {
 
     struct Procedure {
         std::string name;
-        Body body;
+        std::vector<Body *> body;
         ArgList param;
         scan::SymbolTable id;
+        Procedure();
+        ~Procedure();
     };
 
     enum NODE_TYPE { NODE_ROOT, NODE_PROC, NODE_LET };
@@ -111,10 +113,10 @@ namespace parse {
         bool getToken();
         void parseProc();
         void parseArgs(ArgList &args);
-        void parseStatement(Body &body);
+        void parseStatement(Body *body);
         Expr *parseAssignment();
         Expr *parseStringAssignment();
-        void parseBody(Body &body);
+        Body *parseBody(Body *body);
         void parseCode();
         TreeNode *rootNode();
         Expr *parseExpr();
