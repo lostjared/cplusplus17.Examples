@@ -87,6 +87,8 @@ namespace parse {
         if(func != nullptr)
             delete func;
         func = nullptr;
+
+        //std::cout << "deleted expression\n";
      }
 
     Statement::Statement() {
@@ -671,9 +673,10 @@ namespace parse {
    }
 
    void AST::eraseTree(TreeNode *n) {
-        for(int i = 0; i < n->children.size(); ++i)
-           eraseTree(n->children[i]);
-       
+        for(int i = 0; i < n->children.size(); ++i) {
+         eraseTree(n->children[i]);
+         delete n->children[i];
+        }
    }
 
 
