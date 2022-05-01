@@ -256,7 +256,7 @@ namespace parse {
    }
 
     AST::~AST() {
-        eraseTree(&root);
+        
     }
 
    void AST::parseCode() {
