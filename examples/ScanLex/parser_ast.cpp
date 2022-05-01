@@ -124,6 +124,14 @@ namespace parse {
       }
   }
 
+  TreeNode::~TreeNode() {
+      for(int i = 0; i < children.size(); ++i) {
+          TreeNode *n = children[i];
+          delete n;
+          n = nullptr;
+      }
+  }
+
     AST::AST(std::istream *i) : in{i} {}
 
     bool AST::scan() {
@@ -673,10 +681,6 @@ namespace parse {
    }
 
    void AST::eraseTree(TreeNode *n) {
-        for(int i = 0; i < n->children.size(); ++i) {
-         eraseTree(n->children[i]);
-         delete n->children[i];
-        }
    }
 
 

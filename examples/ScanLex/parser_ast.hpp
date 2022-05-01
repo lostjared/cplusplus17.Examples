@@ -100,6 +100,7 @@ namespace parse {
         Procedure proc;
         NODE_TYPE type;
         std::vector<TreeNode *> children;
+        ~TreeNode();
     };
 
     class AST {
