@@ -64,6 +64,8 @@ namespace parse {
 
     enum STATEMENT_TYPE { STATE_LET, STATE_ASSIGN, STATE_FUNC, STATE_RETURN, STATE_EXPR, STATE_IF, STATE_EMPTY };
 
+    struct Body;
+
     struct Statement {
         std::string var;
         VAR_TYPE_INFO var_type;
@@ -73,8 +75,14 @@ namespace parse {
         Statement();
     };
 
+    struct WhileStatement {
+        std::string var;
+        VAR_TYPE_INFO var_type;
+        Expr *expression = nullptr;
+        STATEMENT_TYPE type = STATE_EMPTY;
+        Body *body;
+    };
     
-
     struct Body {
         std::vector<Statement *> statements;
         ~Body();
