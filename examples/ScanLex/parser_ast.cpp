@@ -88,6 +88,10 @@ namespace parse {
             delete func;
         func = nullptr;
 
+        if(ws != nullptr)
+            delete ws;
+
+        ws = nullptr;
         //std::cout << "deleted expression\n";
      }
 
@@ -109,6 +113,17 @@ namespace parse {
                 s = nullptr;
             }
         }
+    }
+
+    WhileStatement::~WhileStatement() {
+        if(expression != nullptr)
+            delete expression;
+
+        expression = nullptr;
+
+        if(body != nullptr)
+            delete body;
+        body = nullptr;
     }
 
 

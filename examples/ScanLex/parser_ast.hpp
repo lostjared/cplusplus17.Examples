@@ -83,7 +83,8 @@ namespace parse {
         VAR_TYPE_INFO var_type;
         Expr *expression = nullptr;
         STATEMENT_TYPE type = STATE_EMPTY;
-        Body *body;
+        Body *body = nullptr;
+        ~WhileStatement();
     };
     
     struct Body {
