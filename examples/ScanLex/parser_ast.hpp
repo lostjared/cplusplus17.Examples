@@ -51,6 +51,8 @@ namespace parse {
         ~Function();
     };
 
+    struct WhileStatement;
+
     struct Expr {
         OP_TYPES oper;
         Expr *left = nullptr, *right = nullptr;
@@ -58,6 +60,7 @@ namespace parse {
         Item token;
         EXPR_TYPE type;
         Function *func = nullptr;
+        WhileStatement *ws = nullptr;
         ~Expr();
         Expr();
     };
