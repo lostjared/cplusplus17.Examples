@@ -88,10 +88,10 @@ namespace parse {
             delete func;
         func = nullptr;
 
-        if(ws != nullptr)
-            delete ws;
+        if(body != nullptr)
+            delete body;
 
-        ws = nullptr;
+        body = nullptr;
         //std::cout << "deleted expression\n";
      }
 
@@ -114,18 +114,6 @@ namespace parse {
             }
         }
     }
-
-    WhileStatement::~WhileStatement() {
-        if(expression != nullptr)
-            delete expression;
-
-        expression = nullptr;
-
-        if(body != nullptr)
-            delete body;
-        body = nullptr;
-    }
-
 
    Procedure::Procedure() {
 
@@ -334,15 +322,19 @@ namespace parse {
               body->statements.push_back(s);
               consume(OP_SEMI_COLON);
           } else if(match(KEY_IF)) {
-              /*
-              Statement *s = new Statement();
-              s->type = STATE_IF;
-              parseIf(body, s);
-              if(block == nullptr)
-                body.statements.push_back(s);
-             else
-                block->statements.push_back(s);*/
+
                 getToken();
+          } else if(match(KEY_WHILE)) {
+              Statement *s = new Statement();
+              s->type = STATE_WHILE;
+              consume(KEY_WHILE);
+              consume(OP_OP);
+              Expr *e = parseExpr();
+              consume(OP_CP);
+              Body *b = parseBlock();
+              e->body = b;
+              s->expression = e;
+              body->statements.push_back(s);
           }
           else if(match(TOKEN_ID) && match_lookahead(OP_EQUAL)) {
              Statement *s = new Statement();
@@ -395,6 +387,16 @@ namespace parse {
            } else {
                
            }
+       }
+       return body;
+   }
+
+   Body *AST::parseBlock() {
+       Body *body = new Body();
+       consume(OP_BLOCK_O);
+       parseStatement(body);
+       if(match({OP_BLOCK_C})) {
+           consume(OP_BLOCK_C);
        }
        return body;
    }
@@ -827,6 +829,16 @@ namespace parse {
                         eval(i->expression);
                         bend.put(Inc(O_POP, Variable(), Variable()));
                         break;
+
+                    case STATE_WHILE:
+
+                    bend.put(Inc(O_LABEL, Variable("Label"), Variable()));
+                    if(i->expression != nullptr)
+                        eval(i->expression);
+
+                    bend.put(Inc(O_BE, Variable("Label"), Variable()));
+
+                    break;
                    default:
                    break;
                    case STATE_IF:

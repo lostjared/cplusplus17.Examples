@@ -51,8 +51,9 @@ namespace parse {
         ~Function();
     };
 
-    struct WhileStatement;
+    struct Body;
 
+ 
     struct Expr {
         OP_TYPES oper;
         Expr *left = nullptr, *right = nullptr;
@@ -60,14 +61,12 @@ namespace parse {
         Item token;
         EXPR_TYPE type;
         Function *func = nullptr;
-        WhileStatement *ws = nullptr;
+        Body *body = nullptr;
         ~Expr();
         Expr();
     };
 
-    enum STATEMENT_TYPE { STATE_LET, STATE_ASSIGN, STATE_FUNC, STATE_RETURN, STATE_EXPR, STATE_IF, STATE_EMPTY };
-
-    struct Body;
+    enum STATEMENT_TYPE { STATE_LET, STATE_ASSIGN, STATE_FUNC, STATE_RETURN, STATE_EXPR, STATE_IF,STATE_WHILE,STATE_EMPTY };
 
     struct Statement {
         std::string var;
@@ -77,16 +76,7 @@ namespace parse {
         ~Statement();
         Statement();
     };
-
-    struct WhileStatement {
-        std::string var;
-        VAR_TYPE_INFO var_type;
-        Expr *expression = nullptr;
-        STATEMENT_TYPE type = STATE_EMPTY;
-        Body *body = nullptr;
-        ~WhileStatement();
-    };
-    
+  
     struct Body {
         std::vector<Statement *> statements;
         ~Body();
@@ -130,6 +120,7 @@ namespace parse {
         Expr *parseAssignment();
         Expr *parseStringAssignment();
         Body *parseBody(Body *body);
+        Body *parseBlock();
         void parseCode();
         TreeNode *rootNode();
         Expr *parseExpr();
