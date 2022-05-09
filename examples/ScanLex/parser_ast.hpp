@@ -147,6 +147,7 @@ namespace parse {
         void eval(Expr *e);
         void gen_eval(Expr *e);
         void buildBackend(TreeNode *n);
+        void buildBackendBody(Body *body);
         void printBackend(std::ostream &out);
         void run();
     protected:

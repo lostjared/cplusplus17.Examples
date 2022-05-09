@@ -793,25 +793,22 @@ namespace parse {
         }
    }
 
-   void AST::buildBackend(TreeNode *n) {
-    switch(n->type) {
-           case NODE_PROC: {
-                for(auto &b : n->proc.body) {
-                    for(auto &i : b->statements) {
-                        switch(i->type) {
-                        case STATE_LET: {
-                            switch(i->var_type) {
-                            case VAR_DOUBLE:
-                                bend.decl(i->var, 0);
-                                if(i->expression != 0)
-                                     eval(i->expression);   
-                                bend.put(Inc(O_ASSIGN, Variable(i->var, VAR_DOUBLE), Variable()));                        
+  void AST::buildBackendBody(Body *body) {
+      for(auto &i : body->statements) {
+            switch(i->type) {
+                case STATE_LET: {
+                   switch(i->var_type) {
+                        case VAR_DOUBLE:
+                            bend.decl(i->var, 0);
+                            if(i->expression != 0)
+                                eval(i->expression);   
+                           bend.put(Inc(O_ASSIGN, Variable(i->var, VAR_DOUBLE), Variable()));                        
                            break;
-                           case VAR_STRING:
-                                bend.decl(i->var, "");
-                                if(i->expression != 0)
-                                    eval(i->expression);
-                                bend.put(Inc(O_SASSIGN, Variable(i->var, VAR_STRING), Variable()));
+                        case VAR_STRING:
+                            bend.decl(i->var, "");
+                           if(i->expression != 0)
+                                eval(i->expression);
+                           bend.put(Inc(O_SASSIGN, Variable(i->var, VAR_STRING), Variable()));
                            break;
                            default:
                            break;
@@ -836,6 +833,9 @@ namespace parse {
                     if(i->expression != nullptr)
                         eval(i->expression);
 
+                    if(i->expression->body != nullptr)
+                        buildBackendBody(i->expression->body);
+
                     bend.put(Inc(O_BE, Variable("Label"), Variable()));
 
                     break;
@@ -844,16 +844,22 @@ namespace parse {
                    case STATE_IF:
                    break;
                }
-           }
+      }
+  }
 
-           //n->proc.id.print();
+
+   void AST::buildBackend(TreeNode *n) {
+
+       switch(n->type) {
+           case NODE_PROC: {
+               for(auto &b : n->proc.body) {
+                   buildBackendBody(b);
+               }
            }
            break;
            default:
            break;
-           }
-        }
-        
+       }
         for(int i = 0; i < n->children.size(); ++i)
         buildBackend(n->children[i]);
    }
