@@ -827,17 +827,24 @@ namespace parse {
                         bend.put(Inc(O_POP, Variable(), Variable()));
                         break;
 
-                    case STATE_WHILE:
+                    case STATE_WHILE: {
+                        static int counter = 0;
+                        std::ostringstream stream;
+                        stream << "LW" << counter++;
+                        std::string label = stream.str();
+                        bend.put(Inc(O_LABEL, Variable(label), Variable()));
+                       
 
-                    bend.put(Inc(O_LABEL, Variable("Label"), Variable()));
-                    if(i->expression != nullptr)
-                        eval(i->expression);
+                     
+                        if(i->expression != nullptr && i->expression->body != nullptr)
+                            buildBackendBody(i->expression->body);
+                        
+                        if(i->expression != nullptr)
+                            eval(i->expression);
+                            
+                        bend.put(Inc(O_BE, Variable(label), Variable()));
 
-                    if(i->expression->body != nullptr)
-                        buildBackendBody(i->expression->body);
-
-                    bend.put(Inc(O_BE, Variable("Label"), Variable()));
-
+                    }
                     break;
                    default:
                    break;
