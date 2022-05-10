@@ -310,6 +310,12 @@ namespace parse {
 
   void AST::parseStatement(Body *body) {
       while(token.keyword != KEY_END) {
+
+          if(token.oper == OP_BLOCK_C) {
+              getToken();
+              return;
+          }
+
           if(match(KEY_RETURN)) {
               Statement *s = new Statement();
               s->expression = parseReturn();
@@ -835,21 +841,14 @@ namespace parse {
                         std::string label2;
                         stream << "_OVER";
                         label2 = stream.str();
-
                         bend.put(Inc(O_LABEL, Variable(label), Variable()));
-                       
-
                         if(i->expression != nullptr)
                             eval(i->expression);
-
                         bend.put(Inc(O_BNE, Variable(label2), Variable()));
-
                         if(i->expression != nullptr && i->expression->body != nullptr)
                             buildBackendBody(i->expression->body);
-
                          bend.put(Inc(O_B, Variable(label), Variable()));
                          bend.put(Inc(O_LABEL, Variable(label2), Variable()));
-                      
                     }
                     break;
                    default:
