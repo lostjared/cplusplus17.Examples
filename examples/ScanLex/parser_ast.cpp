@@ -310,12 +310,9 @@ namespace parse {
 
   void AST::parseStatement(Body *body) {
       while(token.keyword != KEY_END) {
-
           if(token.oper == OP_BLOCK_C) {
-              getToken();
               return;
           }
-
           if(match(KEY_RETURN)) {
               Statement *s = new Statement();
               s->expression = parseReturn();
