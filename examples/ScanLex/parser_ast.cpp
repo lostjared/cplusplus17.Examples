@@ -858,16 +858,19 @@ namespace parse {
 
   void AST::buildCode() {
     buildBackend(rootNode());
-    bend.put(Inc(O_EXIT, Variable(), Variable()));
+    
   }
 
    void AST::buildBackend(TreeNode *n) {
 
        switch(n->type) {
            case NODE_PROC: {
+
                for(auto &b : n->proc.body) {
                    buildBackendBody(b);
                }
+               if(n->proc.name == "main")
+                    bend.put(Inc(O_EXIT, Variable(), Variable()));
            }
            break;
            default:
