@@ -9,8 +9,8 @@ namespace backend {
 
     using namespace scan;
 
-    enum OPERATION_TYPE { O_LABEL=0, O_SASSIGN, O_ASSIGN, O_ADD, O_SUB, O_MUL, O_DIV, O_CALL, O_PUSH, O_POP, O_EE, O_NE, O_LT, O_GT, O_LTE, O_GTE, O_B, O_BNE, O_BE, O_JE };
-    static const char *op_types[] = {"LABEL", "SASSIGN", "ASSIGN", "ADD", "SUB", "MUL", "DIV", "CALL", "PUSH","POP","EE","NE","LT","GT", "LTE", "GTE","B", "BNE", "BE", "JE", 0};
+    enum OPERATION_TYPE { O_LABEL=0, O_SASSIGN, O_ASSIGN, O_ADD, O_SUB, O_MUL, O_DIV, O_CALL, O_PUSH, O_POP, O_EE, O_NE, O_LT, O_GT, O_LTE, O_GTE, O_B, O_BNE, O_BE, O_JE, O_EXIT };
+    static const char *op_types[] = {"LABEL", "SASSIGN", "ASSIGN", "ADD", "SUB", "MUL", "DIV", "CALL", "PUSH","POP","EE","NE","LT","GT", "LTE", "GTE","B", "BNE", "BE", "JE", "EXIT", 0};
 
     class RuntimeException {
     public:
@@ -20,6 +20,8 @@ namespace backend {
     protected:
         std::string text;
     };
+
+    class RuntimeSuccess {};
 
 
     class Inc {

@@ -146,6 +146,7 @@ namespace parse {
         void parExpr(OP_TYPES oper, Expr *left, Expr *right);
         void eval(Expr *e);
         void gen_eval(Expr *e);
+        void buildCode();
         void buildBackend(TreeNode *n);
         void buildBackendBody(Body *body);
         void printBackend(std::ostream &out);

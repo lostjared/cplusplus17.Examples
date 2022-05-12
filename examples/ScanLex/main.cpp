@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
                 //ast.print(std::cout);
                 ast.buildTree();
                 //  ast.printTree(std::cout, ast.rootNode());
-                ast.buildBackend(ast.rootNode());
+                ast.buildCode();
                 ast.printBackend(std::cout);
                 ast.run();
             } else {

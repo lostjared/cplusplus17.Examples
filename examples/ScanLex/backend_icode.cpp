@@ -266,6 +266,10 @@ namespace backend {
                         stack.push_back(result);                      
                     }
                     break;
+                    case O_EXIT: {
+                        throw RuntimeSuccess();
+                    }
+                    break;
                     default:
                     break;
                 }
@@ -274,6 +278,8 @@ namespace backend {
 
         } catch(RuntimeException &e) {
             std::cerr << e.error() << "\n";
+        } catch(RuntimeSuccess &s) {
+            std::cout << "... exited normally.\n";
         }
         vars.print();
     }

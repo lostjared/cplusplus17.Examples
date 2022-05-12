@@ -856,6 +856,10 @@ namespace parse {
       }
   }
 
+  void AST::buildCode() {
+    buildBackend(rootNode());
+    bend.put(Inc(O_EXIT, Variable(), Variable()));
+  }
 
    void AST::buildBackend(TreeNode *n) {
 
