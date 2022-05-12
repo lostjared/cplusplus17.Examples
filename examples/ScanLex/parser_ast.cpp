@@ -398,9 +398,9 @@ namespace parse {
        Body *body = new Body();
        consume(OP_BLOCK_O);
        parseStatement(body);
-       if(match({OP_BLOCK_C})) {
+       //if(match({OP_BLOCK_C})) {
            consume(OP_BLOCK_C);
-       }
+       //}
        return body;
    }
 
