@@ -865,7 +865,7 @@ namespace parse {
 
        switch(n->type) {
            case NODE_PROC: {
-
+               bend.put(Inc(O_LABEL, Variable(n->proc.name), Variable()));
                for(auto &b : n->proc.body) {
                    buildBackendBody(b);
                }

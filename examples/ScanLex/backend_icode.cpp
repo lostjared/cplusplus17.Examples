@@ -286,6 +286,12 @@ namespace backend {
 
     void BackEnd::print(std::ostream &out) {
         for(int i = 0; i < instruct.size(); ++i) {
+
+            if(instruct[i].opc == O_LABEL) {
+                out << instruct[i].value1.value << ":" << "\n";
+                continue;
+            }
+            
             if(instruct[i].value1.type == VAR_EMPTY && instruct[i].value2.type == VAR_EMPTY)
                 out << op_types[instruct[i].opc] << "\n";
             else if(instruct[i].value2.type == VAR_EMPTY)
