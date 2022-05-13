@@ -278,6 +278,14 @@ namespace backend {
                         continue;
                     }
                     break;
+                    case O_BNE: {
+                        Variable value = popVal();
+                        if(value.val.fval == 0) {
+                            ip = labels[instruct[ip].value1.value];
+                            continue;
+                        }
+                    }
+                    break;
                     default:
                     break;
                 }
