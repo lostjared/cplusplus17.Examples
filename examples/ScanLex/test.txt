@@ -1,7 +1,10 @@
 
 proc main() 
 begin
-let x = 10*10;
-let p := "test 123";
-echo("length of p: (", p, ") ", strlen(p), " value is: ", 10*10, " x: ", x);
+let s := "test one two three";
+let x = 0;
+while(x < 10) {
+    echo("Hello: ", x);
+    x = x + 1;
+}
 end;
