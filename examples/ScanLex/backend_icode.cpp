@@ -94,6 +94,9 @@ namespace backend {
 
     void BackEnd::put(const Inc &i) {
         instruct.push_back(i);
+        if(i.opc == O_LABEL) {
+            labels[i.value1.value] = instruct.size()-1;
+        }
     }
 
     void BackEnd::decl(const std::string &var, double d) {
@@ -268,6 +271,11 @@ namespace backend {
                     break;
                     case O_EXIT: {
                         throw RuntimeSuccess();
+                    }
+                    break;
+                    case O_B: {
+                        ip = labels[instruct[ip].value1.value];
+                        continue;
                     }
                     break;
                     default:

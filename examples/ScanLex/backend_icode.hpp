@@ -3,6 +3,7 @@
 
 #include<iostream>
 #include<string>
+#include<unordered_map>
 #include"backend_func.hpp"
 
 namespace backend {
@@ -49,6 +50,7 @@ namespace backend {
         SymbolTable vars;
         double popVal();
         Variable popVar();
+        std::unordered_map<std::string, int> labels;
     };
 
 }
