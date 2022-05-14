@@ -1,0 +1,10 @@
+
+proc main() 
+begin
+let s := "test one two three";
+let x = 0;
+while(x < 10) {
+    echo("Hello: ", x);
+    x = x + 1;
+}
+end;
