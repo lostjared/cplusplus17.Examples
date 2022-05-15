@@ -51,6 +51,7 @@ namespace backend {
         double popVal();
         Variable popVar();
         std::unordered_map<std::string, int> labels;
+        std::unordered_map<std::string, int> procs;
     };
 
 }

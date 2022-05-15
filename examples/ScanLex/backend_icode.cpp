@@ -96,6 +96,8 @@ namespace backend {
         instruct.push_back(i);
         if(i.opc == O_LABEL) {
             labels[i.value1.value] = instruct.size()-1;
+        } else if(i.opc == O_PROC) {
+            procs[i.value1.value] = instruct.size()-1;
         }
     }
 
