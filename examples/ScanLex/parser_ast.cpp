@@ -865,12 +865,14 @@ namespace parse {
 
        switch(n->type) {
            case NODE_PROC: {
-               bend.put(Inc(O_LABEL, Variable(n->proc.name), Variable()));
+               bend.put(Inc(O_PROC, Variable(n->proc.name), Variable()));
                for(auto &b : n->proc.body) {
                    buildBackendBody(b);
                }
                if(n->proc.name == "main")
                     bend.put(Inc(O_EXIT, Variable(), Variable()));
+                else
+                    bend.put(Inc(O_RET, Variable(), Variable()));
            }
            break;
            default:
