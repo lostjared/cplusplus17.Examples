@@ -113,6 +113,7 @@ namespace backend {
     void BackEnd::go() {
         try {
             int ip = 0;
+            ip = procs["main"];
             while(ip < instruct.size()) {
                 OPERATION_TYPE type = instruct[ip].opc;
                 switch(type) {
