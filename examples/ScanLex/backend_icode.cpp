@@ -112,15 +112,25 @@ namespace backend {
     int BackEnd::lookupLabel(const std::string &name) {
         auto it = labels.find(name);
         if(it != labels.end())
-            return labels[name];
+            return it->second;
 
         return -1;
     }
-    
+
+    int BackEnd::lookupProc(const std::string &name) {
+        auto it = procs.find(name);
+        if(it != procs.end())
+            return it->second;
+        return -1;
+    }
+
     void BackEnd::go() {
         try {
             int ip = 0;
-            ip = procs["main"];
+            int proc_ = lookupProc("main");
+            if(proc_ == -1)
+                throw RuntimeException("Could not find main proc");
+            ip = proc_;
             while(ip < instruct.size()) {
                 OPERATION_TYPE type = instruct[ip].opc;
                 switch(type) {

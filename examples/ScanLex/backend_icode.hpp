@@ -44,6 +44,7 @@ namespace backend {
         void decl(const std::string &var, const std::string &value);
         void runtimeTypeCheck(const Variable &v, const VAR_TYPE_INFO &i);
         int lookupLabel(const std::string &name);
+        int lookupProc(const std::string &name);
     protected:
         std::vector<Inc> instruct;
         std::vector<Variable> stack;
