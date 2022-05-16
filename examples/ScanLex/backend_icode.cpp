@@ -109,6 +109,13 @@ namespace backend {
         vars.enter(var, value);
     }
 
+    int BackEnd::lookupLabel(const std::string &name) {
+        auto it = labels.find(name);
+        if(it != labels.end())
+            return labels[name];
+
+        return -1;
+    }
     
     void BackEnd::go() {
         try {
