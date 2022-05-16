@@ -284,14 +284,26 @@ namespace backend {
                     }
                     break;
                     case O_B: {
-                        ip = labels[instruct[ip].value1.value];
+                        int lbl = lookupLabel(instruct[ip].value1.value);
+                        if(lbl == -1) {
+                            std::ostringstream stream;
+                            stream << "Label: " << instruct[ip].value1.value << " not found!.\n";
+                            throw RuntimeException(stream.str());
+                        }
+                        ip = lbl;
                         continue;
                     }
                     break;
                     case O_BNE: {
+                        int lbl = lookupLabel(instruct[ip].value1.value);
+                        if(lbl == -1) {
+                            std::ostringstream stream;
+                            stream << "Label: " << instruct[ip].value1.value << " not found!.\n";
+                            throw RuntimeException(stream.str());
+                        }
                         Variable value = popVal();
                         if(value.val.fval == 0) {
-                            ip = labels[instruct[ip].value1.value];
+                            ip = lbl;
                             continue;
                         }
                     }
