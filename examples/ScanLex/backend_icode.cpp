@@ -318,6 +318,20 @@ namespace backend {
                         }
                     }
                     break;
+                    case O_BE: {
+                        int lbl = lookupLabel(instruct[ip].value1.value);
+                        if(lbl == -1) {
+                            std::ostringstream stream;
+                            stream << "Label: " << instruct[ip].value1.value << " not found!.\n";
+                            throw RuntimeException(stream.str());
+                        }
+                        Variable value = popVal();
+                        if(value.val.fval == 1) {
+                            ip = lbl;
+                            continue;
+                        }
+                    }
+                    break;
                     default:
                     break;
                 }
