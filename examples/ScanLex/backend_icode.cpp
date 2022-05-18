@@ -134,6 +134,9 @@ namespace backend {
             while(ip < instruct.size()) {
                 OPERATION_TYPE type = instruct[ip].opc;
                 switch(type) {
+                    case O_LABEL:
+                    case O_PROC:
+                    break;
                     case O_POP:
                     if(!stack.empty()) {
                         stack.pop_back();
