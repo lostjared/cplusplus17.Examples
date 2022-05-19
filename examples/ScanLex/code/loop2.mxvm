@@ -1,0 +1,14 @@
+proc main() 
+begin
+
+let i = 0;
+whie(i < 100) {
+let z  = 0;
+while(z < 100) {
+z = z + 1;
+echo("i: ", i, " z: ", z);
+}
+i = i + 1;
+}
+
+end;
