@@ -97,9 +97,7 @@ int main(int argc, char **argv) {
             
             if(ast.scan()) {
                file.close();
-                //ast.print(std::cout);
                 ast.buildTree();
-                //  ast.printTree(std::cout, ast.rootNode());
                 ast.buildCode();
                 ast.printBackend(std::cout);
                 ast.run();
