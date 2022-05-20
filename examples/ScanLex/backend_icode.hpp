@@ -10,8 +10,8 @@ namespace backend {
 
     using namespace scan;
 
-    enum OPERATION_TYPE { O_LABEL=0, O_SASSIGN, O_ASSIGN, O_ADD, O_SUB, O_MUL, O_DIV, O_CALL, O_PUSH, O_POP, O_EE, O_NE, O_LT, O_GT, O_LTE, O_GTE, O_B, O_BNE, O_BE, O_JE, O_EXIT, O_PROC, O_RET };
-    static const char *op_types[] = {"LABEL", "SASSIGN", "ASSIGN", "ADD", "SUB", "MUL", "DIV", "CALL", "PUSH","POP","EE","NE","LT","GT", "LTE", "GTE","B", "BNE", "BE", "JE", "EXIT", "PROC","RET", 0};
+    enum OPERATION_TYPE { O_LABEL=0, O_SASSIGN, O_ASSIGN, O_ADD, O_SUB, O_MUL, O_DIV, O_CALL, O_PUSH, O_POP, O_EE, O_NE, O_LT, O_GT, O_LTE, O_GTE, O_B, O_BNE, O_BE, O_JE, O_EXIT, O_PROC, O_RET, O_CALLF };
+    static const char *op_types[] = {"LABEL", "SASSIGN", "ASSIGN", "ADD", "SUB", "MUL", "DIV", "CALL", "PUSH","POP","EE","NE","LT","GT", "LTE", "GTE","B", "BNE", "BE", "JE", "EXIT", "PROC","RET","CALLF",0};
 
     class RuntimeException {
     public:
@@ -47,6 +47,7 @@ namespace backend {
         int lookupProc(const std::string &name);
     protected:
         std::vector<Inc> instruct;
+        std::vector<int> return_stack;
         std::vector<Variable> stack;
         FunctionTable func_table;
         SymbolTable vars;
