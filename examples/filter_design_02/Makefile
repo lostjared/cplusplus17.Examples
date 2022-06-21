@@ -1,6 +1,6 @@
 OBJ=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
 PROGRAM=dmd-example
-CFLAGS= -std=c++17 -O2 `pkg-config acidcam opencv4 --cflags`
+CFLAGS= -std=c++17 -O2 -I. `pkg-config acidcam opencv4 --cflags`
 LDFLAGS= `pkg-config acidcam opencv4 --libs`
 
 %.o: %.cpp

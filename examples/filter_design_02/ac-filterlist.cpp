@@ -1,6 +1,6 @@
 #include "ac-filterlist.hpp"
 
-namespace flist {
+namespace ac {
 
     FilterList::~FilterList() {
     

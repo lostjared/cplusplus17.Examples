@@ -2,11 +2,10 @@
 #define __FILTER_OBJ__H__
 
 #include "ac.h"
-#include "ac-filterobj.hpp"
 #include<iostream>
 #include<deque>
 
-namespace flist {
+namespace ac {
 
 
     class FilterObj {
