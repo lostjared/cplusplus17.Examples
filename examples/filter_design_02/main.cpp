@@ -38,13 +38,17 @@ private:
 
 
 int main(int argc, char **argv) {
-    Filter1 filter1;
-    Filter2 filter2;
-    ac::FilterList list;
-    list.add(&filter1);
-    list.add(&filter2);
-    cv::Mat m = cv::imread("test.png");
-    if(!m.empty())
-    list.exec(m);
+    if(argc == 2) {
+        Filter1 filter1;
+        Filter2 filter2;
+        ac::FilterList list;
+        list.add(&filter1);
+        list.add(&filter2);
+        cv::Mat m = cv::imread(argv[1]);
+        if(!m.empty())
+            list.exec(m);
+    } else
+        std::cerr << "Error use: " << argv[0] << " image_path\n";
+    
     return 0;
 }
