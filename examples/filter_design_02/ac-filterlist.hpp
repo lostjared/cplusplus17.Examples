@@ -4,6 +4,7 @@
 #include "ac.h"
 #include<iostream>
 #include<deque>
+#include<memory>
 
 namespace ac {
 
@@ -24,7 +25,7 @@ namespace ac {
         void add(FilterObj *obj);
         void exec(cv::Mat &frame);
     private:
-        std::deque<FilterObj *> objects;
+        std::deque<std::unique_ptr<FilterObj>> objects;
     };
 
 }

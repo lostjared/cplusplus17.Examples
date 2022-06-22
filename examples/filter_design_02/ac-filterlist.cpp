@@ -7,7 +7,7 @@ namespace ac {
     }
 
     void FilterList::add(FilterObj *obj) {
-        objects.push_back(obj);
+        objects.push_back(std::unique_ptr<FilterObj>(obj));
     }
     
     void FilterList::exec(cv::Mat &frame) {
