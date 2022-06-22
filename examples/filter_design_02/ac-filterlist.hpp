@@ -10,6 +10,7 @@ namespace ac {
 
     class FilterObj {
     public:
+        virtual ~FilterObj() = default;
         virtual void init() = 0;
         virtual void update(cv::Mat &frame) = 0;
         virtual void cleanup() = 0;
