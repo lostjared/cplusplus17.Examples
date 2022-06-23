@@ -2,13 +2,13 @@
 #include<iostream>
 
 
-class Filter1 : public ac::FilterObj {
+class Filter1_FillRect : public ac::FilterObj {
 public:
-    Filter1() {
+    Filter1_FillRect(int xx = 0, int yy = 0) : x{0}, y{0} {
         init();
     }
     
-    ~Filter1() {
+    ~Filter1_FillRect() {
         cleanup();
     }
     
@@ -17,24 +17,29 @@ public:
     }
     
     void update(cv::Mat &frame) override {
-        std::cout << "x: " << x << " y: " << y << "\n";
+        for(int z = y; z < frame.rows; ++z) {
+            for(int i = x; i < frame.cols; ++i) {
+                frame.at<cv::Vec3b>(z, i) = color;
+            }
+        }
     }
     
     void cleanup() override {
         std::cout << "Filter1 cleanup...\n";
     }
 private:
-    int x = 10, y = 20;
+    int x = 0, y = 0;
+    cv::Vec3b color{0, 0, 0};
 };
 
-class Filter2 : public ac::FilterObj {
+class Filter2_FillHalfGreen : public ac::FilterObj {
 public:
     
-    Filter2() {
+    Filter2_FillHalfGreen() {
         init();
     }
     
-    ~Filter2() {
+    ~Filter2_FillHalfGreen() {
         cleanup();
     }
     
@@ -48,21 +53,26 @@ public:
     }
     
     void update(cv::Mat &frame) override {
-        std::cout << "z: " << z << " q: " << q << "\n";
+        for(int z = frame.rows/2; z < frame.rows; ++z) {
+            for(int i = frame.cols/2; i < frame.cols; ++i) {
+                frame.at<cv::Vec3b>(z, i) = cv::Vec3b(0, 255, 0);
+            }
+        }
     }
     private:
-    int z = 50, q = 100;
 };
 
 
 int main(int argc, char **argv) {
     if(argc == 2) {
         ac::FilterList list;
-        list.add(new Filter1());
-        list.add(new Filter2());
+        list.add(new Filter1_FillRect());
+        list.add(new Filter2_FillHalfGreen());
         cv::Mat m = cv::imread(argv[1]);
         if(!m.empty())
             list.exec(m);
+        cv::imwrite("output.png", m);
+        std::cout << "output: output.png\n";
     } else
         std::cerr << "Error use: " << argv[0] << " image_path\n";
     
