@@ -6,6 +6,18 @@ namespace ac {
     
     }
 
+    
+    FilterList::FilterList(FilterList &&l) : objects{std::move(l.objects)} {
+    
+    }
+
+
+    FilterList &FilterList::operator=(FilterList &&l) {
+        objects = std::move(l.objects);
+        return *this;
+    }
+
+
     void FilterList::add(FilterObj *obj) {
         objects.push_back(std::unique_ptr<FilterObj>(obj));
     }

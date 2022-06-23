@@ -4,7 +4,6 @@
 
 class Filter1 : public ac::FilterObj {
 public:
-    
     Filter1() {
         init();
     }
@@ -30,6 +29,7 @@ private:
 
 class Filter2 : public ac::FilterObj {
 public:
+    
     Filter2() {
         init();
     }

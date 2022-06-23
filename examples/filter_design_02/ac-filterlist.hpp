@@ -21,6 +21,11 @@ namespace ac {
     class FilterList {
     public:
         FilterList() = default;
+        FilterList(const FilterList &l) = delete;
+        FilterList(FilterList &&l);
+        
+        FilterList &operator=(const FilterList &l) = delete;
+        FilterList &operator=(FilterList &&l);
         ~FilterList();
         void add(FilterObj *obj);
         void exec(cv::Mat &frame);
