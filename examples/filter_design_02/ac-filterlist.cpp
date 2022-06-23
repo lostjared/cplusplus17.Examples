@@ -27,4 +27,14 @@ namespace ac {
             i->update(frame);
     }
 
+    void FilterList::clear() {
+        if(!objects.empty())
+            objects.erase(objects.begin(), objects.end());
+    }
+    
+    void FilterList::pop() {
+        objects.pop_back();
+    }
+
+
 }

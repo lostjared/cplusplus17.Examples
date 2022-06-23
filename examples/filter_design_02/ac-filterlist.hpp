@@ -28,6 +28,8 @@ namespace ac {
         FilterList &operator=(FilterList &&l);
         ~FilterList();
         void add(FilterObj *obj);
+        void clear();
+        void pop();
         void exec(cv::Mat &frame);
     private:
         std::deque<std::unique_ptr<FilterObj>> objects;
