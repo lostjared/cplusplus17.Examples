@@ -27,6 +27,12 @@ namespace ac {
             i->update(frame);
     }
 
+    void FilterList::call(int n, cv::Mat &frame) {
+        if(n >= 0 && n < objects.size())
+            objects[n]->update(frame);
+    }
+
+
     void FilterList::clear() {
         if(!objects.empty())
             objects.erase(objects.begin(), objects.end());

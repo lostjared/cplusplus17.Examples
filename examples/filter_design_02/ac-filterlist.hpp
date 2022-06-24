@@ -31,6 +31,7 @@ namespace ac {
         void clear();
         void pop();
         void exec(cv::Mat &frame);
+        void call(int n, cv::Mat &frame);
     private:
         std::deque<std::unique_ptr<FilterObj>> objects;
     };
