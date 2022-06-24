@@ -37,6 +37,12 @@ namespace ac {
         if(!objects.empty())
             objects.erase(objects.begin(), objects.end());
     }
+
+    void FilterList::rmv(int n) {
+        if(n >= 0 && n < objects.size())
+            objects.erase(objects.begin()+n);
+    }
+
     
     void FilterList::pop() {
         objects.pop_back();

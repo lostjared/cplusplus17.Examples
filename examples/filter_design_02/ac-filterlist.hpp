@@ -30,6 +30,7 @@ namespace ac {
         void add(FilterObj *obj);
         void clear();
         void pop();
+        void rmv(int n);
         void exec(cv::Mat &frame);
         void call(int n, cv::Mat &frame);
     private:
