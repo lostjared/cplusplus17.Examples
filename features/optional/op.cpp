@@ -29,6 +29,8 @@ int main() {
                 std::cout << "Print...\n";
                 break;
         }
+    } else {
+        std::cout << "Unknown command: \n";
     }
     
     
