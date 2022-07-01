@@ -2,7 +2,6 @@
 #include<iostream>
 #include<string>
 #include<vector>
-#include<tuple>
 
 using VType = std::variant<int, std::string>;
 
@@ -19,8 +18,11 @@ int main() {
     v1 = 42;
     
     std::cout << v1.index() << ": " << std::get<int>(v1) << "\n";
+
+    v1 = "test";
     
-    
+    std::cout << v1.index() << ": " << std::get<std::string>(v1) << "\n";
+
     
     return 0;
 }
