@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv) {
     std::vector<std::string> vec;
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
     while(!std::cin.eof()) {
         std::string s;
         std::getline(std::cin, s);
