@@ -21,14 +21,16 @@ int main(int argc, char **argv) {
     unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
     if(argc == 1) {
         read_stream(std::cin, vec);
-    } else if(argc == 2) {
-        std::fstream file;
-        file.open(argv[1], std::ios::in);
-        if(file.is_open())
-            read_stream(file, vec);
-        else {
-            std::cerr << "Error could not read file...\n";
-            exit(EXIT_FAILURE);
+    } else if(argc >= 2) {
+        for(int i = 1; i < argc; ++i) {
+            std::fstream file;
+            file.open(argv[i], std::ios::in);
+            if(file.is_open())
+                read_stream(file, vec);
+            else {
+                std::cerr << "Error could not read file...\n";
+                exit(EXIT_FAILURE);
+            }
         }
     }
     std::shuffle(vec.begin(), vec.end(), std::default_random_engine(seed));
