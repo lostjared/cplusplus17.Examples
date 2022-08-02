@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
             if(file.is_open())
                 read_stream(file, vec);
             else {
-                std::cerr << "Error could not read file...\n";
+                std::cerr << "Error could not read file: " << argv[1] << "...\n";
                 exit(EXIT_FAILURE);
             }
         }
