@@ -6,15 +6,7 @@
 #include<chrono>
 #include<random>
 
-
-void read_stream(std::istream &in, std::vector<std::string> &out) {
-    while(!in.eof()) {
-        std::string s;
-        std::getline(in, s);
-        if(in)
-            out.push_back(s);
-    }
-}
+void read_stream(std::istream &in, std::vector<std::string> &out);
 
 int main(int argc, char **argv) {
     std::vector<std::string> vec;
@@ -28,7 +20,7 @@ int main(int argc, char **argv) {
             if(file.is_open())
                 read_stream(file, vec);
             else {
-                std::cerr << "Error could not read file: " << argv[1] << "...\n";
+                std::cerr << argv[0] << ": Error could not read file: " << argv[1] << "...\n";
                 exit(EXIT_FAILURE);
             }
         }
@@ -39,3 +31,13 @@ int main(int argc, char **argv) {
     }
     return 0;
 }
+
+void read_stream(std::istream &in, std::vector<std::string> &out) {
+    while(!in.eof()) {
+        std::string s;
+        std::getline(in, s);
+        if(in)
+            out.push_back(s);
+    }
+}
+
