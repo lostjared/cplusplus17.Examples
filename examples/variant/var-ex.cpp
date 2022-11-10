@@ -18,10 +18,10 @@ public:
 
 class PrintTypes {
 public:
-    void operator()(const ObjectType1 &t) {
+    void operator()(const ObjectType1 &t) const {
         std::cout << "Type1: " << t.x << "\n";
     }
-    void operator()(const ObjectType2 &t) {
+    void operator()(const ObjectType2 &t) const {
         std::cout << "Type2: " << t.x << "\n";
     }
 };
@@ -29,7 +29,7 @@ public:
 using obj_t = std::variant<ObjectType1,ObjectType2>;
 using vobj_t = std::vector<obj_t>;
 
-void printAllTypes(vobj_t &all) {
+void printAllTypes(const vobj_t &all) {
     for(auto &i : all) {
         std::visit(PrintTypes{}, i);
     }
