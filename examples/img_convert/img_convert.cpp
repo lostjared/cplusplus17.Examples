@@ -44,6 +44,21 @@ int main(int argc, char **argv) {
 
 void processFile(std::string inputFile, std::string outputType,bool res, int width, int height, std::string output_path) {
     
+    
+    auto lwr = [](const std::string &text) {
+        std::string t;
+        for(int i = 0; i < text.length(); ++i) {
+            t += tolower(text[i]);
+        }
+        return t;
+    };
+    
+    std::string file_n = lwr(inputFile);
+    if(file_n.find(".txt") == std::string::npos) {
+        std::cerr << "Error file type must be .txt file...\n";
+        exit(EXIT_FAILURE);
+    }
+    
     std::filesystem::path file_path{inputFile};
        
     if(is_directory(file_path)) {
