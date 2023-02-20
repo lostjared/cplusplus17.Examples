@@ -132,9 +132,9 @@ namespace game {
      
     void GameLevel::keydown(char key) {
         if(key == 's') {
-            cam.move(0.001f, 1.0f, 0.0f);
+            cam.move(0.009f, 1.0f, 0.0f);
         } else if(key == 'a') {
-            cam.move(0.001f, -1.0f, 0.0f);
+            cam.move(0.009f, -1.0f, 0.0f);
         }
     }
      
