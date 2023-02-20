@@ -59,6 +59,7 @@ namespace game {
         Camera cam;
         int brick;
         int tsize;
+        float delta;
         const int TILE_W=16;
         const int WINDOW_SIZE_W = 1280/16;
         const int WINDOW_SIZE_H = 720/16;

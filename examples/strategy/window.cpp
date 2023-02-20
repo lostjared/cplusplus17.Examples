@@ -151,4 +151,8 @@ namespace game {
         return EXIT_SUCCESS;
     }
 
+    unsigned int getTicks() {
+        return static_cast<unsigned int>(SDL_GetTicks());
+    }
+
 }

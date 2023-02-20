@@ -1,4 +1,5 @@
 #include"level.hpp"
+#include"window.hpp"
 #include<iostream>
 
 namespace game {
@@ -106,7 +107,6 @@ namespace game {
     }
 
     void GameLevel::draw(RenderObject *ro) {
-
         int start_col = cam.x / tsize;
         int end_col = start_col + (cam.width / tsize);
         int start_row = cam.y / tsize;
@@ -131,10 +131,16 @@ namespace game {
     }
      
     void GameLevel::keydown(char key) {
+
+        unsigned int tick = getTicks();
+        static unsigned int prev_tick = 0;
+        delta = float(tick-prev_tick)/1000;
+        prev_tick = tick;
+        //std::cout << "tick: " << tick << " prev_tick: " << prev_tick << " delta: " << delta << "\n";
         if(key == 's') {
-            cam.move(0.009f, 1.0f, 0.0f);
+            cam.move(std::min(0.009f, delta), 1.0f, 0.0f);
         } else if(key == 'a') {
-            cam.move(0.009f, -1.0f, 0.0f);
+            cam.move(std::min(0.009f, delta), -1.0f, 0.0f);
         }
     }
      

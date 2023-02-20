@@ -18,6 +18,7 @@ namespace game {
         static bool active;
         static GameObject *current_object;
     };
+    unsigned int getTicks();
 }
 
 #endif
