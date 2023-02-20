@@ -21,7 +21,7 @@ namespace game {
     class Camera {
     public:
         Camera(int w, int h, int mx, int my);
-
+        void move(float delta, float dx, float dy);
     protected:
         int x,y,width,height,max_x,max_y,speed;
     

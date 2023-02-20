@@ -5,6 +5,15 @@ namespace game {
 
    Camera::Camera(int w, int h, int mx, int my) : x{0}, y{0}, width{w}, height{h}, max_x{mx}, max_y{my}, speed{512} {}
 
+   void Camera::move(float delta, float dx, float dy) {
+        float dx_val = dx * speed * delta;
+        float dy_val = dy * speed * delta;
+        x += static_cast<int>(dx_val);
+        y += static_cast<int>(dy_val);
+        x = std::max(0, std::min(x, max_x));
+        y = std::max(0, std::min(y, max_y));
+   }
+
 
     Level::Level() : width{0}, height{0}, tiles{nullptr} {
 
