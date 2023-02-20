@@ -18,6 +18,15 @@ namespace game {
         int32_t img = 0;
     };
 
+    class Camera {
+    public:
+        Camera(int w, int h, int mx, int my);
+
+    protected:
+        int x,y,width,height,max_x,max_y,speed;
+    
+    };
+
     class Level {
     public:
         Level();

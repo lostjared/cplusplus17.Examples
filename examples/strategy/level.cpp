@@ -3,6 +3,9 @@
 
 namespace game {
 
+   Camera::Camera(int w, int h, int mx, int my) : x{0}, y{0}, width{w}, height{h}, max_x{mx}, max_y{my}, speed{512} {}
+
+
     Level::Level() : width{0}, height{0}, tiles{nullptr} {
 
     }
