@@ -27,7 +27,7 @@ namespace game {
         void init(int w, int h, int mx, int my);
         void move(float delta, float dx, float dy);
     protected:
-        int x,y,width,height,max_x,max_y,speed;
+        int x,y,width,height,max_x,max_y,speed_x,speed_y;
         friend class GameLevel;    
     };
 
@@ -61,10 +61,12 @@ namespace game {
         int tsize;
         float delta;
         const int TILE_W=16;
-        const int WINDOW_SIZE_W = 1280/16;
-        const int WINDOW_SIZE_H = 720/16;
+        static const int WINDOW_SIZE_W = 1280/16;
+        static const int WINDOW_SIZE_H = 720/16;
     };
 
+    static const int WINDOW_SIZE_WIDTH = 1280;
+    static const int WINDOW_SIZE_HEIGHT = 720;
 }
 
 #endif

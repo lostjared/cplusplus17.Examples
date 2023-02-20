@@ -97,6 +97,26 @@ namespace game {
             height = h;
             return true;
         }
+
+        unsigned int getTicks() override {
+            return static_cast<unsigned int>(SDL_GetTicks());
+        }
+
+        bool keyDown(const Key &c) override {
+            const Uint8 *keys = SDL_GetKeyboardState(0);
+            switch(c) {
+                case Key::KEY_LEFT:
+                if(keys[SDL_SCANCODE_LEFT]) return true; 
+                break;
+                case Key::KEY_RIGHT:
+                if(keys[SDL_SCANCODE_RIGHT]) return true;
+                break;
+                default:
+                return false;
+            }
+            return false;
+        }
+
     };
 
     bool Window::active;
@@ -150,9 +170,4 @@ namespace game {
         }
         return EXIT_SUCCESS;
     }
-
-    unsigned int getTicks() {
-        return static_cast<unsigned int>(SDL_GetTicks());
-    }
-
 }

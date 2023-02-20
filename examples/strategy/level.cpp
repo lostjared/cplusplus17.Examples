@@ -4,7 +4,7 @@
 
 namespace game {
 
-   Camera::Camera(int w, int h, int mx, int my) : x{0}, y{0}, width{w}, height{h}, max_x{mx}, max_y{my}, speed{512} {}
+   Camera::Camera(int w, int h, int mx, int my) : x{0}, y{0}, width{w}, height{h}, max_x{mx}, max_y{my}, speed_x{WINDOW_SIZE_WIDTH}, speed_y{WINDOW_SIZE_HEIGHT} {}
 
    void Camera::init(int w, int h, int mx, int my) {
         x = 0;
@@ -13,12 +13,13 @@ namespace game {
         height = h;
         max_x = mx;
         max_y = my;
-        speed = 1280;
+        speed_x = WINDOW_SIZE_WIDTH;
+        speed_y = WINDOW_SIZE_HEIGHT;
    }
 
    void Camera::move(float delta, float dx, float dy) {
-        float dx_val = dx * speed * delta;
-        float dy_val = dy * speed * delta;
+        float dx_val = dx * speed_x * delta;
+        float dy_val = dy * speed_y * delta;
         x += static_cast<int>(dx_val);
         y += static_cast<int>(dy_val);
         x = std::max(0, std::min(x, max_x));
@@ -91,8 +92,8 @@ namespace game {
     }
 
     void GameLevel::init(RenderObject *ro) {
-        int max_x = ((WINDOW_SIZE_W*2) * 16 - 1280) -1;
-        int max_y = ((WINDOW_SIZE_H*2) * 16 - 720) -1;
+        int max_x = ((WINDOW_SIZE_W*2) * 16 - WINDOW_SIZE_WIDTH) -1;
+        int max_y = ((WINDOW_SIZE_H*2) * 16 - WINDOW_SIZE_HEIGHT) -1;
         tsize = 16;
         cam.init(1280, 720, max_x, max_y);
         level.create(WINDOW_SIZE_W*2, WINDOW_SIZE_H*2, Tile{});
@@ -104,6 +105,7 @@ namespace game {
         }
         std::cout << "Created: " << level.width << ":" << level.height << "\n";
         brick = ro->loadImage("img/brick.bmp");
+        delta = 0;
     }
 
     void GameLevel::draw(RenderObject *ro) {
@@ -127,21 +129,24 @@ namespace game {
                     ro->drawAt(brick, xx, yy);                 
                 }
             }
-        }        
+        }       
+
+        unsigned int tick = ro->getTicks();
+        static unsigned int prev_tick = 0;
+        delta = float(tick-prev_tick)/1000;
+        prev_tick = tick; 
+        //std::cout << "tick: " << tick << " prev_tick: " << prev_tick << " delta: " << delta << "\n";
+        if(ro->keyDown(Key::KEY_RIGHT)) {
+            cam.move(std::min(0.009f, delta), 1.0f, 0.0f);
+        } else if(ro->keyDown(Key::KEY_LEFT)) {
+            cam.move(std::min(0.009f, delta), -1.0f, 0.0f);
+        }
+
     }
      
     void GameLevel::keydown(char key) {
 
-        unsigned int tick = getTicks();
-        static unsigned int prev_tick = 0;
-        delta = float(tick-prev_tick)/1000;
-        prev_tick = tick;
-        //std::cout << "tick: " << tick << " prev_tick: " << prev_tick << " delta: " << delta << "\n";
-        if(key == 's') {
-            cam.move(std::min(0.009f, delta), 1.0f, 0.0f);
-        } else if(key == 'a') {
-            cam.move(std::min(0.009f, delta), -1.0f, 0.0f);
-        }
+  
     }
      
     void GameLevel::keyup(char key) {

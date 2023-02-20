@@ -8,12 +8,16 @@ namespace game {
         unsigned char r,g,b;
     };
 
+    enum Key { KEY_LEFT=1, KEY_RIGHT };
+
     struct RenderObject {
         virtual ~RenderObject() = default;
         virtual void drawAt(int image, int x, int y) = 0;
         virtual void drawAtRect(int image, int x, int y, int w, int h) = 0;
         virtual void printText(int x, int y, const std::string &text, const Color &col) = 0;
         virtual int loadImage(const std::string &text) = 0;
+        virtual unsigned int getTicks() = 0;
+        virtual bool keyDown(const Key &c) = 0;
     };
 
     struct GameObject {
