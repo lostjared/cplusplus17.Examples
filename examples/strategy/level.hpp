@@ -18,13 +18,17 @@ namespace game {
         int32_t img = 0;
     };
 
+    class GameLevel;
+
     class Camera {
     public:
+        Camera() = default;
         Camera(int w, int h, int mx, int my);
+        void init(int w, int h, int mx, int my);
         void move(float delta, float dx, float dy);
     protected:
         int x,y,width,height,max_x,max_y,speed;
-    
+        friend class GameLevel;    
     };
 
     class Level {
@@ -49,12 +53,15 @@ namespace game {
         void draw(RenderObject *ro) override;
         void keydown(char key) override;
         void keyup(char key) override;    
+        friend class Camera;
     protected:    
         Level level;
+        Camera cam;
         int brick;
+        int tsize;
         const int TILE_W=16;
-        const int WINDOW_SIZE_W = 1280/TILE_W;
-        const int WINDOW_SIZE_H = 720/TILE_W;
+        const int WINDOW_SIZE_W = 1280/16;
+        const int WINDOW_SIZE_H = 720/16;
     };
 
 }
