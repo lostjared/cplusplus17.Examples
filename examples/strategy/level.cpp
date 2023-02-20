@@ -135,13 +135,16 @@ namespace game {
         static unsigned int prev_tick = 0;
         delta = float(tick-prev_tick)/1000;
         prev_tick = tick; 
-        //std::cout << "tick: " << tick << " prev_tick: " << prev_tick << " delta: " << delta << "\n";
         if(ro->keyDown(Key::KEY_RIGHT)) {
             cam.move(std::min(0.009f, delta), 1.0f, 0.0f);
         } else if(ro->keyDown(Key::KEY_LEFT)) {
             cam.move(std::min(0.009f, delta), -1.0f, 0.0f);
         }
-
+        if(ro->keyDown(Key::KEY_UP)) {
+            cam.move(std::min(0.009f, delta), 0.0f, -1.0f);
+        } else if(ro->keyDown(Key::KEY_DOWN)) {
+            cam.move(std::min(0.009f, delta), 0.0f, 1.0f);
+        }
     }
      
     void GameLevel::keydown(char key) {

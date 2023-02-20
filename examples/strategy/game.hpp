@@ -8,7 +8,7 @@ namespace game {
         unsigned char r,g,b;
     };
 
-    enum Key { KEY_LEFT=1, KEY_RIGHT };
+    enum Key { KEY_LEFT=1, KEY_RIGHT, KEY_UP, KEY_DOWN };
 
     struct RenderObject {
         virtual ~RenderObject() = default;
