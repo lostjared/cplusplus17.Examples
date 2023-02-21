@@ -55,6 +55,7 @@ namespace game {
             SDL_Surface *surf = TTF_RenderText_Solid(font, text.c_str(), col_s);
             SDL_Rect rc = { x, y, surf->w, surf->h };
             SDL_BlitSurface(surf, 0, surface, &rc);
+            SDL_FreeSurface(surf);
         }
         
         int loadImage(const std::string &text) override {
