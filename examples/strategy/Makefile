@@ -2,7 +2,7 @@
 
 CXX_FLAGS=-std=c++17 -O2
 SDL_CXXFLAGS= `sdl2-config --cflags`
-SDL_LDFLAGS= `sdl2-config --libs`
+SDL_LDFLAGS= `sdl2-config --libs` -lSDL2_ttf
 CPP_FILES := $(wildcard *.cpp)
 OBJ_FILES := $(addprefix ,$(notdir $(CPP_FILES:.cpp=.o)))
 OUTPUT_NAME=test-game
