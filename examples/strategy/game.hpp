@@ -1,6 +1,7 @@
 #ifndef _GAME_H_PP
 #define _GAME_H_PP
 #include<string>
+#include<algorithm>
 #define DEBUG_MODE 
 
 namespace game {
