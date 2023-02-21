@@ -1,5 +1,6 @@
 #include"window.hpp"
 #include"SDL.h"
+#include"SDL_ttf.h"
 #include<iostream>
 #include<vector>
 
@@ -12,9 +13,13 @@ namespace game {
          SDL_Texture *tex = NULL;
          SDL_Surface *surface = NULL;
          int width = 0, height = 0;
+         TTF_Font *font;
     
          ~SDL_RenderObject() {
             release_images();
+
+            TTF_Quit();
+            SDL_Quit();
          }
 
         void release_images() {
@@ -24,6 +29,9 @@ namespace game {
             }
             if(!surfaces.empty())
                 surfaces.erase(surfaces.begin(), surfaces.end());
+
+            if(font != NULL)
+                TTF_CloseFont(font);
         }
 
         void drawAt(int image, int x, int y) override {
@@ -43,7 +51,10 @@ namespace game {
         }
         
         void printText(int x, int y, const std::string &text, const Color &col) override {
-
+            SDL_Color col_s = { col.r, col.g, col.b };
+            SDL_Surface *surf = TTF_RenderText_Solid(font, text.c_str(), col_s);
+            SDL_Rect rc = { x, y, surf->w, surf->h };
+            SDL_BlitSurface(surf, 0, surface, &rc);
         }
         
         int loadImage(const std::string &text) override {
@@ -66,15 +77,28 @@ namespace game {
                 std::cerr << "Error initaliziing SDL\n";
                 return false;
             }
+
+            TTF_Init();
+
+            font = TTF_OpenFont("./img/arial.ttf", 24);
+            if(!font) {
+                std::cerr << "Error opening font file ./img/arial.ttf\n";
+                TTF_Quit();
+                SDL_Quit();
+                return false;
+            }
+
             window = SDL_CreateWindow(text.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_SHOWN);
             if(!window) {
                 std::cerr << "Error creating window: " << SDL_GetError() << "...\n";
+                TTF_Quit();
                 SDL_Quit();
                 return false;
             }
             ren = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
             if(!ren) {
                 std::cerr << "Error creating Renderer: " << SDL_GetError() << "\n";
+                TTF_Quit();
                 SDL_Quit();
                 return false;
             }
@@ -83,6 +107,8 @@ namespace game {
 
             if(!tex) {
                 std::cerr << "Could not create texture: " << SDL_GetError() << "\n";
+                TTF_Quit();
+                SDL_Quit();
                 return false;
             }
 
@@ -90,6 +116,8 @@ namespace game {
 
             if(!surface) {
                 std::cerr << "Could not create main surface: " << SDL_GetError() << "\n";
+                TTF_Quit();
+                SDL_Quit();
                 return false;
             }
 

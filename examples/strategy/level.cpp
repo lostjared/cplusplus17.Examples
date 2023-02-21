@@ -1,5 +1,7 @@
 #include"level.hpp"
 #include<iostream>
+#include<sstream>
+#include<string>
 
 namespace game {
 
@@ -144,6 +146,10 @@ namespace game {
         } else if(ro->keyDown(Key::KEY_DOWN)) {
             cam.move(std::min(0.009f, delta), 0.0f, 1.0f);
         }
+        static unsigned int frame_c = 0;
+        std::ostringstream frame_count;
+        frame_count << frame_c << " FPS";
+        ro->printText(15, 15, frame_count.str(), Color(255,255,255));
     }
      
     void GameLevel::keydown(char key) {

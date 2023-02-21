@@ -6,6 +6,8 @@ namespace game {
 
     struct Color {
         unsigned char r,g,b;
+        Color() = default;
+        Color(unsigned char r, unsigned char g, unsigned char b);
     };
 
     enum Key { KEY_LEFT=1, KEY_RIGHT, KEY_UP, KEY_DOWN };
