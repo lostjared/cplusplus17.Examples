@@ -15,7 +15,7 @@ namespace game {
         max_x = mx;
         max_y = my;
         speed_x = WINDOW_SIZE_WIDTH;
-        speed_y = WINDOW_SIZE_HEIGHT;
+        speed_y = speed_x;// WINDOW_SIZE_HEIGHT;
    }
 
    void Camera::move(float delta, float dx, float dy) {

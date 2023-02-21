@@ -16,7 +16,7 @@ namespace game {
         static void init_object(GameObject *obj);
     protected:
         static bool active;
-        static GameObject *current_object;
+        static GameObject *current_object;   
     };
 
 }

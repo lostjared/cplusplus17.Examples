@@ -103,7 +103,7 @@ namespace game {
                 return false;
             }
 
-            tex = SDL_CreateTexture(ren, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, w, h);
+            tex = SDL_CreateTexture(ren, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, 1280, 720);
 
             if(!tex) {
                 std::cerr << "Could not create texture: " << SDL_GetError() << "\n";
@@ -112,7 +112,7 @@ namespace game {
                 return false;
             }
 
-            surface = SDL_CreateRGBSurfaceFrom(NULL, w, h, 32, w*4, 0x00FF0000, 0x0000FF00,0x000000FF,0xFF000000);
+            surface = SDL_CreateRGBSurfaceFrom(NULL, 1280, 720, 32, w*4, 0x00FF0000, 0x0000FF00,0x000000FF,0xFF000000);
 
             if(!surface) {
                 std::cerr << "Could not create main surface: " << SDL_GetError() << "\n";
@@ -182,7 +182,8 @@ namespace game {
             SDL_LockTexture(render_object.tex, 0, &render_object.surface->pixels, &render_object.surface->pitch);
             current_object->draw(&render_object);
             SDL_UnlockTexture(render_object.tex);
-            SDL_RenderCopy(render_object.ren, render_object.tex, 0, 0);
+            SDL_Rect rc = { 0, 0, render_object.width, render_object.height };
+            SDL_RenderCopy(render_object.ren, render_object.tex, 0, &rc);
             SDL_RenderPresent(render_object.ren);
     
             while(SDL_PollEvent(&e)) {
