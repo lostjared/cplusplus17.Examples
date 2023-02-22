@@ -3,6 +3,8 @@
 #include"SDL_ttf.h"
 #include<iostream>
 #include<vector>
+#include<cstdlib>
+#include<ctime>
 
 namespace game {
 
@@ -142,6 +144,7 @@ namespace game {
 
             width = w;
             height = h;
+            srand(static_cast<unsigned int>(time(0)));
             return true;
         }
 
