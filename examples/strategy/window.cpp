@@ -77,6 +77,10 @@ namespace game {
             return index;
         }
 
+        void setImageColorKey(Image image, const Color &c) override {
+            SDL_SetColorKey(surfaces[image], SDL_TRUE, SDL_MapRGB(surfaces[image]->format, c.r, c.g, c.b));
+        }
+
         Image loadFont(const std::string &text, int size) override {
             TTF_Font *font = TTF_OpenFont(text.c_str(), size);
             if(!font) {

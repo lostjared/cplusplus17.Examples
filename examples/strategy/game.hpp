@@ -24,6 +24,7 @@ namespace game {
         virtual void drawAtRect(Image image, int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) = 0;
         virtual void printText(Font font, int x, int y, const std::string &text, const Color &col) = 0;
         virtual Font loadImage(const std::string &text) = 0;
+        virtual void setImageColorKey(Image image, const Color &c) = 0;
         virtual Image loadFont(const std::string &text, int size) = 0;
         virtual unsigned int getTicks() = 0;
         virtual bool keyDown(const Key &c) = 0;
