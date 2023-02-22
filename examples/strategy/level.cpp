@@ -160,7 +160,7 @@ namespace game {
             frame_c += 1;
         }
         std::ostringstream frame_count;
-        frame_count << frame_counter << " FPS";
+        frame_count << frame_counter << " FPS Camera: X: " << cam.x << " - Y: " << cam.y;
         ro->printText(arial, 15, 15, frame_count.str(), Color(255,255,255));
 #endif
     }
