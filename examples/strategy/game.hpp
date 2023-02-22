@@ -14,13 +14,17 @@ namespace game {
 
     enum Key { KEY_LEFT=1, KEY_RIGHT, KEY_UP, KEY_DOWN };
 
+    using Font = int;
+    using Image = int;
+
     struct RenderObject {
         virtual ~RenderObject() = default;
-        virtual void drawAt(int image, int x, int y) = 0;
-        virtual void drawAtRect(int image, int x, int y, int w, int h) = 0;
-        virtual void printText(int font, int x, int y, const std::string &text, const Color &col) = 0;
-        virtual int loadImage(const std::string &text) = 0;
-        virtual int loadFont(const std::string &text, int size) = 0;
+        virtual void drawAt(Image image, int x, int y) = 0;
+        virtual void drawAtRect(Image image, int x, int y, int w, int h) = 0;
+        virtual void drawAtRect(Image image, int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) = 0;
+        virtual void printText(Font font, int x, int y, const std::string &text, const Color &col) = 0;
+        virtual Font loadImage(const std::string &text) = 0;
+        virtual Image loadFont(const std::string &text, int size) = 0;
         virtual unsigned int getTicks() = 0;
         virtual bool keyDown(const Key &c) = 0;
     };

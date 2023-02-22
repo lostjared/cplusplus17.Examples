@@ -40,23 +40,23 @@ namespace game {
             
         }
 
-        void drawAt(int image, int x, int y) override {
+        void drawAt(Image image, int x, int y) override {
             SDL_Rect rc = { x, y, surfaces[image]->w, surfaces[image]->h };
             SDL_BlitSurface(surfaces[image], 0, surface, &rc);
         }
 
-        void drawAtRect(int image, int x, int y, int w, int h) override {
+        void drawAtRect(Image image, int x, int y, int w, int h) override {
             SDL_Rect rc = { x, y, w, h };
             SDL_BlitSurface(surfaces[image], 0, surface, &rc);
         }
 
-        void drawAtRect(int image, int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
+        void drawAtRect(Image image, int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) override {
             SDL_Rect rc = { x1, y1, w1, h1 };
             SDL_Rect rc2 = { x2, y2, w2, h2 };
             SDL_BlitSurface(surfaces[image], &rc, surface, &rc2);
         }
         
-        void printText(int font, int x, int y, const std::string &text, const Color &col) override {
+        void printText(Font font, int x, int y, const std::string &text, const Color &col) override {
             SDL_Color col_s = { col.r, col.g, col.b };
             SDL_Surface *surf = TTF_RenderText_Solid(fonts[font], text.c_str(), col_s);
             SDL_Rect rc = { x, y, surf->w, surf->h };
@@ -64,7 +64,7 @@ namespace game {
             SDL_FreeSurface(surf);
         }
         
-        int loadImage(const std::string &text) override {
+        Font loadImage(const std::string &text) override {
             SDL_Surface *surface = SDL_LoadBMP(text.c_str());
             if(!surface) {
                 std::cerr << "Error could not load surface: " << text << "\n";
@@ -77,7 +77,7 @@ namespace game {
             return index;
         }
 
-        int loadFont(const std::string &text, int size) override {
+        Image loadFont(const std::string &text, int size) override {
             TTF_Font *font = TTF_OpenFont(text.c_str(), size);
             if(!font) {
                 std::cerr << "Error could not load font: " << text << "\n" << SDL_GetError() << "\n";

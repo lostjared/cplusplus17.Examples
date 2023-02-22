@@ -56,8 +56,8 @@ namespace game {
     protected:    
         Level level;
         Camera cam;
-        int brick;
-        int arial;
+        Image brick;
+        Font arial;
         int tsize;
         float delta;
         const int TILE_W=16;
