@@ -25,14 +25,14 @@ namespace game {
         void release_images() {
             for(int i = 0; i < surfaces.size(); ++i) {
                 SDL_FreeSurface(surfaces[i]);
-                std::cout << "released image: [" << i << "]\n";
+                std::cout << "released image index: [" << i << "]\n";
             }
             if(!surfaces.empty())
                 surfaces.erase(surfaces.begin(), surfaces.end());
 
             for(int i = 0; i< fonts.size(); ++i) {
                 TTF_CloseFont(fonts[i]);
-                std::cout << "released font: [" << i << "]\n";
+                std::cout << "released font index: [" << i << "]\n";
             }
 
             if(!fonts.empty()) 
@@ -72,7 +72,9 @@ namespace game {
                 exit(EXIT_FAILURE);
             }
             surfaces.push_back(surface);
-            return surfaces.size()-1;
+            int index = surfaces.size()-1;
+            std::cout << "loaded image [" << text << "] at index: [" << index << "]\n";
+            return index;
         }
 
         int loadFont(const std::string &text, int size) override {
@@ -84,7 +86,9 @@ namespace game {
                 exit(EXIT_FAILURE);
             }
             fonts.push_back(font);
-            return fonts.size()-1;
+            int index = fonts.size()-1;
+            std::cout << "loaded font [" << text << "] at index: [" << index << "]\n";
+            return index;
         }
 
         void update() {
