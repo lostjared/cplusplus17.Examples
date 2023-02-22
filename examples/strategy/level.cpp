@@ -106,6 +106,7 @@ namespace game {
         }
         std::cout << "Created: " << level.width << ":" << level.height << "\n";
         brick = ro->loadImage("img/brick.bmp");
+        arial = ro->loadFont("./img/arial.ttf", 24);
         delta = 0;
     }
 
@@ -160,7 +161,7 @@ namespace game {
         }
         std::ostringstream frame_count;
         frame_count << frame_counter << " FPS";
-        ro->printText(15, 15, frame_count.str(), Color(255,255,255));
+        ro->printText(arial, 15, 15, frame_count.str(), Color(255,255,255));
 #endif
     }
      

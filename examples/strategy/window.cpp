@@ -10,10 +10,10 @@ namespace game {
          SDL_Window *window = NULL;
          SDL_Renderer *ren = NULL;
          std::vector<SDL_Surface *> surfaces;
+         std::vector<TTF_Font *> fonts;
          SDL_Texture *tex = NULL;
          SDL_Surface *surface = NULL;
          int width = 0, height = 0;
-         TTF_Font *font;
     
          ~SDL_RenderObject() {
             release_images();
@@ -30,8 +30,14 @@ namespace game {
             if(!surfaces.empty())
                 surfaces.erase(surfaces.begin(), surfaces.end());
 
-            if(font != NULL)
-                TTF_CloseFont(font);
+            for(int i = 0; i< fonts.size(); ++i) {
+                TTF_CloseFont(fonts[i]);
+                std::cout << "released font: [" << i << "]\n";
+            }
+
+            if(!fonts.empty()) 
+                fonts.erase(fonts.begin(), fonts.end());
+            
         }
 
         void drawAt(int image, int x, int y) override {
@@ -50,9 +56,9 @@ namespace game {
             SDL_BlitSurface(surfaces[image], &rc, surface, &rc2);
         }
         
-        void printText(int x, int y, const std::string &text, const Color &col) override {
+        void printText(int font, int x, int y, const std::string &text, const Color &col) override {
             SDL_Color col_s = { col.r, col.g, col.b };
-            SDL_Surface *surf = TTF_RenderText_Solid(font, text.c_str(), col_s);
+            SDL_Surface *surf = TTF_RenderText_Solid(fonts[font], text.c_str(), col_s);
             SDL_Rect rc = { x, y, surf->w, surf->h };
             SDL_BlitSurface(surf, 0, surface, &rc);
             SDL_FreeSurface(surf);
@@ -69,6 +75,18 @@ namespace game {
             return surfaces.size()-1;
         }
 
+        int loadFont(const std::string &text, int size) override {
+            TTF_Font *font = TTF_OpenFont(text.c_str(), size);
+            if(!font) {
+                std::cerr << "Error could not load font: " << text << "\n" << SDL_GetError() << "\n";
+                TTF_Quit();
+                SDL_Quit();
+                exit(EXIT_FAILURE);
+            }
+            fonts.push_back(font);
+            return fonts.size()-1;
+        }
+
         void update() {
 
         }
@@ -80,14 +98,6 @@ namespace game {
             }
 
             TTF_Init();
-
-            font = TTF_OpenFont("./img/arial.ttf", 24);
-            if(!font) {
-                std::cerr << "Error opening font file ./img/arial.ttf\n";
-                TTF_Quit();
-                SDL_Quit();
-                return false;
-            }
 
             window = SDL_CreateWindow(text.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_SHOWN);
             if(!window) {
