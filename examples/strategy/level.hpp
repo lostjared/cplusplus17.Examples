@@ -3,7 +3,7 @@
 #include<cstdint>
 #include<iostream>
 #include<string>
-#include"game.hpp"
+
 namespace game {
 
     struct Tile {
@@ -16,8 +16,6 @@ namespace game {
         int32_t solid = 0;
         int32_t img = 0;
     };
-
-    class GameLevel;
 
     class Camera {
     public:
@@ -48,7 +46,6 @@ protected:
         void releaseTiles();
     };
 
-   
     static const int WINDOW_SIZE_WIDTH = 1280;
     static const int WINDOW_SIZE_HEIGHT = 720;
 }
