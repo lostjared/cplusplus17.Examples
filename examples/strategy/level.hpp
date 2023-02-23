@@ -25,12 +25,10 @@ namespace game {
         Camera(int w, int h, int mx, int my);
         void init(int w, int h, int mx, int my);
         void move(float delta, float dx, float dy);
-
         int getx() const;
         int gety() const;
         int get_width() const;
         int get_height() const;
-
 protected:    
         int x,y,width,height,max_x,max_y,speed_x,speed_y;
     };
@@ -50,26 +48,7 @@ protected:
         void releaseTiles();
     };
 
-    class GameLevel : public GameObject {
-    public:
-        GameLevel() = default;
-        void init(RenderObject *ro) override;
-        void draw(RenderObject *ro) override;
-        void keydown(char key) override;
-        void keyup(char key) override;   
-
-    protected:    
-        Level level;
-        Camera cam;
-        Image brick;
-        Font arial;
-        int tsize;
-        float delta;
-        const int TILE_W=16;
-        static const int WINDOW_SIZE_W = 1280/16;
-        static const int WINDOW_SIZE_H = 720/16;
-    };
-
+   
     static const int WINDOW_SIZE_WIDTH = 1280;
     static const int WINDOW_SIZE_HEIGHT = 720;
 }
