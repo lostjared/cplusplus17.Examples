@@ -23,10 +23,10 @@ namespace game {
         Camera(int w, int h, int mx, int my);
         void init(int w, int h, int mx, int my);
         void move(float delta, float dx, float dy);
-        int getx() const;
-        int gety() const;
-        int get_width() const;
-        int get_height() const;
+        int getX() const;
+        int getY() const;
+        int getWidth() const;
+        int getHeight() const;
 protected:    
         int x,y,width,height,max_x,max_y,speed_x,speed_y;
     };

@@ -24,13 +24,13 @@ namespace game {
     }
 
     void GameLevel::draw(RenderObject *ro) {
-        int start_col = cam.getx() / tsize;
-        int end_col = start_col + (cam.get_width() / tsize);
-        int start_row = cam.gety() / tsize;
-        int end_row = start_row + (cam.get_height() / tsize);
+        int start_col = cam.getX() / tsize;
+        int end_col = start_col + (cam.getWidth() / tsize);
+        int start_row = cam.getY() / tsize;
+        int end_row = start_row + (cam.getHeight() / tsize);
 
-        int cx = cam.getx();
-        int cy = cam.gety();
+        int cx = cam.getX();
+        int cy = cam.getY();
 
         int off_x = -cx + start_col * tsize;
         int off_y = -cy + start_row * tsize;
@@ -73,7 +73,7 @@ namespace game {
             frame_c += 1;
         }
         std::ostringstream frame_count;
-        frame_count << frame_counter << " FPS Camera: X: " << cam.getx() << " - Y: " << cam.gety();
+        frame_count << frame_counter << " FPS Camera: X: " << cam.getX() << " - Y: " << cam.getY();
         ro->printText(arial, 15, 15, frame_count.str(), Color(255,255,255));
 #endif
     }

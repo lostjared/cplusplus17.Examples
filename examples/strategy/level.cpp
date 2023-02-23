@@ -27,19 +27,19 @@ namespace game {
         y = std::max(0, std::min(y, max_y));
    }
    
-   int Camera::getx() const { 
+   int Camera::getX() const { 
         return x; 
    }
    
-   int Camera::gety() const {
+   int Camera::getY() const {
         return y; 
    }
    
-   int Camera::get_width() const { 
+   int Camera::getWidth() const { 
         return width; 
     }
    
-   int Camera::get_height() const { 
+   int Camera::getHeight() const { 
         return height; 
     }
    
