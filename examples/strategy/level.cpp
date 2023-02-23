@@ -26,7 +26,14 @@ namespace game {
         x = std::max(0, std::min(x, max_x));
         y = std::max(0, std::min(y, max_y));
    }
-
+   
+   int Camera::getx() const { return x; }
+   
+   int Camera::gety() const { return y; }
+   
+   int Camera::get_width() const { return width; }
+   
+   int Camera::get_height() const { return height; }
 
     Level::Level() : width{0}, height{0}, tiles{nullptr} {
 
