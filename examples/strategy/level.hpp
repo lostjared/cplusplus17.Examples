@@ -25,9 +25,14 @@ namespace game {
         Camera(int w, int h, int mx, int my);
         void init(int w, int h, int mx, int my);
         void move(float delta, float dx, float dy);
-    protected:
+
+        int getx() const { return x; }
+        int gety() const { return y; }
+        int get_width() const { return width; }
+        int get_height() const { return height; }
+
+protected:    
         int x,y,width,height,max_x,max_y,speed_x,speed_y;
-        friend class GameLevel;    
     };
 
     class Level {
@@ -51,8 +56,8 @@ namespace game {
         void init(RenderObject *ro) override;
         void draw(RenderObject *ro) override;
         void keydown(char key) override;
-        void keyup(char key) override;    
-        friend class Camera;
+        void keyup(char key) override;   
+        
     protected:    
         Level level;
         Camera cam;

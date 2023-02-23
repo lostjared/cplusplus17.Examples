@@ -16,10 +16,9 @@ namespace game {
          SDL_Texture *tex = NULL;
          SDL_Surface *surface = NULL;
          int width = 0, height = 0;
-    
+             
          ~SDL_RenderObject() {
             release_images();
-
             TTF_Quit();
             SDL_Quit();
          }
