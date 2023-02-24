@@ -9,6 +9,11 @@ namespace game {
     Camera::Camera(const Camera &c) : x{c.x}, y{c.y}, width{c.width}, height{c.height}, max_x{c.max_x}, max_y{c.max_y}, speed_x{c.speed_x}, speed_y{c.speed_y} {}
 
     Camera &Camera::operator=(const Camera &c) {
+          set(c);
+          return *this;
+    }
+
+    void Camera::set(const Camera &c) {
         x = c.x;
         y = c.y;
         width = c.width;
@@ -17,7 +22,6 @@ namespace game {
         max_y = c.max_y;
         speed_x = c.speed_x;
         speed_y = c.speed_y;
-        return *this;
     }
 
    

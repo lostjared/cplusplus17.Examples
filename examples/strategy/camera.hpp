@@ -20,7 +20,8 @@ namespace game {
         int getWidth() const;
         int getHeight() const;
         void reset();        
-protected:    
+        void set(const Camera &c);
+protected:   
         int x,y,width,height,max_x,max_y,speed_x,speed_y;
     };
 
