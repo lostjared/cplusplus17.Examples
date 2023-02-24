@@ -8,7 +8,7 @@ namespace game {
 
  class Camera {
     public:
-        Camera() = default;
+        Camera();
         Camera(int w, int h, int mx, int my);
         Camera(const Camera &c);
 
