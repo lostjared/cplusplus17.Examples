@@ -16,6 +16,7 @@ namespace game {
         int getY() const;
         int getWidth() const;
         int getHeight() const;
+        void reset();        
 protected:    
         int x,y,width,height,max_x,max_y,speed_x,speed_y;
     };

@@ -40,4 +40,7 @@ namespace game {
         return height; 
     }
 
+    void Camera::reset() {
+        x = y = 0;
+    }
 }
