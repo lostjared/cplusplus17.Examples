@@ -1,8 +1,10 @@
 #ifndef _GAME_LEVEL_H_
 #define _GAME_LEVEL_H_
 
+#include"camera.hpp"
 #include"level.hpp"
 #include"game.hpp"
+
 namespace game {
      class GameLevel : public GameObject {
     public:

@@ -15,21 +15,7 @@ namespace game {
         int32_t color = 0;
         int32_t solid = 0;
         int32_t img = 0;
-    };
-
-    class Camera {
-    public:
-        Camera() = default;
-        Camera(int w, int h, int mx, int my);
-        void init(int w, int h, int mx, int my);
-        void move(float delta, float dx, float dy);
-        int getX() const;
-        int getY() const;
-        int getWidth() const;
-        int getHeight() const;
-protected:    
-        int x,y,width,height,max_x,max_y,speed_x,speed_y;
-    };
+    };   
 
     class Level {
     public:
@@ -45,9 +31,6 @@ protected:
         bool resizeTiles(int w, int h);
         void releaseTiles();
     };
-
-    static const int WINDOW_SIZE_WIDTH = 1280;
-    static const int WINDOW_SIZE_HEIGHT = 720;
 }
 
 #endif
