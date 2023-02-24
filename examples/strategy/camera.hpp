@@ -10,6 +10,9 @@ namespace game {
     public:
         Camera() = default;
         Camera(int w, int h, int mx, int my);
+        Camera(const Camera &c);
+
+        Camera &operator=(const Camera &c);
         void init(int w, int h, int mx, int my);
         void move(float delta, float dx, float dy);
         int getX() const;
