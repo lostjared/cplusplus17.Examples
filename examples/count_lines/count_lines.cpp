@@ -75,7 +75,7 @@ unsigned long countLines(std::vector<std::string> &v, unsigned long &blank) {
         unsigned long blank_lines = 0;
         unsigned long line_count = countFile(v[i], blank_lines);
         blank += blank_lines;
-        if(line_count > 0 || blank_lines > 0) {
+        if(line_count > 0 || blank_lines > 0 || line_count == 0) {
             std::cout << v[i] << ": " << line_count << " lines " << blank_lines << " blank lines for total of " << (line_count+blank_lines) << "\n";
             value += line_count;
         }
