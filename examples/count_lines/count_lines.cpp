@@ -51,16 +51,15 @@ bool lineEmpty(const std::string &line) {
 
 unsigned long countFile(std::string filename, unsigned long &blank) {
     unsigned long counter = 0;
-    std::fstream file;
-    file.open(filename, std::ios::in);
+    std::fstream file(filename, std::ios::in);
     if(!file.is_open()) {
         std::cerr << "Could not open file: " << filename << "\n";
         return 0;
     }
-    while(!file.eof()) {
-        std::string line;
-        std::getline(file, line);
-        if(file && lineEmpty(line) == false) {
+    
+    std::string line;
+     while(std::getline(file, line)) {
+        if(!lineEmpty(line)) {
             ++counter;
         } else {
             ++blank;
@@ -76,7 +75,7 @@ unsigned long countLines(std::vector<std::string> &v, unsigned long &blank) {
         unsigned long blank_lines = 0;
         unsigned long line_count = countFile(v[i], blank_lines);
         blank += blank_lines;
-        if(line_count > 0) {
+        if(line_count > 0 || blank_lines > 0) {
             std::cout << v[i] << ": " << line_count << " lines " << blank_lines << " blank lines for total of " << (line_count+blank_lines) << "\n";
             value += line_count;
         }
