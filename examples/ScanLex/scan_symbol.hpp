@@ -13,7 +13,7 @@ namespace scan {
 
     enum VAR_TYPE { VAR_CONST, VAR_VAR, VAR_FUNC_NAME, VAR_EMPTY };
     enum VAR_TYPE_INFO { VAR_DOUBLE, VAR_STRING, VAR_ID, VAR_ARRAY };
-    static const char *vtype_info[] = {"Numeric", "String", "Identifier", "Array", 0 };
+    inline constexpr const char *vtype_info[] = {"Numeric", "String", "Identifier", "Array", 0 };
 
     struct Variable {
         Variable() = default;

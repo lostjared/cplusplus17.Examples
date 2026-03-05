@@ -17,7 +17,7 @@ public:
     }
     Diamond(int argc, char **argv) {
         if(argc >= 2) {
-            for(unsigned int i = 1; i < argc; ++i) {
+            for(int i = 1; i < argc; ++i) {
                 files.push_back(argv[i]);
             }
         } else {

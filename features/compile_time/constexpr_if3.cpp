@@ -3,7 +3,7 @@
 
 
 template<typename T>
-void PrintValue(const T &type) {
+void PrintValue(const T &) {
     if constexpr(std::is_same<T, int>::value) {
         std::cout << "Genreated for integer type..\n";
         return;

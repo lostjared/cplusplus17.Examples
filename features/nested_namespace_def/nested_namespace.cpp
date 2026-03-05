@@ -10,7 +10,7 @@ namespace X::Y::Z {
 }
 
 // output value 0 for x
-int main(int argc, char **argv) {
+int main() {
 	std::cout << "Value X: " << X::Y::Z::x << "\n";
 	return 0;
 }

@@ -5,9 +5,10 @@
 int main() {
     
     int *x = gen();
-    gen(); /// should warn return discarded.
+    int *y = gen();
     
     delete [] x;
+    delete [] y;
     
     return 0;
 }

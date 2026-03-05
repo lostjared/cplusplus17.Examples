@@ -70,9 +70,10 @@ int main(int argc, char **argv) {
         
         switch(lang_type) {
         case 0: {
-            if(!type_)
+            if(!type_) {
                 type = "unsigned char";
-                outputCPP(type,cmd_name,term);
+            }
+            outputCPP(type,cmd_name,term);
         }
             break;
         case 1: {

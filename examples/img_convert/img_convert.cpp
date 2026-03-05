@@ -47,7 +47,7 @@ void processFile(std::string inputFile, std::string outputType,bool res, int wid
     
     auto lwr = [](const std::string &text) {
         std::string t;
-        for(int i = 0; i < text.length(); ++i) {
+        for(std::size_t i = 0; i < text.length(); ++i) {
             t += tolower(text[i]);
         }
         return t;

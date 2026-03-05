@@ -4,8 +4,8 @@
 
 void rand_pixels(SDL_Texture *tex, SDL_Surface *surface) {
     SDL_LockTexture(tex, 0, &surface->pixels, &surface->pitch);
-    for(unsigned int i = 0; i < surface->w; ++i) {
-        for(unsigned int z = 0; z < surface->h; ++z) {
+    for(int i = 0; i < surface->w; ++i) {
+        for(int z = 0; z < surface->h; ++z) {
             unsigned int *ptr = (unsigned int *)surface->pixels+ (i+z*surface->w);
             *ptr = SDL_MapRGB(surface->format, rand()%255, rand()%255, rand()%255);
         }

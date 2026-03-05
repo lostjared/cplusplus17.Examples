@@ -20,8 +20,8 @@ public:
 };
 
 int main() {
-    ErrorInt<char> value1;
-    ErrorInt<long> value2;
+    [[maybe_unused]] ErrorInt<char> value1;
+    [[maybe_unused]] ErrorInt<long> value2;
     // uncomment below to for it cause an error
     // ErrorInt<int> err;
     std::cout << "Error Int\n";

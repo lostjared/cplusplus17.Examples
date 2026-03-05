@@ -14,7 +14,7 @@ public:
 };
 
 template<typename T>
-void testType(T type) {
+void testType(T) {
     if(isOfType<T, int>::value) {
         std::cout << "value is of type int...\n";
     } else if(isOfType<T, float>::value) {
@@ -25,8 +25,8 @@ void testType(T type) {
 }
 
 template<typename T, typename... Args>
-void testType(T type, Args... args) {
-    testType(type);
+void testType(T value, Args... args) {
+    testType(value);
     testType(args...);
 }
 

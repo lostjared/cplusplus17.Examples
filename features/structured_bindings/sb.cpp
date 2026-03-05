@@ -12,7 +12,7 @@ std::pair<std::string, int> getValue() {
 }
 
 
-int main(int argc, char **argv) {
+int main() {
     std::cout << "Test program.\n";
     auto [first, second] = getValue(); // any pair variable
     std::cout << "First: " << first << " Second: " << second << "\n";

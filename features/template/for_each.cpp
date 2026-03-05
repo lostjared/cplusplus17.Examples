@@ -10,7 +10,7 @@ void foreach(Iter start, Iter stop, Func f) {
     }
 }
 
-int main(int argc, char **argv) {
+int main() {
     std::vector<int> v {1,2,8,49,5920,881,2,4,1};
     foreach(v.begin(), v.end(), [](int x) { std::cout << "val: " << x << "\n"; });
     return 0;

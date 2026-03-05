@@ -90,7 +90,7 @@ namespace htable {
             }
         }
         
-        const int size() const { return Size; }
+        int size() const { return Size; }
         std::list<std::pair<std::string, T>> &at(unsigned int pos) { return buckets[pos]; }
         
     protected:

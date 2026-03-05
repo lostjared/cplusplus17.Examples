@@ -33,7 +33,7 @@ public:
 };
 
 template<typename T>
-void PrintOut(T type) {
+void PrintOut(T) {
     if(HasDefaultConstructor<T>::value) {
         std::cout << "Has Default Constructor...\n";
     } else {

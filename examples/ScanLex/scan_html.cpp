@@ -5,7 +5,7 @@ namespace scan {
 
     std::string convertToHTML(const std::string &text) {
         std::string temp;
-        for(int i = 0; i < text.length(); ++i) {
+        for(std::size_t i = 0; i < text.length(); ++i) {
             if(text[i] == ' ')
                 temp += "&nbsp;";
             else if(text[i] == '<')

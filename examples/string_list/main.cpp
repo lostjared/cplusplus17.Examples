@@ -1,6 +1,6 @@
 #include "list.hpp"
 
-int main(int argc, char **argv) {
+int main() {
     lst::SList lst("test.txt");
     std::cout << "enter value:";
     std::string val1, val2;

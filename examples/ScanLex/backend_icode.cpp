@@ -27,7 +27,7 @@ namespace backend {
     }
 
     void printEcho(std::vector<Variable> &param, Variable &result) {
-        for(int i =0; i < param.size(); ++i) {
+        for(std::size_t i =0; i < param.size(); ++i) {
             switch(param[i].type_info) {
                 case VAR_DOUBLE:
                     std::cout << param[i].val.fval;
@@ -45,7 +45,7 @@ namespace backend {
 
     void printList(std::vector<Variable> &param, Variable &result) {
         std::cout << "( ";
-        for(int i = 0; i < param.size(); ++i) {
+        for(std::size_t i = 0; i < param.size(); ++i) {
             if(param[i].type == VAR_CONST) {
                 switch(param[i].type_info) {
                     case VAR_DOUBLE:
@@ -66,6 +66,7 @@ namespace backend {
     }
 
     void inputValue(std::vector<Variable> &param, Variable &result) {
+        (void)param;
         double val;
         std::cin >> val;
         result = Variable(val);
@@ -131,7 +132,7 @@ namespace backend {
             if(proc_ == -1)
                 throw RuntimeException("Could not find main proc");
             ip = proc_;
-            while(ip < instruct.size()) {
+            while(ip < static_cast<int>(instruct.size())) {
                 OPERATION_TYPE type = instruct[ip].opc;
                 switch(type) {
                     case O_LABEL:
@@ -350,7 +351,7 @@ namespace backend {
     }
 
     void BackEnd::print(std::ostream &out) {
-        for(int i = 0; i < instruct.size(); ++i) {
+        for(std::size_t i = 0; i < instruct.size(); ++i) {
 
             if(instruct[i].opc == O_LABEL) {
                 out << instruct[i].value1.value << ":" << "\n";

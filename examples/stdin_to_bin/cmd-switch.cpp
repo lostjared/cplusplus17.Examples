@@ -7,9 +7,9 @@ namespace cmd {
     }
     
     bool Argument_FindInList(std::vector<std::string> &lst, ArgumentStringList &alst) {
-        for(int i = 0; i < alst.argz.size(); ++i) {
+        for(std::size_t i = 0; i < alst.argz.size(); ++i) {
             bool found = false;
-            for(int z = 0; z < lst.size(); ++z) {
+            for(std::size_t z = 0; z < lst.size(); ++z) {
                 if(alst.argz.item(i).key == "$") {
                     if(alst.argz.item(i).value == lst[z]) {
                         found = true;

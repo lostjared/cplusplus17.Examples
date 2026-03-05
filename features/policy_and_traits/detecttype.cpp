@@ -44,7 +44,7 @@ BUILT_IN(void, TYPE_VOID)
 
 
 template<typename T>
-void EchoType(const T &type) {
+void EchoType(const T &) {
     std::cout << "Parameter is of type: " << DefaultType<T>::type << "\n";
 }
 

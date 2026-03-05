@@ -1,10 +1,10 @@
 #include<QApplication>
 #include<QMainWindow>
 
-class Window1 : QMainWindow {
+class Window1 : public QMainWindow {
   Q_OBJECT
 public:
-    MainWindow(QWidget *parent = 0) : QMainWindow(parent) {
+    Window1(QWidget *parent = nullptr) : QMainWindow(parent) {
     }
 };
 
@@ -15,3 +15,5 @@ int main(int argc, char **argv) {
     app.exec();
     return 0;
 }
+
+  #include "main.moc"

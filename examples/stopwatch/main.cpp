@@ -30,7 +30,7 @@ void testFunc2() {
     testFunc();
 }
 
-int main(int argc, char **argv) {
+int main() {
     averageTest();
     testFunc2();
     return 0;

@@ -9,7 +9,7 @@ void print(int len, const T &type) {
 }
 
 template<typename T, typename... Args>
-void print(int len, const T &type, Args... args) {
+void print(int, const T &type, Args... args) {
     print(sizeof...(args), type);
     print(0, args...);
 }

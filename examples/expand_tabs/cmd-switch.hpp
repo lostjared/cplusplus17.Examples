@@ -9,6 +9,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<cstddef>
 namespace cmd {
 
     template<typename T>
@@ -26,7 +27,6 @@ namespace cmd {
         T key,value;
     };
 
-    // template so you can subclass string if you want
     template<typename T>
     class ArgumentList {
     public:
@@ -40,7 +40,6 @@ namespace cmd {
         unsigned int size() const { return items.size(); }
     protected:
         std::vector<Token<T>> items;
-        
     };
 
     class ArgumentStringList {
@@ -61,7 +60,7 @@ namespace cmd {
                 T right = s.substr(pos+1, s.length());
                 if(right.length() == 0)
                     throw ArgExcep<T>("Argument Error: Zero Length");
-                
+
                 Token<T> token;
                 token.key = left;
                 token.value = right;
@@ -74,9 +73,10 @@ namespace cmd {
             }
         }
     }
+
     template<typename T>
     bool ArgumentList<T>::check(T key) {
-        for(int i = 0; i < items.size(); ++i) {
+        for(std::size_t i = 0; i < items.size(); ++i) {
             if(items[i].key == "$") {
                 if(items[i].value == key) {
                     return true;
@@ -88,7 +88,7 @@ namespace cmd {
 
     template<typename T>
     bool ArgumentList<T>::check_require(T key) {
-        for(int i = 0; i < items.size(); ++i) {
+        for(std::size_t i = 0; i < items.size(); ++i) {
             if(items[i].key == "$") {
                 if(items[i].value == key) {
                     return true;
@@ -101,7 +101,7 @@ namespace cmd {
 
     template<typename T>
     bool ArgumentList<T>::extract(T key, T &value) {
-        for(int i = 0; i < items.size(); ++i) {
+        for(std::size_t i = 0; i < items.size(); ++i) {
             if(items[i].key == "$" && items[i].value == key) {
                 return false;
             }
@@ -115,13 +115,12 @@ namespace cmd {
 
     template<typename T>
     bool ArgumentList<T>::require(T key, T &value, T desc) {
-        for(int i = 0; i < items.size(); ++i) {
-            
+        for(std::size_t i = 0; i < items.size(); ++i) {
             if(items[i].key == "$" && items[i].value == key) {
                 throw ArgExcep<T>("Argument Error: " + key + " required argument missing value...");
                 return false;
             }
-            
+
             if(items[i].key == key) {
                 value = items[i].value;
                 return true;
@@ -131,17 +130,15 @@ namespace cmd {
         return false;
     }
 
-
     template<typename T>
     void ArgumentList<T>::print() {
-        for(int i = 0; i < items.size(); ++i) {
+        for(std::size_t i = 0; i < items.size(); ++i) {
             if(items[i].key == "$")
                 std::cout << items[i].value << "\n";
             else
                 std::cout << items[i].key << ":" << items[i].value << "\n";
         }
     }
-
 }
 
 #endif

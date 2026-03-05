@@ -12,7 +12,7 @@ int main() {
 	std::string value{" test 1 2 3 "};
 	print_hello(value);
 	std::string_view sv{value};
-	const void *ptr = sv.data();
+	[[maybe_unused]] const void *ptr = sv.data();
 	int sz = sv.size();
 	std::cout << "sv: size:  " << sz << "\n";	
 	return 0;

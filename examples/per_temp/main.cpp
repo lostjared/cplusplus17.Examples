@@ -25,7 +25,7 @@ public:
     }
 };
 
-int main(int argc, char **argv) {
+int main() {
     per::Per<int, per::Data<int>> p{"test.dat", 0};
     p.data()++;
     std::cout << "program ran: " << p.data() << "\n";

@@ -18,7 +18,7 @@ bool VecRemove(std::vector<T> &vec, const T &search) {
     return false;
 }
 
-int main(int argc, char **argv) {
+int main() {
     std::vector<std::string> v {"Jared", "Monkey", "Cow", "Turkey", "Pumpkin" };
     // cool initilization for if statement
     if(int sz(v.size()); sz > 3) {

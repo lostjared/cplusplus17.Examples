@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
         }
         size_t index = atoi(argv[2]);
         double d = atof(argv[3]);
-        if(index >= 0 && index < ac::filters.size()) {
+        if(index < ac::filters.size()) {
             ac::filters[index]->setalpha(d);
             ac::filters[index]->exec(img);
         } else {

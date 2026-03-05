@@ -2,15 +2,15 @@
 
 namespace scan {
  
-    Token::Token() : keyword{KEY_EMPTY}, lineno{0}, type{TOKEN_NULL},oper{OP_EMPTY} {
+    Token::Token() : token{}, type{TOKEN_NULL}, keyword{KEY_EMPTY}, oper{OP_EMPTY}, lineno{0} {
 
     }
     
-    Token::Token(const Token &ty) : token{ty.token}, type{ty.type}, lineno{ty.lineno},keyword{ty.keyword}, oper{ty.oper} {}
+    Token::Token(const Token &ty) : token{ty.token}, type{ty.type}, keyword{ty.keyword}, oper{ty.oper}, lineno{ty.lineno} {}
         
-    Token::Token(Token &&ty) : token{ty.token}, type{ty.type}, lineno{ty.lineno},keyword{ty.keyword}, oper{ty.oper} {}
+    Token::Token(Token &&ty) : token{ty.token}, type{ty.type}, keyword{ty.keyword}, oper{ty.oper}, lineno{ty.lineno} {}
         
-    Token::Token(const std::string &t, TOKEN_TYPE ty, int line) : token{t}, type{ty}, lineno{line},keyword{KEY_EMPTY}, oper{OP_EMPTY}  {
+    Token::Token(const std::string &t, TOKEN_TYPE ty, int line) : token{t}, type{ty}, keyword{KEY_EMPTY}, oper{OP_EMPTY}, lineno{line}  {
         if(ty == TOKEN_ID) {
             KEYWORD_TYPES key = lookupKeyword(t);
             if(key != KEY_EMPTY) {
@@ -52,17 +52,17 @@ namespace scan {
     }
 
     KEYWORD_TYPES Token::lookupKeyword(const std::string &text) {
-        for(int i = 0; keywords[i] != 0; ++i) {
+        for(std::size_t i = 0; keywords[i] != 0; ++i) {
             if(text == keywords[i])
-                return KEYWORD_TYPES(i);
+                return KEYWORD_TYPES(static_cast<int>(i));
         }
         return KEY_EMPTY;
     }
 
     OP_TYPES Token::lookupOperator(const std::string &text) {
-        for(int i = 0; operators[i] != 0; ++i)
+        for(std::size_t i = 0; operators[i] != 0; ++i)
             if(text == operators[i])
-                return OP_TYPES(i);
+                return OP_TYPES(static_cast<int>(i));
 
         return OP_EMPTY;
     }

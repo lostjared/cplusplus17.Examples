@@ -18,7 +18,7 @@ namespace scan {
 
         const char *szOp = "!@$%^&*()+=-<>{}|/\\.,[];:";
         for(int i = 0; szOp[i] != 0; ++i) 
-            char_table[szOp[i]] = TOKEN_SYMBOL;
+            char_table[static_cast<unsigned char>(szOp[i])] = TOKEN_SYMBOL;
 
         char_table[' '] = TOKEN_WHITESPACE;
         char_table['\t'] = TOKEN_WHITESPACE;
@@ -29,13 +29,13 @@ namespace scan {
     }
 
     char Scanner::getchar() {
-        if(index < text.length())
+        if(index < static_cast<int>(text.length()))
             return text[index++];
         return -1;
     }
     
     char Scanner::peekchar() {
-        if(index + 1 < text.length())
+        if(index + 1 < static_cast<int>(text.length()))
             return text[index + 1];
         return -1;
     }
@@ -56,7 +56,7 @@ namespace scan {
         token_index = 0;
         char c;
         while((c = getchar()) != -1) {
-            switch(char_table[c]) {
+            switch(char_table[static_cast<unsigned char>(c)]) {
                 case TOKEN_CHAR:
                     grabId();
                 break;
@@ -88,7 +88,7 @@ namespace scan {
     }
 
     bool Scanner::nextToken(Token &token) {
-        if(token_index < tokens.size()) {
+        if(token_index < static_cast<int>(tokens.size())) {
             token = tokens[token_index++];
             return true;
         }
@@ -104,7 +104,7 @@ namespace scan {
     }
 
     void Scanner::print() {
-        for(int i = 0; i < tokens.size(); ++i) {
+        for(std::size_t i = 0; i < tokens.size(); ++i) {
             std::cout << i << ": " << tokens[i] << "\n";
         }
     }
@@ -115,7 +115,7 @@ namespace scan {
         do {
             token += c;
             c = getchar();
-        } while(c != -1 && (char_table[c] == TOKEN_CHAR || char_table[c] == TOKEN_NUMBER));
+        } while(c != -1 && (char_table[static_cast<unsigned char>(c)] == TOKEN_CHAR || char_table[static_cast<unsigned char>(c)] == TOKEN_NUMBER));
 
         if(c != -1)
             index--;
@@ -132,7 +132,7 @@ namespace scan {
         do {
             token += c;
             c = getchar();
-        } while(c != -1 && (char_table[c] == TOKEN_NUMBER || c == '.'));
+        } while(c != -1 && (char_table[static_cast<unsigned char>(c)] == TOKEN_NUMBER || c == '.'));
 
         if(c != -1)
             index--;
@@ -176,7 +176,7 @@ namespace scan {
                 token += ch;
                 continue;
             }
-        } while( (c = getchar()) != -1 && (char_table[c] != TOKEN_STRING));
+        } while( (c = getchar()) != -1 && (char_table[static_cast<unsigned char>(c)] != TOKEN_STRING));
 
         if(c == -1) {
             std::ostringstream stream;
@@ -206,7 +206,7 @@ namespace scan {
             }
         }
         std::cout << "\n";
-        for(int i = 0; i < table.const_strings.size(); ++i) {
+        for(std::size_t i = 0; i < table.const_strings.size(); ++i) {
             out<< i << ": " << "\"" << table.const_strings[i] << "\"" << "\n";
         }
     }

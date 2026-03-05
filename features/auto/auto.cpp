@@ -42,6 +42,7 @@ int main() {
     auto x = 100;
     // x is float
     auto y = 45.2f;
+    (void)y;
     // z is X<int>
     auto z = X<int>(x);
     z.print();

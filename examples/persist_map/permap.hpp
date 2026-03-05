@@ -90,7 +90,7 @@ namespace persist {
     }
     
     template<typename T>
-    PersistMap<T>::PersistMap(PersistMap<T> &&p) : map_(std::move(p.map_)), read_(p.read_), write_(p.write), filename(p.filename) {
+    PersistMap<T>::PersistMap(PersistMap<T> &&p) : map_(std::move(p.map_)), read_(p.read_), write_(p.write_), filename(p.filename) {
         ReadMap();
     }
     

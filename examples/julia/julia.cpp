@@ -89,9 +89,7 @@ void frac::DrawFractal(cv::Mat &frame, int thread_count, cv::Vec3b rgb, double p
                 std::complex<double> c(paramA, paramB);
                 int n = julia(c, zval);
                 unsigned char color = static_cast<unsigned char>(255-(n * 255 / MAX_ITER));
-                
-                unsigned char red = 50, green = 100, blue = 150;
-                
+
                 pixel[0] = color + 255-(n/1+rgb[0]);
                 pixel[1] = color + 255-(n/1+rgb[1]);
                 pixel[2] = color + 255-(n/1+rgb[2]);

@@ -58,6 +58,11 @@ int main() {
     std::vector<int> values {0, 1, 4, 6, 8};
     // is int &
     decltype(auto) type = values[0];
+    (void)element;
+    (void)element1;
+    (void)dat;
+    (void)value;
+    (void)type;
     decltype(values) v;
     v.push_back(255);
     std::cout << "v[0] = " << v[0] << "\n";

@@ -14,6 +14,7 @@ namespace game {
     }
 
     bool Level::loadLevel(const std::string &filename) {
+        (void)filename;
 
         return true;
     }

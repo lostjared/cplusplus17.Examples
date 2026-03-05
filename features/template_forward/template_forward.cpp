@@ -8,15 +8,15 @@
 
 class TypeValue {};
 
-void type(TypeValue &c) {
+void type(TypeValue &) {
     std::cout << "passed value: TypeValue &c\n";
 }
 
-void type(TypeValue &&c) {
+void type(TypeValue &&) {
     std::cout << "passed value: TypeValue &&c\n";
 }
 
-void type(const TypeValue &c) {
+void type(const TypeValue &) {
     std::cout << "passed value: const TypeValue &c\n";
 }
 

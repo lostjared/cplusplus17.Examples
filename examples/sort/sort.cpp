@@ -1,15 +1,17 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<algorithm>
+#include<cstdlib>
 
 class Item {
 public:
     std::string name;
     int value;
-    Item() : value{0} {
+    Item() : name{}, value{0} {
         
     }
-    Item(int vvalue, std::string nname) : value{vvalue}, name{nname} {}
+    Item(int vvalue, std::string nname) : name{nname}, value{vvalue} {}
     
     bool operator<(const Item &i) const {
         return value<i.value;
@@ -17,7 +19,7 @@ public:
 };
 
 
-int main(int argc, char **argv) {
+int main() {
     std::vector<Item> items;
     while(1) {
         std::cout << "Enter items: ";

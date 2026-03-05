@@ -24,14 +24,14 @@ namespace game {
          }
 
         void release_images() {
-            for(int i = 0; i < surfaces.size(); ++i) {
+            for(std::size_t i = 0; i < surfaces.size(); ++i) {
                 SDL_FreeSurface(surfaces[i]);
                 std::cout << "released image index: [" << i << "]\n";
             }
             if(!surfaces.empty())
                 surfaces.erase(surfaces.begin(), surfaces.end());
 
-            for(int i = 0; i< fonts.size(); ++i) {
+            for(std::size_t i = 0; i< fonts.size(); ++i) {
                 TTF_CloseFont(fonts[i]);
                 std::cout << "released font index: [" << i << "]\n";
             }
@@ -58,7 +58,7 @@ namespace game {
         }
         
         void printText(Font font, int x, int y, const std::string &text, const Color &col) override {
-            SDL_Color col_s = { col.r, col.g, col.b };
+            SDL_Color col_s = { col.r, col.g, col.b, 255 };
             SDL_Surface *surf = TTF_RenderText_Solid(fonts[font], text.c_str(), col_s);
             SDL_Rect rc = { x, y, surf->w, surf->h };
             SDL_BlitSurface(surf, 0, surface, &rc);

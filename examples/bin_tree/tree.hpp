@@ -17,7 +17,7 @@ namespace tree {
         T value;
         std::string id;
         TreeNode<T> *left, *right;
-        TreeNode() : left(nullptr), right(nullptr), value(T()) { }
+        TreeNode() : value(T()), left(nullptr), right(nullptr) { }
     };
     
     template<typename T>

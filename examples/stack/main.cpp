@@ -1,6 +1,6 @@
 #include"stack.hpp"
 
-int main(int argc, char **argv) {
+int main() {
     try {
         Stack<int> stack1(100);
         stack1.push(100);

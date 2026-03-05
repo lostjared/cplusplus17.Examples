@@ -37,7 +37,7 @@ BUILT_IN(void)
 
 
 template<typename T>
-void isType(const T &type) {
+void isType(const T &) {
     if constexpr(isBuiltIn<T>::value) {
         std::cout << "Yes it is a built in type...\n";
     } else {

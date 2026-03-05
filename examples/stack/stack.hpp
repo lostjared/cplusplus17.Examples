@@ -68,7 +68,7 @@ T Stack<T>::top() {
 
 template<typename T>
 void Stack<T>::printItems() const {
-    for(int i = 0; i < index; ++i) {
+    for(std::size_t i = 0; i < index; ++i) {
         std::cout << type[i] << "\n";
     }
 }

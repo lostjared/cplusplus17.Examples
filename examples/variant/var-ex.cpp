@@ -35,7 +35,7 @@ void printAllTypes(const vobj_t &all) {
     }
 }
 
-int main(int argc, char **argv) {
+int main() {
     vobj_t obj_collection;
     obj_collection.push_back(ObjectType2{});
     obj_collection.push_back(ObjectType1{});

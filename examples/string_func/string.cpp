@@ -26,7 +26,7 @@ std::string right(const std::string &src, size_t num) {
     return temp;
 }
 
-int main(int argc, char **argv) {
+int main() {
     std::string src="abc 123 efg";
     std::string one, two, three;
     one=mid(src,3,5);

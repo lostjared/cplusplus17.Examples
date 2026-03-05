@@ -89,7 +89,7 @@ namespace net {
         memset(&saddy, 0, sizeof(sockaddr_in));
         saddy.sin_port = htons(port);
         in_addr_t a = inet_addr(hostname.c_str());
-        if(a == -1) {
+        if(a == INADDR_NONE) {
             herror("inet_addr");
             return -1;
         }
@@ -178,7 +178,6 @@ namespace net {
         ssize_t bytesRead = 0;
         ssize_t readVal = 0;
         char c = 0;
-        int count = 0;
         while(1) {
             readVal = read(sockfd, &c, 1);
             if(readVal == 0 || readVal == -1) break;

@@ -9,6 +9,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<cstddef>
 namespace cmd {
 
     template<typename T>
@@ -76,7 +77,7 @@ namespace cmd {
     }
     template<typename T>
     bool ArgumentList<T>::check(T key) {
-        for(int i = 0; i < items.size(); ++i) {
+        for(std::size_t i = 0; i < items.size(); ++i) {
             if(items[i].key == "$") {
                 if(items[i].value == key) {
                     return true;
@@ -88,7 +89,7 @@ namespace cmd {
 
     template<typename T>
     bool ArgumentList<T>::check_require(T key) {
-        for(int i = 0; i < items.size(); ++i) {
+        for(std::size_t i = 0; i < items.size(); ++i) {
             if(items[i].key == "$") {
                 if(items[i].value == key) {
                     return true;
@@ -101,7 +102,7 @@ namespace cmd {
 
     template<typename T>
     bool ArgumentList<T>::extract(T key, T &value) {
-        for(int i = 0; i < items.size(); ++i) {
+        for(std::size_t i = 0; i < items.size(); ++i) {
             if(items[i].key == "$" && items[i].value == key) {
                 return false;
             }
@@ -115,7 +116,7 @@ namespace cmd {
 
     template<typename T>
     bool ArgumentList<T>::require(T key, T &value, T desc) {
-        for(int i = 0; i < items.size(); ++i) {
+        for(std::size_t i = 0; i < items.size(); ++i) {
             
             if(items[i].key == "$" && items[i].value == key) {
                 throw ArgExcep<T>("Argument Error: " + key + " required argument missing value...");
@@ -134,7 +135,7 @@ namespace cmd {
 
     template<typename T>
     void ArgumentList<T>::print() {
-        for(int i = 0; i < items.size(); ++i) {
+        for(std::size_t i = 0; i < items.size(); ++i) {
             if(items[i].key == "$")
                 std::cout << items[i].value << "\n";
             else

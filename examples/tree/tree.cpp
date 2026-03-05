@@ -116,7 +116,6 @@ int main() {
     assign.root->token = "=";
     assign.root->left = new Node<std::string>("x", Var_type::VARIABLE, nullptr, nullptr);
     assign.root->right = new Node<std::string>("+", Var_type::PLUS, nullptr, nullptr);
-    Node<std::string> *plus = assign.root->right;
     node = assign.root->right;
     node->left = new Node<std::string>("10", Var_type::DIGIT, nullptr, nullptr);
     node->left->value = 10;

@@ -1,5 +1,5 @@
 #include<iostream>
-int main(int argc, char **argv)
+int main()
 {
 	char quote = 34;
 	const char *arr[] = {

@@ -59,7 +59,7 @@ void swapSpaceTab(std::istream &in, std::ostream &out, int spaces) {
                         buf += c;
                     }
                 } while(c == ' ');
-                if(buf.length() == spaces) {
+                if(buf.length() == static_cast<std::size_t>(spaces)) {
                     out << "\t" << c;
                 } else {
                     out << buf << c;

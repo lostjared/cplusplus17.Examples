@@ -8,7 +8,7 @@ static st::staticIF startup([](){
     std::cout << "goodbye!\n";
 });
 
-int main(int argc, char **argv) {
+int main() {
     std::cout << "seeded random number: " << rand()%255 << "\n";
     return 0;
 }

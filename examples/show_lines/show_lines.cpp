@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
     std::ostringstream s_len;
     s_len << values.size();
     int vlength = s_len.str().size()+1;
-    for(int i = 0; i < values.size(); ++i) {
+    for(std::size_t i = 0; i < values.size(); ++i) {
         std::ostringstream strout;
         strout.width(vlength);
         strout.fill('0');

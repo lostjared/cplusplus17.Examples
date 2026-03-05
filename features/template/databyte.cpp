@@ -54,7 +54,7 @@ DataBytes<T>::DataBytes(DataBytes<T> &&value) {
 
 template<typename T>
 DataBytes<T> &DataBytes<T>::operator=(const DataBytes<T> &byte) {
-    bytes = byte.byteval;
+    bytes = byte.bytes;
     return *this;
 }
 

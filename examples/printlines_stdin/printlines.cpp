@@ -3,7 +3,7 @@
 #include<fstream>
 #include<algorithm>
 
-int main(int argc, char **argv) {
+int main() {
     std::istream &file = std::cin;
     unsigned int index = 1;
     while(!file.eof()) {

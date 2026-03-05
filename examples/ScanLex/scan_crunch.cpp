@@ -34,7 +34,7 @@ namespace scan {
         out.write("!", sizeof('!'));
         int ts = scan->table.const_strings.size();
         out.write(reinterpret_cast<char*>(&ts), sizeof(ts));
-        for(int i = 0; i < scan->table.const_strings.size(); ++i) {
+        for(std::size_t i = 0; i < scan->table.const_strings.size(); ++i) {
             int length = scan->table.const_strings[i].length();
             out.write(reinterpret_cast<char*>(&length), sizeof(length));
             out.write(scan->table.const_strings[i].c_str(), length);

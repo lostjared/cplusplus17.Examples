@@ -55,7 +55,7 @@ public:
 class Test {
 public:
     Test() = delete;
-    Test(int x) {}
+    Test(int) {}
 };
 
 using MemberCount = Index<int, Object>;

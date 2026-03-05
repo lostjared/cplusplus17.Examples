@@ -79,12 +79,12 @@ namespace game {
 #endif
     }
      
-    void GameLevel::keydown(char key) {
+    void GameLevel::keydown(char) {
 
   
     }
      
-    void GameLevel::keyup(char key) {
+    void GameLevel::keyup(char) {
 
     }        
 }

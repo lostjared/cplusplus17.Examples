@@ -12,7 +12,7 @@
 #include "hash.hpp"
 
 
-int main(int argc, char **argv) {
+int main() {
     htable::Table<std::string, 1024> table;
     while(1) {
         std::string key;
@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
         table[key] = value;
         // print table
         std::cout << "*****\tprint table\n";
-        for(unsigned int i = 0; i < table.size(); ++i) {
+        for(int i = 0; i < table.size(); ++i) {
             if(table.at(i).size() > 0) {
                 for(auto & [first, second] : table.at(i)) {
                     std::cout << "hash:" << i << " -> " << first << ":" << second << "\n";

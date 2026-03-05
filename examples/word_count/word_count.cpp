@@ -6,7 +6,7 @@
 #include<algorithm>
 void extract_and_fill(std::istream &in, std::unordered_map<std::string, unsigned int> &words);
 void sort_and_print(std::ostream &out, std::unordered_map<std::string, unsigned int> &words);
-int main(int argc, char **argv) {
+int main() {
     std::unordered_map<std::string, unsigned int> words;
     extract_and_fill(std::cin, words);
     sort_and_print(std::cout, words);

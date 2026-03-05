@@ -5,30 +5,30 @@ namespace parse {
     using namespace scan;
     using namespace backend;
 
-    Item::Item() : index{-1}, keyword{KEY_EMPTY}, oper{OP_EMPTY}, type{TOKEN_NULL}{
+    Item::Item() : keyword{KEY_EMPTY}, oper{OP_EMPTY}, id{}, type{TOKEN_NULL}, index{-1}, index_const{-1}, val{0} {
 
     }
-    Item::Item(KEYWORD_TYPES k) : index{-1}, keyword{k}, oper{OP_EMPTY}, type{TOKEN_KEYWORD} {
-
-    }
-    
-    Item::Item(OP_TYPES o) : index{-1}, oper{o}, keyword{KEY_EMPTY}, type{TOKEN_SYMBOL} {
+    Item::Item(KEYWORD_TYPES k) : keyword{k}, oper{OP_EMPTY}, id{}, type{TOKEN_KEYWORD}, index{-1}, index_const{-1}, val{0} {
 
     }
     
-    Item::Item(std::string i) : index {-1}, oper{OP_EMPTY}, keyword{KEY_EMPTY}, id{i}, type{TOKEN_ID} {
+    Item::Item(OP_TYPES o) : keyword{KEY_EMPTY}, oper{o}, id{}, type{TOKEN_SYMBOL}, index{-1}, index_const{-1}, val{0} {
+
+    }
+    
+    Item::Item(std::string i) : keyword{KEY_EMPTY}, oper{OP_EMPTY}, id{i}, type{TOKEN_ID}, index{-1}, index_const{-1}, val{0} {
 
     }
         
-    Item::Item(int i) : index_const{i}, keyword{KEY_EMPTY}, oper{OP_EMPTY}, type{TOKEN_STRING} {
+    Item::Item(int i) : keyword{KEY_EMPTY}, oper{OP_EMPTY}, id{}, type{TOKEN_STRING}, index{-1}, index_const{i}, val{0} {
 
     }
 
-    Item::Item(int i, bool) : index{i}, keyword{KEY_EMPTY}, oper{OP_EMPTY}, type{TOKEN_ID}{
+    Item::Item(int i, bool) : keyword{KEY_EMPTY}, oper{OP_EMPTY}, id{}, type{TOKEN_ID}, index{i}, index_const{-1}, val{0} {
 
     }
         
-    Item::Item(double d) : val{d}, keyword{KEY_EMPTY}, oper{OP_EMPTY}, type{TOKEN_NUMBER} {
+    Item::Item(double d) : keyword{KEY_EMPTY}, oper{OP_EMPTY}, id{}, type{TOKEN_NUMBER}, index{-1}, index_const{-1}, val{d} {
 
     }
 
@@ -59,7 +59,7 @@ namespace parse {
     }
 
     Function::~Function() {
-        for(int i = 0; i < expressions.size(); ++i) {
+        for(std::size_t i = 0; i < expressions.size(); ++i) {
             Expr *expression = expressions[i];
             if(expression != nullptr)
                delete expression;
@@ -106,7 +106,7 @@ namespace parse {
      }
 
     Body::~Body() {
-        for(int i = 0; i < statements.size(); ++i) {
+        for(std::size_t i = 0; i < statements.size(); ++i) {
             Statement *s = statements[i];
             if(s != nullptr) {
                 delete s;
@@ -120,7 +120,7 @@ namespace parse {
    }
         
   Procedure::~Procedure() {
-      for(int i = 0; i < body.size(); ++i) {
+    for(std::size_t i = 0; i < body.size(); ++i) {
           Body *b = body[i];
           if(b != nullptr)
             delete b;
@@ -128,7 +128,7 @@ namespace parse {
   }
 
   TreeNode::~TreeNode() {
-      for(int i = 0; i < children.size(); ++i) {
+    for(std::size_t i = 0; i < children.size(); ++i) {
           TreeNode *n = children[i];
           delete n;
           n = nullptr;
@@ -222,7 +222,7 @@ namespace parse {
     }
 
     void AST::print(std::ostream &out) {
-        for(int i = 0; i < tokens.size(); ++i) {
+        for(std::size_t i = 0; i < tokens.size(); ++i) {
             switch(tokens[i].type) {
                 case TOKEN_ID:
                 out << "id: " << identifiers[tokens[i].index] << "\n";
@@ -578,7 +578,7 @@ namespace parse {
     }
 
     bool AST::match_lookahead(OP_TYPES type) {
-        if(sindex < tokens.size() && tokens[sindex].oper == type)
+        if(sindex < static_cast<int>(tokens.size()) && tokens[sindex].oper == type)
             return true;
         return false;
     }
@@ -660,7 +660,7 @@ namespace parse {
        return false;
    }
 
-   void AST::printTree(std::ostream &out, TreeNode *n) {
+    void AST::printTree(std::ostream &, TreeNode *) {
    }
 
    Function *AST::parseFunction() {
@@ -700,16 +700,16 @@ namespace parse {
        return nullptr;
    }
 
-   void AST::eraseTree(TreeNode *n) {
+    void AST::eraseTree(TreeNode *) {
    }
 
 
-    void AST::parExpr(OP_TYPES oper, Expr *left, Expr *right) {
+    void AST::parExpr(OP_TYPES, Expr *, Expr *) {
      
     }
         
 
-    void AST::printExpr(Expr *e) {
+    void AST::printExpr(Expr *) {
 
    }
 
@@ -762,7 +762,7 @@ namespace parse {
             break;
              case EXPR_FUNC: {
                  if(e->func != nullptr) {
-                     for(int i = 0; i < e->func->expressions.size(); ++i) {
+                     for(std::size_t i = 0; i < e->func->expressions.size(); ++i) {
                          Expr *expression = e->func->expressions[i];
                         if(expression != nullptr)
                             eval(expression);
@@ -820,9 +820,10 @@ namespace parse {
                    break;
                    case STATE_ASSIGN:
                         bend.decl(i->var, "");
-                        if(i->expression != 0)
+                        if(i->expression != 0) {
                             eval(i->expression);
-                            bend.put(Inc(O_ASSIGN, Variable(i->var, ""), Variable()));
+                        }
+                        bend.put(Inc(O_ASSIGN, Variable(i->var, ""), Variable()));
 
                    break;
                    case STATE_FUNC:
@@ -878,7 +879,7 @@ namespace parse {
            default:
            break;
        }
-        for(int i = 0; i < n->children.size(); ++i)
+        for(std::size_t i = 0; i < n->children.size(); ++i)
         buildBackend(n->children[i]);
    }
 
@@ -896,7 +897,7 @@ namespace parse {
 
 
     bool AST::getToken() {
-        if(sindex < tokens.size()) {
+        if(sindex < static_cast<int>(tokens.size())) {
             token = tokens[sindex++];
             return true;
         }
